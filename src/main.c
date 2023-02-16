@@ -1,16 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/16 04:25:35 by jbernard          #+#    #+#             */
-/*   Updated: 2023/02/16 04:31:12 by jbernard         ###   ########.fr       */
+/*   Created: 2023/02/16 04:31:19 by jbernard          #+#    #+#             */
+/*   Updated: 2023/02/16 04:32:14 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include "../libraries/readline/include/readline/readline.h"
-#include "../libraries/readline/include/readline/history.h"
+#include "../include/minishell.h"
+
+int main() {
+    char* input = readline("Enter some text: ");
+    printf("You entered: %s\n", input);
+    free(input);
+    return 0;
+}
