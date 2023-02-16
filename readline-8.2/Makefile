@@ -31,7 +31,7 @@ PACKAGE_TARNAME = readline
 srcdir = .
 
 top_srcdir = .
-BUILD_DIR = /home/jbernard/Downloads/readline-8.2
+BUILD_DIR = /home/jbernard/Documents/42_minishell/readline-8.2
 
 INSTALL = /usr/bin/install -c
 INSTALL_PROGRAM = ${INSTALL}
@@ -48,7 +48,7 @@ MV = mv
 
 SHELL = /bin/sh
 
-prefix = /home/jbernard/Documents/42_minishell/readline
+prefix = /home/jbernard/Documents/42_minishell/readline_install
 exec_prefix = ${prefix}
 
 datarootdir = ${prefix}/share

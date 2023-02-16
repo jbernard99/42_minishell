@@ -22,7 +22,7 @@ topdir = ..
 srcdir = .
 
 
-prefix = /home/jbernard/Documents/42_minishell/readline
+prefix = /home/jbernard/Documents/42_minishell/readline_install
 
 datarootdir = ${prefix}/share
 
@@ -49,7 +49,7 @@ RM = rm -f
 INSTALL = /usr/bin/install -c
 INSTALL_DATA = ${INSTALL} -m 644
 
-BUILD_DIR = /home/jbernard/Downloads/readline-8.2
+BUILD_DIR = /home/jbernard/Documents/42_minishell/readline-8.2
 TEXINPUTDIR = $(srcdir)
 
 MAKEINFO    = LANGUAGE= makeinfo

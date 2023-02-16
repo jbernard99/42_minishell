@@ -21,7 +21,7 @@ RL_LIBRARY_VERSION = 8.2
 SHELL = /bin/sh
 RM = rm -f
 
-prefix = /home/jbernard/Documents/42_minishell/readline
+prefix = /home/jbernard/Documents/42_minishell/readline_install
 exec_prefix = ${prefix}
 
 datarootdir = ${prefix}/share
@@ -32,7 +32,7 @@ datadir = ${datarootdir}
 
 top_srcdir = ..
 #BUILD_DIR = .
-BUILD_DIR = /home/jbernard/Downloads/readline-8.2
+BUILD_DIR = /home/jbernard/Documents/42_minishell/readline-8.2
 installdir = $(datadir)/readline
 
 INSTALL = /usr/bin/install -c
