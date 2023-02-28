@@ -12,5 +12,5 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "../libraries/readline/include/readline/readline.h"
-#include "../libraries/readline/include/readline/history.h"
+#include "../libraries/readline-8.1/readline.h"
+#include "../libraries/readline-8.1/history.h"
