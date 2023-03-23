@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:31:19 by jbernard          #+#    #+#             */
-/*   Updated: 2023/03/06 11:45:22 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/03/23 13:25:24 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	prompt_loop(void){
 			printf(" -> %s\n", token);
 		}
 	}
-}		
+}
 
 int main() {
 	signal(SIGINT, ctrlc_handle);
