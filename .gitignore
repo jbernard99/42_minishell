@@ -1,3 +1,4 @@
 minishell
-build
+obj
 .vscode
+libraries/readline/libreadline.a

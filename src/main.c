@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:31:19 by jbernard          #+#    #+#             */
-/*   Updated: 2023/03/23 13:25:24 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/03/24 13:18:59 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,18 +30,21 @@ void	prompt_loop(void){
 		if (input == NULL)
 			exit(0);
 		add_history(input);
-		free(input);
 		token = ft_strtok(input, delim);
 		printf(" -> %s\n", token);
 		while (token != NULL){
 			token = ft_strtok(NULL, delim);
 			printf(" -> %s\n", token);
 		}
+		free(input);
 	}
 }
 
-int main() {
+int main(int argc, char **argv, char **envp) {
 	signal(SIGINT, ctrlc_handle);
+	(void)argc;
+	(void)argv;
+	(void)envp;
 	prompt_loop();
 	return 0;
 }
