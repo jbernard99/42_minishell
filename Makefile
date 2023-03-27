@@ -6,7 +6,7 @@
 #    By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/16 04:45:18 by jbernard          #+#    #+#              #
-#    Updated: 2023/03/24 14:17:42 by jbernard         ###   ########.fr        #
+#    Updated: 2023/03/26 23:45:16 by jbernard         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,16 +18,34 @@ CFLAGS = -Wall -Wextra -Werror
 NAME = minishell
 
 # Directories
-SRC_DIR = ./src
-INC_DIR = ./includes
-OBJ_DIR = ./obj
+SRC_DIR = src/
+BI_DIR = $(SRC_DIR)/builtin
+MAIN_DIR = $(SRC_DIR)/main
+INC_DIR = includes/
+OBJ_DIR = obj/
 LIBFT_DIR = ./libraries/42_libft
 RL_DIR = ./libraries/readline
 
 # Files
-SRC_FILES = $(wildcard $(SRC_DIR)/*.c)
-OBJ_FILES = $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRC_FILES))
+MAIN_FILES = main.c		\
+			tools.c
+
+#BI_FILES = cd.c			\
+			echo.c		\
+			env.c		\
+			exit.c		\
+			export.c	\
+			pwd.c		\
+			unset.c
+
+#SRC_FILES = $(wildcard $(MAIN_DIR)/*.c) $(wildcard $(BI_DIR)/*.c)
+
+OBJ_FILES = $(MAIN_FILES:%.c=$(OBJ_DIR)%.o)	\
+			$(BI_FILES:%.c=$(OBJ_DIR)%.o)
+
 LIB_FILES = -L$(LIBFT_DIR) -lft -L$(RL_DIR) -lreadline -lncurses
+
+VPATH =	$(SRC_DIR) $(MAIN_DIR) $(BI_DIR)
 
 # Build rule
 all: $(NAME)
@@ -36,8 +54,8 @@ $(NAME): $(RL_DIR)/libreadline.a $(OBJ_FILES)
 	$(MAKE) -C $(LIBFT_DIR)
 	$(CC) $(CFLAGS) $(OBJ_FILES) $(LIB_FILES) -o $(NAME)
 
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(INC_DIR)/minishell.h | $(OBJ_DIR)
-	$(CC) $(CFLAGS) -c $< -o $@
+$(OBJ_DIR)%.o: %.c | $(OBJ_DIR)
+	$(CC) $(CFLAGS) -I$(INC_DIR) -c $< -o $@
 
 $(OBJ_DIR):
 	mkdir -p $(OBJ_DIR)
