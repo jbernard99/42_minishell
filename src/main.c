@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:31:19 by jbernard          #+#    #+#             */
-/*   Updated: 2023/03/24 13:18:59 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/03/27 14:47:49 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ void ctrlc_handle(){
 	rl_redisplay();
 }
 
-void	prompt_loop(void){
+void	prompt_loop(void)
+{
 	char *token;
 	char *delim = " ";
 

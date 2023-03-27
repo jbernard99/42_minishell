@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:25:35 by jbernard          #+#    #+#             */
-/*   Updated: 2023/03/23 15:15:47 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/03/27 12:45:16 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,4 +17,27 @@
 #include "../libraries/readline/includes/readline.h"
 #include "../libraries/readline/includes/history.h"
 
+typedef struct s_cmdlst {
+	int			flags;
+	char			*cmd;
+	char			**token;
+	struct s_cmdlst	*next;
+}		t_cmdlst;
+
+enum	e_flags{
+	PIPE = 1 << 0,
+	AND = 1 << 1,
+	OR = 1 << 2,
+	QUOTE = 1 << 3,
+	DQUOTE = 1 << 4
+};
+
 char	*ft_strtok(char *str, const char *delim);
+
+/* list managing functions */
+t_cmdlst	*new_cmd_node(void);
+void	cmdlst_addback(t_cmdlst **cmdlst, t_cmdlst *new_node);
+t_cmdlst	*cmdlst_last(t_cmdlst *cmdlst);
+void	cmdlst_clear(t_cmdlst **cmdlst);
+void	cmdlst_delone(t_cmdlst *cmdlst);
+t_cmdlst	**get_lst(void);
