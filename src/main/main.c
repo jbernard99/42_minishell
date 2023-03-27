@@ -6,12 +6,11 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:31:19 by jbernard          #+#    #+#             */
-/*   Updated: 2023/03/26 22:34:18 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/03/27 00:06:05 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-#include <termios.h>
 
 void ctrlc_handle(){
 	ft_putchar_fd('\n', 1); 							// Jump on a clean line
