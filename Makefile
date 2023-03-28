@@ -6,7 +6,7 @@
 #    By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/16 04:45:18 by jbernard          #+#    #+#              #
-#    Updated: 2023/03/26 23:45:16 by jbernard         ###   ########.fr        #
+#    Updated: 2023/03/28 14:34:06 by jbernard         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,11 +27,13 @@ LIBFT_DIR = ./libraries/42_libft
 RL_DIR = ./libraries/readline
 
 # Files
-MAIN_FILES = main.c		\
-			tools.c
+MAIN_FILES = main.c			\
+			envp.c			\
+			tools.c			\
+			envp_tools.c	
 
-#BI_FILES = cd.c			\
-			echo.c		\
+BI_FILES = cd.c
+#			echo.c		\
 			env.c		\
 			exit.c		\
 			export.c	\
