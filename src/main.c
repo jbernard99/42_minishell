@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:31:19 by jbernard          #+#    #+#             */
-/*   Updated: 2023/03/27 14:47:49 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/03/28 12:33:53 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,20 +23,15 @@ void ctrlc_handle(){
 
 void	prompt_loop(void)
 {
-	char *token;
-	char *delim = " ";
+	char	*input;
 
-	while (1){
-		char* input = readline("minishell> ");
+	while (1)
+	{
+		input = readline("minishell> ");
 		if (input == NULL)
 			exit(0);
 		add_history(input);
-		token = ft_strtok(input, delim);
-		printf(" -> %s\n", token);
-		while (token != NULL){
-			token = ft_strtok(NULL, delim);
-			printf(" -> %s\n", token);
-		}
+		first_divide(input);	
 		free(input);
 	}
 }

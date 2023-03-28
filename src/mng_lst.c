@@ -6,7 +6,7 @@
 /*   By: mgagnon <mgagnon@student.42quebec.com      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 11:17:41 by mgagnon           #+#    #+#             */
-/*   Updated: 2023/03/27 14:47:43 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/03/28 12:06:17 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,13 +60,14 @@ void	cmdlst_addback(t_cmdlst **cmdlst, t_cmdlst *new_node)
 	}
 }
 
-t_cmdlst	*new_cmd_node(void)
+t_cmdlst	*new_cmd_node(char *cmd)
 {
 	t_cmdlst	*new_node;
 
 	new_node = ft_calloc(1, sizeof(t_cmdlst));
 	if (!new_node)
 		return (NULL);
+	new_node->cmd = cmd;
 	new_node->next = NULL;
 	return (new_node);
 }
