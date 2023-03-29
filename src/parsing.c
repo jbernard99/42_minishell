@@ -6,11 +6,39 @@
 /*   By: mgagnon <mgagnon@student.42quebec.com      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 13:33:11 by mgagnon           #+#    #+#             */
-/*   Updated: 2023/03/28 13:09:15 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/03/29 17:49:12 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+void	print_flags(int flags)
+{
+	if (flags & PIPEI)
+		printf("PIPEI: ON, ");
+	else
+		printf("PIPEI: OFF, ");
+	if (flags & PIPEO)
+		printf("PIPEO: ON, ");
+	else
+		printf("PIPEO: OFF, ");
+	if (flags & ANDI)
+		printf("ANDI: ON, ");
+	else
+		printf("ANDI: OFF, ");
+	if (flags & ANDO)
+		printf("ANDO: ON, ");
+	else
+		printf("ANDO: OFF, ");
+	if (flags & ORI)
+		printf("ORI: ON, ");
+	else
+		printf("ORI: OFF, ");
+	if (flags & ORO)
+		printf("ORO: ON\n");
+	else
+		printf("ORO: OFF\n");
+}
 
 void	second_divide(t_cmdlst *cmdlst)
 {
@@ -19,13 +47,12 @@ void	second_divide(t_cmdlst *cmdlst)
 
 	old_size = 0;
 	printf("cmd -> %s\n", cmdlst->cmd);
-	token = ft_strtok(cmdlst->cmd, " ");
-	printf(" -> %s\n", token);
+	token = ft_strtok(cmdlst->cmd, " ", &cmdlst->flags);
 	while (token != NULL)
 	{
 		cmdlst->token = realloc(cmdlst->token, old_size + 1);
-		token = ft_strtok(NULL, " ");
 		cmdlst->token[old_size] = token;
+		token = ft_strtok(NULL, " ", &cmdlst->flags);
 		printf(" -> %s\n", cmdlst->token[old_size]);
 		old_size++;
 	}
@@ -41,18 +68,18 @@ t_cmdlst	*get_lst(void)
 	/* if quotes or double quotes are used makes sure to skip */ 
 	/* over every part between 2 quotes or two double quotes */
 
-void	check_quotes(char *input, size_t *i, int flags)
+void	check_quotes(char *input, size_t *i, int *flags)
 {
 	char	c;
 
 	if (input[*i] == '\'')
 	{
-		flags |= QUOTE;
+		*flags |= QUOTE;
 		c = '\'';
 	}
 	else
 	{
-		flags |= DQUOTE;
+		*flags |= DQUOTE;
 		c = '\"';
 	}
 	(*i)++;
@@ -63,18 +90,19 @@ void	check_quotes(char *input, size_t *i, int flags)
 	/* identify what operand is being used and */ 
 	/* if any quotes or double quotes are used */
 
-void	what_is_it(char *input, size_t *i, int flags)
+void	what_is_it(char *input, size_t *i, int *flags)
 {
-	if (input[*i] == '\'' || input[*i] == '\"')
-		check_quotes(input, i, flags);
-	else if (input[*i] == '&')
+	/* if (input[*i] == '\'' || input[*i] == '\"') */
+	/* 	check_quotes(input, i, flags); */
+	if (input[*i] == '&')
 	{
 		(*i)++;
 		if (input[*i] == '&')
 		{
 			(*i)++;
-			flags |= AND;
+			*flags |= ANDI;
 		}
+		(*i)++;
 	}
 	else if (input[*i] == '|')
 	{
@@ -82,10 +110,27 @@ void	what_is_it(char *input, size_t *i, int flags)
 		if (input[*i] == '|')
 		{
 			(*i)++;
-			flags = OR;
+			*flags |= ORI;
 		}
 		else
-			flags |= PIPE;
+			*flags |= PIPEI;
+		(*i)++;
+	}
+}
+void	finish_flag_set(t_cmdlst **cmdlst)
+{
+	t_cmdlst	*cur;
+
+	cur = *cmdlst;
+	while (cur->next != NULL)
+	{
+		if (cur->flags & PIPEI)
+			cur->next->flags |= PIPEO;
+		else if (cur->flags & ORI)
+			cur->next->flags |= ORO;
+		else if (cur->flags & ANDI)
+			cur->next->flags |= ANDO;
+		cur = cur->next;
 	}
 }
 
@@ -104,20 +149,19 @@ void	first_divide(char *input)
 	while (input[i])
 	{
 		origin = i;
-		while (!ft_strrchr("\'\"|&", input[i]))
+		while (!ft_strrchr("|&", input[i]))
 			i++;
-		write(1, "separator found\n", 16);
 		cmdlst_addback(&cmdlst, new_cmd_node(ft_strldup(&input[origin], \
 						i - origin)));
-		cur = cmdlst;
-		if(cur->next != NULL)
-			cur = cur->next;
-		what_is_it(input, &i, cur->flags);
+		cur = cmdlst_last(cmdlst);
+		what_is_it(input, &i, &cur->flags);
 	}
 	cur = cmdlst;
+	finish_flag_set(&cmdlst);
 	while (cur != NULL)
 	{
 		second_divide(cur);
+		print_flags(cur->flags);
 		cur = cur->next;
 	}
 }

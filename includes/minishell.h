@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:25:35 by jbernard          #+#    #+#             */
-/*   Updated: 2023/03/29 14:25:29 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/03/29 16:22:06 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ enum	e_flags{
 	DQUOTE = 1 << 7
 };
 
-char	*ft_strtok(char *str, const char *delim);
+char	*ft_strtok(char *str, const char *delim, int *flags);
 
 /* list managing functions */
 t_cmdlst	*new_cmd_node(char *cmd);
