@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:25:35 by jbernard          #+#    #+#             */
-/*   Updated: 2023/03/28 12:49:48 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/03/29 14:25:29 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,14 @@ typedef struct s_cmdlst {
 }		t_cmdlst;
 
 enum	e_flags{
-	PIPE = 1 << 0,
-	AND = 1 << 1,
-	OR = 1 << 2,
-	QUOTE = 1 << 3,
-	DQUOTE = 1 << 4
+	PIPEI = 1 << 0,
+	PIPEO = 1 << 1,
+	ANDI = 1 << 2,
+	ANDO = 1 << 3,
+	ORI = 1 << 4,
+	ORO = 1 << 5,
+	QUOTE = 1 << 6,
+	DQUOTE = 1 << 7
 };
 
 char	*ft_strtok(char *str, const char *delim);
