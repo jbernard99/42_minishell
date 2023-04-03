@@ -6,27 +6,12 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 06:43:50 by jbernard          #+#    #+#             */
-/*   Updated: 2023/03/29 17:44:49 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/04/03 15:03:27 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 #include <stdint.h>
-
-void	skip_quotes(const char *ptr)
-{
-	if (*ptr == '\'')
-	{
-		ptr++;
-		while (*ptr != '\'')
-			ptr++;
-	}
-	else if (*ptr == '\"')
-	{
-		while (*ptr != '\"')
-			ptr++;
-	}
-}
 
 char	*ft_strpbrk(const char *str, const char *delim, int *flags)
 {

@@ -6,7 +6,7 @@
 /*   By: mgagnon <mgagnon@student.42quebec.com      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 13:33:11 by mgagnon           #+#    #+#             */
-/*   Updated: 2023/03/29 17:49:12 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/04/03 15:18:32 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,20 +40,18 @@ void	print_flags(int flags)
 		printf("ORO: OFF\n");
 }
 
-void	second_divide(t_cmdlst *cmdlst)
+void	second_divide(t_cmdlst **cmdlst)
 {
 	char	*token;
 	size_t	old_size;
 
 	old_size = 0;
-	printf("cmd -> %s\n", cmdlst->cmd);
-	token = ft_strtok(cmdlst->cmd, " ", &cmdlst->flags);
+	token = ft_strtok((*cmdlst)->cmd, " ", &(*cmdlst)->flags);
 	while (token != NULL)
 	{
-		cmdlst->token = realloc(cmdlst->token, old_size + 1);
-		cmdlst->token[old_size] = token;
-		token = ft_strtok(NULL, " ", &cmdlst->flags);
-		printf(" -> %s\n", cmdlst->token[old_size]);
+		(*cmdlst)->token = realloc((*cmdlst)->token, old_size + 1);
+		(*cmdlst)->token[old_size] = ft_strdup(token);
+		token = ft_strtok(NULL, " ", &(*cmdlst)->flags);
 		old_size++;
 	}
 }
@@ -136,7 +134,24 @@ void	finish_flag_set(t_cmdlst **cmdlst)
 
 	/* makes a first split to separate multiple cmd and looks */ 
 	/* for PIPE, AND and OR operand */
+void	print_node_info(t_cmdlst **cmdlst)
+{
+	int	i;
+	t_cmdlst	*cur;
 
+	cur = *cmdlst;
+	while (cur)
+	{
+		i = 0;
+		printf("cmd -> %s\n", cur->cmd);
+		while (cur->token[i])
+		{
+			printf("token[%i] -> %s\n", i, cur->token[i]);
+			i++;
+		}
+		cur = cur->next;
+	}
+}
 void	first_divide(char *input)
 {
 	t_cmdlst	*cmdlst;
@@ -156,14 +171,9 @@ void	first_divide(char *input)
 		cur = cmdlst_last(cmdlst);
 		what_is_it(input, &i, &cur->flags);
 	}
-	cur = cmdlst;
 	finish_flag_set(&cmdlst);
-	while (cur != NULL)
-	{
-		second_divide(cur);
-		print_flags(cur->flags);
-		cur = cur->next;
-	}
+	second_divide(&cmdlst);
+	print_node_info(&cmdlst);
 }
 
 /* int	main(int ac, char **av) */
