@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 13:06:54 by jbernard          #+#    #+#             */
-/*   Updated: 2023/03/28 14:13:23 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/04/03 15:30:59 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,34 +97,3 @@ void	put_envp(char **envp)
 }
 
 /* _____________________________________________________________________________________________*/
-
-
-
-
-
-
-/* Set line in envp from main structure of program. If not exists the
- * environement variables is create.
- *
- *	Arguments : 
- *		{t_mnshl *}	{vars}	: pointer to main struct of the program
- *		{char *}	{*name} : name of environnement variable to set.
- *
- *	Returns : 
- *		{char *} : pointeur to the value start in vars.envp
- */
-// TODO check is case sensitive
-char	*envp_get_value_line(char **envp, char *name)
-{
-	char	*ret;
-	int		i;
-
-	ret = NULL;
-	i = is_name_in_envp(envp, name);
-	if (i >= 0)
-	{
-		ret = &envp[i][ft_strlen(name) + 1];
-		return (ret);
-	}
-	return (ret);
-}

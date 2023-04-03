@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:31:19 by jbernard          #+#    #+#             */
-/*   Updated: 2023/03/28 14:10:30 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/04/03 15:48:24 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,21 +24,34 @@ void sigquit_handle(int sig){
 	(void)sig;
 }
 
-void	prompt_loop(void){
-	char *token;
-	char *delim = " ";
+void	ez_divide(t_cmdlst *cmdlst)
+{
+	char	*token;
+	size_t	old_size;
 
+	old_size = 0;
+	token = ft_strtok(cmdlst->cmd, " ", &cmdlst->flags);
+	write(1, "ok\n", 2);
+	// if (!cmd_is_builtin(token)){
+	// 	token = ft_strjoin("/bin/", token);
+	// 	printf("Result");
+	// }
+	while (token != NULL)
+	{
+		cmdlst->token = realloc(cmdlst->token, old_size + 1);
+		cmdlst->token[old_size] = token;
+		token = ft_strtok(NULL, " ", &cmdlst->flags);
+		old_size++;
+	}
+}
+
+void	prompt_loop(t_cmdlst *cmdlst){
 	while (1){
 		char* input = readline("minishell$ ");
 		if (input == NULL)
 			exit(0);
 		add_history(input);								// Add current input to the history list
-		token = ft_strtok(input, delim);
-		printf(" -> %s\n", token);
-		while (token != NULL){
-			token = ft_strtok(NULL, delim);
-			printf(" -> %s\n", token);
-		}
+		ez_divide(cmdlst);
 		free(input);
 	}
 }
@@ -54,7 +67,9 @@ void set_new_termios(struct termios old_termios){
 
 int main(int argc, char **argv, char **envp) {
 	struct termios old_termios;
-	
+	t_cmdlst *cmdlst;
+
+	cmdlst = get_lst();
 	tcgetattr(STDIN_FILENO, &old_termios);				// Get parent terminal settings
 	set_new_termios(old_termios);
 	
@@ -65,7 +80,7 @@ int main(int argc, char **argv, char **envp) {
 	(void)argv;
 	(void)envp;
 	
-	prompt_loop();
+	prompt_loop(cmdlst);
 	tcsetattr(STDIN_FILENO, TCSANOW, &old_termios);		// Go back to old terminal settings.
 	
 	return 0;

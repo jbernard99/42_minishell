@@ -6,27 +6,11 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 11:17:41 by mgagnon           #+#    #+#             */
-/*   Updated: 2023/03/31 15:51:30 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/04/03 15:38:08 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-typedef struct s_cmdlst {
-	int			flags;
-	char			*cmd;
-	char			**token;
-	struct s_cmdlst	*next;
-}		t_cmdlst;
-
-enum	e_flags{
-	PIPEI = 1 << 0,
-	PIPEO = 1 << 1,
-	ANDI = 1 << 2,
-	ANDO = 1 << 3,
-	ORI = 1 << 4,
-	ORO = 1 << 5,
-	QUOTE = 1 << 6,
-	DQUOTE = 1 << 7
-};
+#include "../../includes/minishell.h"	
 
 void	ft_bzero(void *str, size_t n)
 {
