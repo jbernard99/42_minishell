@@ -6,20 +6,21 @@
 /*   By: mgagnon <mgagnon@student.42quebec.com      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 11:17:41 by mgagnon           #+#    #+#             */
-/*   Updated: 2023/03/28 12:06:17 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/04/04 10:20:11 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	cmdlst_delone(t_cmdlst *cmdlst)
+void	cmdlst_delone(t_cmdlst *cmdlst, void (*del)(t_cmdlst *))
 {
 	if (!cmdlst)
 		return ;
+	del(cmdlst);
 	free(cmdlst);
 }
 
-void	cmdlst_clear(t_cmdlst **cmdlst)
+void	cmdlst_clear(t_cmdlst **cmdlst, void (*del)(t_cmdlst *))
 {
 	t_cmdlst	*proxy;
 
@@ -28,7 +29,7 @@ void	cmdlst_clear(t_cmdlst **cmdlst)
 		while (*cmdlst)
 		{
 			proxy = (*cmdlst)->next;
-			cmdlst_delone(*cmdlst);
+			cmdlst_delone(*cmdlst, del);
 			(*cmdlst) = proxy;
 		}
 	}

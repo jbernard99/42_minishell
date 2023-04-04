@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:25:35 by jbernard          #+#    #+#             */
-/*   Updated: 2023/03/29 16:22:06 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/04/04 11:23:47 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,14 @@ char	*ft_strtok(char *str, const char *delim, int *flags);
 t_cmdlst	*new_cmd_node(char *cmd);
 void	cmdlst_addback(t_cmdlst **cmdlst, t_cmdlst *new_node);
 t_cmdlst	*cmdlst_last(t_cmdlst *cmdlst);
-void	cmdlst_clear(t_cmdlst **cmdlst);
-void	cmdlst_delone(t_cmdlst *cmdlst);
+void	cmdlst_clear(t_cmdlst **cmdlst, void (*del)(t_cmdlst *));
+void	cmdlst_delone(t_cmdlst *cmdlst, void (*del)(t_cmdlst *));
 t_cmdlst	*get_lst(void);
+void	empty_lst(t_cmdlst *cmdlst);
+void	ft_cmdlstiter(t_cmdlst **cmdlst, void (*f)(t_cmdlst *));
+void	print_cmdlst_node(t_cmdlst *node);
 
 char	*ft_strldup(const char *str, size_t len);
-void	first_divide(char *input);
+void	first_divide(char *input, t_cmdlst **cmdlst);
+void	*ft_realloc(void *ptr, size_t size);
+void	print_flags(int flags);

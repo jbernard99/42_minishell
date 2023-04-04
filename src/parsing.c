@@ -6,7 +6,7 @@
 /*   By: mgagnon <mgagnon@student.42quebec.com      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 13:33:11 by mgagnon           #+#    #+#             */
-/*   Updated: 2023/04/03 15:18:32 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/04/04 15:46:50 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,17 +43,22 @@ void	print_flags(int flags)
 void	second_divide(t_cmdlst **cmdlst)
 {
 	char	*token;
-	size_t	old_size;
+	char	*cmd;
+	size_t	i;
 
-	old_size = 0;
-	token = ft_strtok((*cmdlst)->cmd, " ", &(*cmdlst)->flags);
+	i = 1;
+	cmd = ft_strdup((*cmdlst)->cmd);
+	/* printf("cmd -> %s\n", (*cmdlst)->cmd); */
+	token = ft_strtok(cmd, " ", &(*cmdlst)->flags);
 	while (token != NULL)
 	{
-		(*cmdlst)->token = realloc((*cmdlst)->token, old_size + 1);
-		(*cmdlst)->token[old_size] = ft_strdup(token);
+		(*cmdlst)->token = ft_realloc((*cmdlst)->token, (sizeof(char *) * (i + 1)));
+		(*cmdlst)->token[(i - 1)] = ft_strdup(token);
 		token = ft_strtok(NULL, " ", &(*cmdlst)->flags);
-		old_size++;
+		/* printf(" -> %s\n", (*cmdlst)->token[i]); */
+		i++;
 	}
+	/* printf(" -> %s\n", (*cmdlst)->token[i]); */
 }
 
 t_cmdlst	*get_lst(void)
@@ -90,8 +95,6 @@ void	check_quotes(char *input, size_t *i, int *flags)
 
 void	what_is_it(char *input, size_t *i, int *flags)
 {
-	/* if (input[*i] == '\'' || input[*i] == '\"') */
-	/* 	check_quotes(input, i, flags); */
 	if (input[*i] == '&')
 	{
 		(*i)++;
@@ -134,46 +137,32 @@ void	finish_flag_set(t_cmdlst **cmdlst)
 
 	/* makes a first split to separate multiple cmd and looks */ 
 	/* for PIPE, AND and OR operand */
-void	print_node_info(t_cmdlst **cmdlst)
-{
-	int	i;
-	t_cmdlst	*cur;
 
-	cur = *cmdlst;
-	while (cur)
-	{
-		i = 0;
-		printf("cmd -> %s\n", cur->cmd);
-		while (cur->token[i])
-		{
-			printf("token[%i] -> %s\n", i, cur->token[i]);
-			i++;
-		}
-		cur = cur->next;
-	}
-}
-void	first_divide(char *input)
+void	first_divide(char *input, t_cmdlst **cmdlst)
 {
-	t_cmdlst	*cmdlst;
 	t_cmdlst	*cur;
 	size_t		i;
 	size_t		origin;
 
 	i = 0;
-	cmdlst = get_lst();
 	while (input[i])
 	{
 		origin = i;
 		while (!ft_strrchr("|&", input[i]))
 			i++;
-		cmdlst_addback(&cmdlst, new_cmd_node(ft_strldup(&input[origin], \
+		cmdlst_addback(cmdlst, new_cmd_node(ft_strldup(&input[origin], \
 						i - origin)));
-		cur = cmdlst_last(cmdlst);
+		cur = cmdlst_last(*cmdlst);
 		what_is_it(input, &i, &cur->flags);
 	}
-	finish_flag_set(&cmdlst);
-	second_divide(&cmdlst);
-	print_node_info(&cmdlst);
+	cur = *cmdlst;
+	finish_flag_set(cmdlst);
+	while (cur != NULL)
+	{
+		second_divide(&cur);
+		/* print_flags(cur->flags); */
+		cur = cur->next;
+	}
 }
 
 /* int	main(int ac, char **av) */

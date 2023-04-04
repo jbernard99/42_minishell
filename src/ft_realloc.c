@@ -1,0 +1,51 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_realloc.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mgagnon <mgagnon@student.42quebec.com      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/04/04 10:47:04 by mgagnon           #+#    #+#             */
+/*   Updated: 2023/04/04 12:57:54 by mgagnon          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../includes/minishell.h"
+
+size_t	ft_malloc_size(void *ptr)
+{
+	size_t	size;
+
+	if (ptr == NULL)
+		return (0);
+	size = *((size_t*)ptr - 1);
+	return (size);
+}
+
+void	*ft_realloc(void *ptr, size_t size)
+{
+	void *new_ptr;
+	size_t copy_size;
+
+	if (ptr == NULL)
+	{
+		new_ptr = malloc(size);
+		if (new_ptr == NULL)
+			return NULL;
+		return (new_ptr);
+	}
+	if (size == 0)
+	{
+		free(ptr);
+		return NULL;
+	}
+	new_ptr = malloc(size);
+	if (new_ptr == NULL)
+		return NULL;
+	copy_size = size;
+	if (size > ft_malloc_size(ptr))
+		copy_size = ft_malloc_size(ptr);
+	ft_memcpy(new_ptr, ptr, copy_size);
+	free(ptr);
+	return (new_ptr);
+}
