@@ -6,12 +6,11 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 06:43:50 by jbernard          #+#    #+#             */
-/*   Updated: 2023/04/04 15:06:33 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/04/05 11:04:37 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-#include <stdint.h>
 
 void	print_cmdlst_node(t_cmdlst *node)
 {

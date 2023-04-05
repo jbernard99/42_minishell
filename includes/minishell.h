@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:25:35 by jbernard          #+#    #+#             */
-/*   Updated: 2023/04/04 11:23:47 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/04/05 11:20:04 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ enum	e_flags{
 char	*ft_strtok(char *str, const char *delim, int *flags);
 
 /* list managing functions */
-t_cmdlst	*new_cmd_node(char *cmd);
+t_cmdlst	*new_node(char *cmd);
 void	cmdlst_addback(t_cmdlst **cmdlst, t_cmdlst *new_node);
 t_cmdlst	*cmdlst_last(t_cmdlst *cmdlst);
 void	cmdlst_clear(t_cmdlst **cmdlst, void (*del)(t_cmdlst *));

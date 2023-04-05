@@ -6,7 +6,7 @@
 /*   By: mgagnon <mgagnon@student.42quebec.com      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 13:33:11 by mgagnon           #+#    #+#             */
-/*   Updated: 2023/04/04 15:46:50 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/04/05 11:20:30 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	second_divide(t_cmdlst **cmdlst)
 	token = ft_strtok(cmd, " ", &(*cmdlst)->flags);
 	while (token != NULL)
 	{
-		(*cmdlst)->token = ft_realloc((*cmdlst)->token, (sizeof(char *) * (i + 1)));
+		(*cmdlst)->token = realloc((*cmdlst)->token, (sizeof(char *) * (i + 1)));
 		(*cmdlst)->token[(i - 1)] = ft_strdup(token);
 		token = ft_strtok(NULL, " ", &(*cmdlst)->flags);
 		/* printf(" -> %s\n", (*cmdlst)->token[i]); */
@@ -150,8 +150,13 @@ void	first_divide(char *input, t_cmdlst **cmdlst)
 		origin = i;
 		while (!ft_strrchr("|&", input[i]))
 			i++;
-		cmdlst_addback(cmdlst, new_cmd_node(ft_strldup(&input[origin], \
-						i - origin)));
+		if (ft_strrchr("|&", input[i]))
+			cmdlst_addback(cmdlst, \
+					new_node(ft_strldup(&input[origin], \
+							(i - 1) - origin)));
+		else
+			cmdlst_addback(cmdlst, new_node(ft_strldup(&input[origin], \
+							i - origin)));
 		cur = cmdlst_last(*cmdlst);
 		what_is_it(input, &i, &cur->flags);
 	}
@@ -160,7 +165,6 @@ void	first_divide(char *input, t_cmdlst **cmdlst)
 	while (cur != NULL)
 	{
 		second_divide(&cur);
-		/* print_flags(cur->flags); */
 		cur = cur->next;
 	}
 }
