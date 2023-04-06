@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:31:19 by jbernard          #+#    #+#             */
-/*   Updated: 2023/03/24 13:18:59 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/04/05 22:09:15 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,22 +21,22 @@ void ctrlc_handle(){
 	rl_redisplay();
 }
 
-void	prompt_loop(void){
-	char *token;
-	char *delim = " ";
+void	prompt_loop(void)
+{
+	char	*input;
+	t_cmdlst	*cmdlst;
 
-	while (1){
-		char* input = readline("minishell> ");
+	while (1)
+	{
+		cmdlst = NULL;
+		input = readline("minishell> ");
 		if (input == NULL)
 			exit(0);
 		add_history(input);
-		token = ft_strtok(input, delim);
-		printf(" -> %s\n", token);
-		while (token != NULL){
-			token = ft_strtok(NULL, delim);
-			printf(" -> %s\n", token);
-		}
+		make_lst(input, &cmdlst);
+		ft_cmdlstiter(&cmdlst, &print_cmdlst_node);
 		free(input);
+		cmdlst_clear(&cmdlst, &empty_lst);
 	}
 }
 

@@ -6,7 +6,7 @@
 #    By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/16 04:45:18 by jbernard          #+#    #+#              #
-#    Updated: 2023/03/24 13:28:11 by jbernard         ###   ########.fr        #
+#    Updated: 2023/04/05 10:13:31 by mgagnon          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,8 +54,10 @@ $(RL_DIR)/libreadline.a:
 #Management Rules
 clean:
 	rm -rf $(OBJ_DIR)
+	$(MAKE) -C $(LIBFT_DIR) clean
 
 fclean: clean
 	rm $(NAME)
+	$(MAKE) -C $(LIBFT_DIR) fclean
 
 re: clean all
