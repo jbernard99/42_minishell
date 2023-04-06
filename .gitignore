@@ -3,3 +3,4 @@ obj
 .vscode
 libraries/readline/libreadline.a
 .DS_Store
+a.out

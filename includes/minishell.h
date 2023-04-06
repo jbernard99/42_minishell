@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:25:35 by jbernard          #+#    #+#             */
-/*   Updated: 2023/04/05 21:06:37 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/04/06 10:33:35 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <signal.h>
+#include <termios.h>
+#include <errno.h>
 # include "../libraries/42_libft/include/libft.h"
 # include "../libraries/readline/includes/readline.h"
 # include "../libraries/readline/includes/history.h"
