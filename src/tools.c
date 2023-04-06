@@ -6,81 +6,49 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 06:43:50 by jbernard          #+#    #+#             */
-/*   Updated: 2023/04/05 11:04:37 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/04/05 21:10:11 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	print_cmdlst_node(t_cmdlst *node)
-{
-	int	i;
-
-	if (!node)
-		return ;
-	i = 0;
-	if (node->cmd)
-		printf("cmd -> %s\n", node->cmd);
-	while(node->token[i])
-	{
-		if (node->token[i] != NULL)
-			printf("token[%i] -> %s\n", i, node->token[i]);
-		i++;
-	}
-	print_flags(node->flags);
-}
-
-void	ft_cmdlstiter(t_cmdlst **cmdlst, void (*f)(t_cmdlst *))
+void	finish_flag_set(t_cmdlst **cmdlst)
 {
 	t_cmdlst	*cur;
 
-	if (!cmdlst || !f)
-		return ;
 	cur = *cmdlst;
-	while (cur)
+	while (cur->next != NULL)
 	{
-		f(cur);
+		if (cur->flags & PIPEI)
+			cur->next->flags |= PIPEO;
+		else if (cur->flags & ORI)
+			cur->next->flags |= ORO;
+		else if (cur->flags & ANDI)
+			cur->next->flags |= ANDO;
 		cur = cur->next;
-	}
-}
-
-void	empty_lst(t_cmdlst *cmdlst)
-{
-	int	i;
-
-	i = 0;
-	if (cmdlst->cmd)
-		free(cmdlst->cmd);
-	if (cmdlst->token)
-	{
-		while(cmdlst->token[i])
-		{
-			free(cmdlst->token[i]);
-			i++;
-		}
 	}
 }
 
 char	*ft_strpbrk(const char *str, const char *delim, int *flags)
 {
-	const char *ptr1;
-	const char *ptr2;
-	
+	const char	*ptr1;
+	const char	*ptr2;
+
 	ptr1 = str;
 	while (*ptr1 != '\0')
 	{
 		ptr2 = delim;
 		while (*ptr2 != '\0')
 		{
-			if (*ptr1 == '\'' || *ptr1 =='\"')
+			if (*ptr1 == '\'' || *ptr1 == '\"')
 			{
 				if (*ptr1 == '\'')
 					*flags ^= QUOTE;
-				else if(*ptr1 == '\"')
+				else if (*ptr1 == '\"')
 					*flags ^= DQUOTE;
 			}
 			if (*ptr1 == *ptr2 && (*flags & (QUOTE | DQUOTE)) == 0)
-				return ((char*)ptr1);
+				return ((char *)ptr1);
 			ptr2++;
 		}
 		ptr1++;
@@ -95,7 +63,7 @@ char	*ft_strtok(char *str, const char *delim, int *flags)
 
 	if (str != NULL)
 		last_token = ft_strdup(str);
-	else if(last_token == NULL)
+	else if (last_token == NULL)
 	{
 		free(last_token);
 		return (NULL);

@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:31:19 by jbernard          #+#    #+#             */
-/*   Updated: 2023/04/04 11:22:07 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/04/05 22:09:15 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	prompt_loop(void)
 		if (input == NULL)
 			exit(0);
 		add_history(input);
-		first_divide(input, &cmdlst);
+		make_lst(input, &cmdlst);
 		ft_cmdlstiter(&cmdlst, &print_cmdlst_node);
 		free(input);
 		cmdlst_clear(&cmdlst, &empty_lst);
