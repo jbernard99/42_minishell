@@ -6,7 +6,7 @@
 #    By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/16 04:45:18 by jbernard          #+#    #+#              #
-#    Updated: 2023/04/06 10:32:23 by jbernard         ###   ########.fr        #
+#    Updated: 2023/04/06 10:42:15 by jbernard         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,9 +28,12 @@ RL_DIR = ./libraries/readline
 
 # Files
 MAIN_FILES = main.c			\
-			envp.c			\
+			ft_realloc.c	\
+			parsing.c		\
 			tools.c			\
 			mng_lst.c		\
+			mng_lst2.c		\
+			envp.c			\
 			envp_tools.c	
 
 #BI_FILES = cd.c		\

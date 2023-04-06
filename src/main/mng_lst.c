@@ -3,47 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   mng_lst.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: mgagnon <mgagnon@student.42quebec.com      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 11:17:41 by mgagnon           #+#    #+#             */
-/*   Updated: 2023/04/03 15:38:08 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/04/05 11:19:50 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"	
+#include "../includes/minishell.h"
 
-void	ft_bzero(void *str, size_t n)
-{
-	while (n--)
-		*(char *)str++ = 0;
-}
-
-void	*ft_calloc(size_t nb, size_t size)
-{
-	void	*ptr;
-
-	ptr = malloc(nb * size);
-	if (!ptr)
-		return (0);
-	ft_bzero(ptr, nb * size);
-	return (ptr);
-}
-
-void	cmdlst_delone(t_cmdlst *cmdlst)
+void	cmdlst_delone(t_cmdlst *cmdlst, void (*del)(t_cmdlst *))
 {
 	if (!cmdlst)
 		return ;
+	del(cmdlst);
 	free(cmdlst);
 }
 
-t_cmdlst	*get_lst(void)
-{
-	static t_cmdlst	*cmdlst = NULL;
-
-	return (cmdlst);
-}
-
-void	cmdlst_clear(t_cmdlst **cmdlst)
+void	cmdlst_clear(t_cmdlst **cmdlst, void (*del)(t_cmdlst *))
 {
 	t_cmdlst	*proxy;
 
@@ -52,7 +29,7 @@ void	cmdlst_clear(t_cmdlst **cmdlst)
 		while (*cmdlst)
 		{
 			proxy = (*cmdlst)->next;
-			cmdlst_delone(*cmdlst);
+			cmdlst_delone(*cmdlst, del);
 			(*cmdlst) = proxy;
 		}
 	}
@@ -84,11 +61,11 @@ void	cmdlst_addback(t_cmdlst **cmdlst, t_cmdlst *new_node)
 	}
 }
 
-t_cmdlst	*new_cmd_node(char *cmd)
+t_cmdlst	*new_node(char *cmd)
 {
 	t_cmdlst	*new_node;
 
-	new_node = ft_calloc(1, sizeof(t_cmdlst)); 
+	new_node = ft_calloc(1, sizeof(t_cmdlst));
 	if (!new_node)
 		return (NULL);
 	new_node->cmd = cmd;
