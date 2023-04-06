@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:25:35 by jbernard          #+#    #+#             */
-/*   Updated: 2023/04/06 10:33:35 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/04/06 11:04:13 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,5 +58,10 @@ void		cmdlst_addback(t_cmdlst **cmdlst, t_cmdlst *new_node);
 void		empty_lst(t_cmdlst *cmdlst);
 void		ft_cmdlstiter(t_cmdlst **cmdlst, void (*f)(t_cmdlst *));
 void		print_cmdlst_node(t_cmdlst *node);
+
+// envp_tools.c //
+int		is_name_in_line(char *envline, char *name);
+int		is_name_in_envp(char **envp, char *name);
+char	*build_envp_line(char *name, char *value);
 
 #endif

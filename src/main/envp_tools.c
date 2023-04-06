@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 13:06:54 by jbernard          #+#    #+#             */
-/*   Updated: 2023/04/03 15:30:59 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/04/06 11:04:39 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,7 @@ char	*get_value(char *env_line)
 {
 	// This function get the value of a line found in the envp.
 	int		i;
-	int		len;
 
-	len = ft_strlen(env_line);
 	i = 0;
 	while (env_line[i] != '=')
 	{
