@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:31:19 by jbernard          #+#    #+#             */
-/*   Updated: 2023/04/03 15:48:24 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/04/06 10:39:13 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,35 +24,22 @@ void sigquit_handle(int sig){
 	(void)sig;
 }
 
-void	ez_divide(t_cmdlst *cmdlst)
+void	prompt_loop(void)
 {
-	char	*token;
-	size_t	old_size;
+	char	*input;
+	t_cmdlst	*cmdlst;
 
-	old_size = 0;
-	token = ft_strtok(cmdlst->cmd, " ", &cmdlst->flags);
-	write(1, "ok\n", 2);
-	// if (!cmd_is_builtin(token)){
-	// 	token = ft_strjoin("/bin/", token);
-	// 	printf("Result");
-	// }
-	while (token != NULL)
+	while (1)
 	{
-		cmdlst->token = realloc(cmdlst->token, old_size + 1);
-		cmdlst->token[old_size] = token;
-		token = ft_strtok(NULL, " ", &cmdlst->flags);
-		old_size++;
-	}
-}
-
-void	prompt_loop(t_cmdlst *cmdlst){
-	while (1){
-		char* input = readline("minishell$ ");
+		cmdlst = NULL;
+		input = readline("minishell> ");
 		if (input == NULL)
 			exit(0);
-		add_history(input);								// Add current input to the history list
-		ez_divide(cmdlst);
+		add_history(input);
+		make_lst(input, &cmdlst);
+		ft_cmdlstiter(&cmdlst, &print_cmdlst_node);
 		free(input);
+		cmdlst_clear(&cmdlst, &empty_lst);
 	}
 }
 
@@ -67,9 +54,7 @@ void set_new_termios(struct termios old_termios){
 
 int main(int argc, char **argv, char **envp) {
 	struct termios old_termios;
-	t_cmdlst *cmdlst;
 
-	cmdlst = get_lst();
 	tcgetattr(STDIN_FILENO, &old_termios);				// Get parent terminal settings
 	set_new_termios(old_termios);
 	
@@ -80,7 +65,7 @@ int main(int argc, char **argv, char **envp) {
 	(void)argv;
 	(void)envp;
 	
-	prompt_loop(cmdlst);
+	prompt_loop();
 	tcsetattr(STDIN_FILENO, TCSANOW, &old_termios);		// Go back to old terminal settings.
 	
 	return 0;
