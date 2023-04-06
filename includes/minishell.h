@@ -6,21 +6,24 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:25:35 by jbernard          #+#    #+#             */
-/*   Updated: 2023/04/03 15:35:14 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/04/06 10:33:35 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <signal.h>
+#ifndef MINISHELL_H
+# define MINISHELL_H
+
+# include <stdio.h>
+# include <stdlib.h>
+# include <signal.h>
 #include <termios.h>
 #include <errno.h>
-#include "../libraries/42_libft/include/libft.h"
-#include "../libraries/readline/includes/readline.h"
-#include "../libraries/readline/includes/history.h"
+# include "../libraries/42_libft/include/libft.h"
+# include "../libraries/readline/includes/readline.h"
+# include "../libraries/readline/includes/history.h"
 
 typedef struct s_cmdlst {
-	int			flags;
+	int				flags;
 	char			*cmd;
 	char			**token;
 	struct s_cmdlst	*next;
@@ -37,21 +40,23 @@ enum	e_flags{
 	DQUOTE = 1 << 7
 };
 
-// tools.c
-char	*ft_strtok(char *str, const char *delim, int *flags);
+char		*ft_strtok(char *str, const char *delim, int *flags);
+char		*ft_strldup(const char *str, size_t len);
+void		make_lst(char *input, t_cmdlst **cmdlst);
+void		first_divide(char *input, t_cmdlst **cmdlst);
+void		*ft_realloc(void *ptr, size_t size);
+void		finish_flag_set(t_cmdlst **cmdlst);
+void		print_flags(int flags);
 
-//envp.c
-void	envp_remove_line(char **envp, char *name);
-void	envp_set_line(char **envp, char *name, char *value);
-char	*envp_get_value_line(char **envp, char *name);
-
-// envp_tools.c
-int		is_name_in_line(char *envline, char *name);
-int		is_name_in_envp(char **envp, char *name);
-char	*build_envp_line(char *name, char *value);
-char	*get_name(char *env_line);
-char	*get_value(char *env_line);
-void	put_envp(char **envp); // TEMPORARY
-
-// mng_lst.c
+/* list managing functions */
+t_cmdlst	*new_node(char *cmd);
+t_cmdlst	*cmdlst_last(t_cmdlst *cmdlst);
 t_cmdlst	*get_lst(void);
+void		cmdlst_clear(t_cmdlst **cmdlst, void (*del)(t_cmdlst *));
+void		cmdlst_delone(t_cmdlst *cmdlst, void (*del)(t_cmdlst *));
+void		cmdlst_addback(t_cmdlst **cmdlst, t_cmdlst *new_node);
+void		empty_lst(t_cmdlst *cmdlst);
+void		ft_cmdlstiter(t_cmdlst **cmdlst, void (*f)(t_cmdlst *));
+void		print_cmdlst_node(t_cmdlst *node);
+
+#endif
