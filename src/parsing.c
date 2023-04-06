@@ -6,7 +6,7 @@
 /*   By: mgagnon <mgagnon@student.42quebec.com      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 13:33:11 by mgagnon           #+#    #+#             */
-/*   Updated: 2023/04/05 11:20:30 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/04/05 21:45:07 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	second_divide(t_cmdlst **cmdlst)
 	token = ft_strtok(cmd, " ", &(*cmdlst)->flags);
 	while (token != NULL)
 	{
-		(*cmdlst)->token = realloc((*cmdlst)->token, (sizeof(char *) * (i + 1)));
+		(*cmdlst)->token = ft_realloc((*cmdlst)->token, (sizeof(char *) * (i + 1)));
 		(*cmdlst)->token[(i - 1)] = ft_strdup(token);
 		token = ft_strtok(NULL, " ", &(*cmdlst)->flags);
 		/* printf(" -> %s\n", (*cmdlst)->token[i]); */
@@ -150,7 +150,7 @@ void	first_divide(char *input, t_cmdlst **cmdlst)
 		origin = i;
 		while (!ft_strrchr("|&", input[i]))
 			i++;
-		if (ft_strrchr("|&", input[i]))
+		if (ft_strrchr("|&", input[i]) && input[i])
 			cmdlst_addback(cmdlst, \
 					new_node(ft_strldup(&input[origin], \
 							(i - 1) - origin)));
