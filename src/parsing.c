@@ -6,7 +6,7 @@
 /*   By: mgagnon <mgagnon@student.42quebec.com      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 13:33:11 by mgagnon           #+#    #+#             */
-/*   Updated: 2023/04/05 22:16:27 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/04/10 15:12:13 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,13 +71,24 @@ void	second_divide(t_cmdlst **cmdlst)
 
 	i = 1;
 	cmd = ft_strdup((*cmdlst)->cmd);
-	token = ft_strtok(cmd, " ", &(*cmdlst)->flags);
-	while (token != NULL)
+	while (1)
 	{
-		(*cmdlst)->token = ft_realloc((*cmdlst)->token, \
-				(sizeof(char *) * (i + 1)));
-		(*cmdlst)->token[(i - 1)] = ft_strdup(token);
-		token = ft_strtok(NULL, " ", &(*cmdlst)->flags);
+		if (i == 1)
+			token  = ft_strtok(cmd, " ", &(*cmdlst)->flags);
+		else
+			token = ft_strtok(NULL, " ", &(*cmdlst)->flags);
+		if (token != NULL)
+		{
+			write(1, "loop turn\n", 10);
+			(*cmdlst)->token = ft_realloc((*cmdlst)->token, \
+					(sizeof(char *) * (i + 1)));
+			(*cmdlst)->token[(i - 1)] = ft_strdup(token);
+		}
+		else
+		{
+			write(1, "out the loop\n", 13);
+			break;
+		}
 		i++;
 	}
 }
@@ -95,7 +106,7 @@ void	first_divide(char *input, t_cmdlst **cmdlst)
 	while (input[i])
 	{
 		origin = i;
-		while (!ft_strrchr("|&", input[i]))
+		while (!ft_strrchr("|&><", input[i]))
 			i++;
 		if (ft_strrchr("|&", input[i]) && input[i])
 			cmdlst_addback(cmdlst, \

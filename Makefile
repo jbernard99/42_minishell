@@ -6,7 +6,7 @@
 #    By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/16 04:45:18 by jbernard          #+#    #+#              #
-#    Updated: 2023/04/05 10:13:31 by mgagnon          ###   ########.fr        #
+#    Updated: 2023/04/10 13:31:33 by mgagnon          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -60,4 +60,6 @@ fclean: clean
 	rm $(NAME)
 	$(MAKE) -C $(LIBFT_DIR) fclean
 
+debug:
+	$(CC) $(CFLAGS) -g -o $(NAME) $(SRC_FILES) -Iinclude/ -I$(LIBFT_DIR) $(LIBFT_DIR)/libft.a
 re: clean all

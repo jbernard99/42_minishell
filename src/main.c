@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:31:19 by jbernard          #+#    #+#             */
-/*   Updated: 2023/04/05 22:09:15 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/04/10 14:23:13 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ void ctrlc_handle(){
 
 void	prompt_loop(void)
 {
-	char	*input;
 	t_cmdlst	*cmdlst;
+	char		*input;
 
 	while (1)
 	{
@@ -43,8 +43,8 @@ void	prompt_loop(void)
 int main(int argc, char **argv, char **envp) {
 	signal(SIGINT, ctrlc_handle);
 	(void)argc;
-	(void)argv;
 	(void)envp;
+	(void)argv;
 	prompt_loop();
 	return 0;
 }
