@@ -6,11 +6,13 @@
 #    By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/16 04:45:18 by jbernard          #+#    #+#              #
-#    Updated: 2023/04/06 10:42:15 by jbernard         ###   ########.fr        #
+#    Updated: 2023/04/11 14:20:16 by jbernard         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 #gcc -o minishell -I./libraries/readline/include ./src/main.c -L./libraries/readline/lib -lreadline -lncurses
+
+include settings.mk
 
 # Compiler and compiler flags
 CC = clang
@@ -57,31 +59,35 @@ VPATH =	$(SRC_DIR) $(MAIN_DIR) $(BI_DIR)
 all: $(NAME)
 
 $(NAME): $(RL_DIR)/libreadline.a $(OBJ_FILES)
-	$(MAKE) -C $(LIBFT_DIR)
-	$(CC) $(CFLAGS) $(OBJ_FILES) $(LIB_FILES) -o $(NAME)
+	@ printf "$(GREEN) Almost done ......\r$(RESET)"
+	@ $(MAKE) -C $(LIBFT_DIR)
+	@ $(CC) $(CFLAGS) $(OBJ_FILES) $(LIB_FILES) -o $(NAME)
+	@ printf "$(GREEN) - ✅✅✅ -> Compilation of $(PURPLE)$(NAME)$(GREEN) complete!                       $(RESET)\n"
 
 $(OBJ_DIR)%.o: %.c | $(OBJ_DIR)
-	$(CC) $(CFLAGS) -I$(INC_DIR) -c $< -o $@
+	@ printf "$(GREEN)- ⚡⚡⚡ -> Compiling $(PURPLE)$(notdir $@)$(GREEN) using $(PURPLE)$(notdir $<)$(GREEN)...           \r$(RESET)"
+	@ $(CC) $(CFLAGS) -I$(INC_DIR) -c $< -o $@
 
-$(OBJ_DIR):
-	mkdir -p $(OBJ_DIR)
+obj:
+	@ mkdir -p $(OBJ_DIR)
 
 # Download and install readline library
 $(RL_DIR)/libreadline.a:
-	curl -O https://ftp.gnu.org/gnu/readline/readline-8.1.tar.gz 
-	tar -xf readline-8.1.tar.gz
-	rm readline-8.1.tar.gz
-	cd readline-8.1 && bash configure && make
-	mv readline-8.1/libreadline.a ./libraries/readline/
-	rm -rf readline-8.1
+	@ curl -O https://ftp.gnu.org/gnu/readline/readline-8.1.tar.gz 
+	@ tar -xf readline-8.1.tar.gz
+	@ rm readline-8.1.tar.gz
+	@ cd readline-8.1 && bash configure && make
+	@ mv readline-8.1/libreadline.a ./libraries/readline/
+	@ rm -rf readline-8.1
 
 #Management Rules
 clean:
-	rm -rf $(OBJ_DIR)
-	$(MAKE) -C $(LIBFT_DIR) clean
+	@ rm -rf $(OBJ_DIR)
+	@ $(MAKE) -C $(LIBFT_DIR) clean
 
 fclean: clean
-	rm $(NAME)
-	$(MAKE) -C $(LIBFT_DIR) fclean
+	@ rm -f $(NAME)
+	@ rm -f $(RL_DIR)/libreadline.a
+	@ $(MAKE) -C $(LIBFT_DIR) fclean
 
 re: clean all
