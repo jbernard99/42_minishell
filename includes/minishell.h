@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:25:35 by jbernard          #+#    #+#             */
-/*   Updated: 2023/04/10 14:20:11 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/04/11 11:21:42 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,9 @@ enum	e_flags{
 	ORI = 1 << 4,
 	ORO = 1 << 5,
 	QUOTE = 1 << 6,
-	DQUOTE = 1 << 7
+	DQUOTE = 1 << 7,
+	APPEND = 1 << 8,
+	HRDOC = 1 << 9
 };
 
 char		*ft_strtok(char *str, const char *delim, int *flags);

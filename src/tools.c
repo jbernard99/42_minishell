@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 06:43:50 by jbernard          #+#    #+#             */
-/*   Updated: 2023/04/05 21:10:11 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/04/11 13:40:20 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,49 +29,43 @@ void	finish_flag_set(t_cmdlst **cmdlst)
 	}
 }
 
-char	*ft_strpbrk(const char *str, const char *delim, int *flags)
+void	ft_strpbrk(const char *str, const char *delim, int *flags, int *i)
 {
-	const char	*ptr1;
-	const char	*ptr2;
+	const char	*ptr;
 
-	ptr1 = str;
-	while (*ptr1 != '\0')
+	while (str[*i] != '\0')
 	{
-		ptr2 = delim;
-		while (*ptr2 != '\0')
+		ptr = delim;
+		while (*ptr != '\0')
 		{
-			if (*ptr1 == '\'' || *ptr1 == '\"')
+			if (str[*i] == '\'' || str[*i] == '\"')
 			{
-				if (*ptr1 == '\'')
+				if (str[*i] == '\'')
 					*flags ^= QUOTE;
-				else if (*ptr1 == '\"')
+				else if (str[*i] == '\"')
 					*flags ^= DQUOTE;
 			}
-			if (*ptr1 == *ptr2 && (*flags & (QUOTE | DQUOTE)) == 0)
-				return ((char *)ptr1);
-			ptr2++;
+			if (str[*i] == *ptr && (*flags & (QUOTE | DQUOTE)) == 0)
+				return ;
+			ptr++;
 		}
-		ptr1++;
+		(*i)++;
 	}
-	return (NULL);
+	return ;
 }
 
 char	*ft_strtok(char *str, const char *delim, int *flags)
 {
-	static char	*last_token;
+	static int	i = 0;
+	int		origin;
 	char		*token;
 
-	if (str != NULL)
-		last_token = ft_strdup(str);
-	else if (last_token == NULL)
-	{
-		free(last_token);
-		return (NULL);
-	}
-	token = last_token;
-	last_token = ft_strpbrk(last_token, delim, flags);
-	if (last_token)
-		*last_token++ = '\0';
+	origin = i;
+	ft_strpbrk(str, delim, flags, &i);
+	if (str[i] == *delim)
+		token = ft_strldup(&str[origin], (i - 1) - origin);
+	else
+		token = ft_strldup(&str[origin], i - origin);
 	return (token);
 }
 

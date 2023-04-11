@@ -6,7 +6,7 @@
 /*   By: mgagnon <mgagnon@student.42quebec.com      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 13:33:11 by mgagnon           #+#    #+#             */
-/*   Updated: 2023/04/10 15:12:13 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/04/11 14:01:25 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,26 +69,26 @@ void	second_divide(t_cmdlst **cmdlst)
 	char	*cmd;
 	size_t	i;
 
-	i = 1;
+	i = 0;
 	cmd = ft_strdup((*cmdlst)->cmd);
 	while (1)
 	{
-		if (i == 1)
-			token  = ft_strtok(cmd, " ", &(*cmdlst)->flags);
-		else
-			token = ft_strtok(NULL, " ", &(*cmdlst)->flags);
-		if (token != NULL)
+		token = ft_strtok(cmd, " ", &(*cmdlst)->flags);
+		if (*token != '\0')
 		{
 			write(1, "loop turn\n", 10);
-			(*cmdlst)->token = ft_realloc((*cmdlst)->token, \
+			(*cmdlst)->token = realloc((*cmdlst)->token, \
 					(sizeof(char *) * (i + 1)));
-			(*cmdlst)->token[(i - 1)] = ft_strdup(token);
+			(*cmdlst)->token[i] = ft_strdup(token);
 		}
 		else
 		{
+			(*cmdlst)->token[i] = "\0";
+			free(token);
 			write(1, "out the loop\n", 13);
 			break;
 		}
+		free(token);
 		i++;
 	}
 }
