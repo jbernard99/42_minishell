@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:25:35 by jbernard          #+#    #+#             */
-/*   Updated: 2023/04/11 11:21:42 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/04/12 11:58:52 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ enum	e_flags{
 
 char		*ft_strtok(char *str, const char *delim, int *flags);
 char		*ft_strldup(const char *str, size_t len);
+void		ft_strpbrk(const char *str, const char *delim, int *flags, size_t *i);
 void		make_lst(char *input, t_cmdlst **cmdlst);
 void		first_divide(char *input, t_cmdlst **cmdlst);
 void		*ft_realloc(void *ptr, size_t size);

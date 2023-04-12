@@ -6,7 +6,7 @@
 /*   By: mgagnon <mgagnon@student.42quebec.com      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 13:33:11 by mgagnon           #+#    #+#             */
-/*   Updated: 2023/04/11 14:01:25 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/04/12 12:00:05 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,30 +65,33 @@ void	what_is_it(char *input, size_t *i, int *flags)
 
 void	second_divide(t_cmdlst **cmdlst)
 {
-	char	*token;
 	char	*cmd;
 	size_t	i;
+	size_t	origin;
+	size_t	end;
 
 	i = 0;
+	end = 0;
 	cmd = ft_strdup((*cmdlst)->cmd);
-	while (1)
+	while (cmd != NULL)
 	{
-		token = ft_strtok(cmd, " ", &(*cmdlst)->flags);
-		if (*token != '\0')
-		{
-			write(1, "loop turn\n", 10);
-			(*cmdlst)->token = realloc((*cmdlst)->token, \
-					(sizeof(char *) * (i + 1)));
-			(*cmdlst)->token[i] = ft_strdup(token);
-		}
+		write(1, "loop turn\n", 10);
+		origin = end;
+		(*cmdlst)->token = realloc((*cmdlst)->token, \
+				(sizeof(char *) * (i + 1)));
+		ft_strpbrk(cmd, " " , &(*cmdlst)->flags, &end);
+		if (cmd[i] == ' ')
+			(*cmdlst)->token[i] = ft_strldup(&cmd[origin], (end - 1) - origin);
 		else
+			(*cmdlst)->token[i] = ft_strldup(&cmd[origin], i - origin);
+		if ((*cmdlst)->token[i] == NULL)
 		{
 			(*cmdlst)->token[i] = "\0";
-			free(token);
+			free(cmd);
 			write(1, "out the loop\n", 13);
 			break;
 		}
-		free(token);
+		cmd = cmd + end;
 		i++;
 	}
 }
