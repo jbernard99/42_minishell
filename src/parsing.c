@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 13:33:11 by mgagnon           #+#    #+#             */
-/*   Updated: 2023/04/13 16:41:16 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/04/14 11:27:23 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,15 @@ void	what_is_it(char *input, size_t *i, int *flags)
 	}
 }
 
+/* problem still in second_divide : */
+/* 1- single token (wrong dup) but works with trailing ' ' */
+/* 2- every other trailing ' ' segfault */
+/* 3- fifth of five tokens (bad dup) */
+/* 4- same for ninth of nine */
+/* 5- elventh too */
+/* 6- segfault on 21st token of 21, empty token[0], only last word on token[1] */
+/*    and segfault */
+
 void	second_divide(t_cmdlst **cmdlst)
 {
 	char	*cmd;
@@ -72,22 +81,23 @@ void	second_divide(t_cmdlst **cmdlst)
 
 	i = 0;
 	end = 0;
-	origin = 0;
 	cmd = ft_strdup((*cmdlst)->cmd);
-	while (end < ft_strlen(cmd))
+	(*cmdlst)->token = ft_calloc((ft_strpbrk(cmd, " ", &(*cmdlst)->flags) + 1), sizeof(char *));
+	while (end < ft_strlen(cmd) && &(*cmdlst)->token[i])
 	{
 		origin = end;
-		(*cmdlst)->token = realloc((*cmdlst)->token, \
-				(sizeof(char *) * (i + 1)));
-		ft_strpbrk(cmd, " " , &(*cmdlst)->flags, &end);
-		if (cmd[end] == ' '){
-			(*cmdlst)->token[i] = ft_strldup(&cmd[origin], (end) - origin);
+		while (cmd[end] && (cmd[end] != ' ' && ((*cmdlst)->flags & (QUOTE | DQUOTE)) == 0))
+		{
+			if (cmd[end] == '\'' || cmd[end] == '\"')
+			{
+				if (cmd[end] == '\'')
+					(*cmdlst)->flags ^= QUOTE;
+				else if (cmd[end] == '\"')
+					(*cmdlst)->flags ^= DQUOTE;
+			}
+			end++;
 		}
-		else{
-			(*cmdlst)->token[i] = ft_strldup(&cmd[origin], end - origin);
-			(*cmdlst)->token = realloc((*cmdlst)->token, (sizeof(char *) * (i + 2)));
-			(*cmdlst)->token[i+2] = "\0";
-		}
+		(*cmdlst)->token[i] = ft_strldup(&cmd[origin], end - origin);
 		i++;
 		end++;
 	}
@@ -107,7 +117,7 @@ void	first_divide(char *input, t_cmdlst **cmdlst)
 	while (input[i])
 	{
 		origin = i;
-		while (!ft_strrchr("|&><", input[i]))
+		while (!ft_strrchr("|&", input[i]))
 			i++;
 		if (ft_strrchr("|&", input[i]) && input[i])
 			cmdlst_addback(cmdlst, \

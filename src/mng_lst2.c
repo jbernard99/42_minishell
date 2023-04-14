@@ -6,7 +6,7 @@
 /*   By: mgagnon <mgagnon@student.42quebec.com      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 20:22:14 by mgagnon           #+#    #+#             */
-/*   Updated: 2023/04/05 20:40:59 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/04/14 09:52:40 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ void	print_cmdlst_node(t_cmdlst *node)
 			printf("token[%i] -> %s\n", i, node->token[i]);
 		i++;
 	}
+	printf("token[%i] -> %s\n", i, node->token[i]);
 	print_flags(node->flags);
 }
 

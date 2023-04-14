@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 06:43:50 by jbernard          #+#    #+#             */
-/*   Updated: 2023/04/12 11:59:21 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/04/14 11:00:22 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,29 +29,34 @@ void	finish_flag_set(t_cmdlst **cmdlst)
 	}
 }
 
-void	ft_strpbrk(const char *str, const char *delim, int *flags, size_t *i)
+size_t	ft_strpbrk(const char *str, const char *delim, int *flags)
 {
 	const char	*ptr;
+	size_t		token_nb;
+	int		i;
 
-	while (str[*i] != '\0')
+	token_nb = 1;
+	i = 0;
+	while (str[i] != '\0')
 	{
 		ptr = delim;
 		while (*ptr != '\0')
 		{
-			if (str[*i] == '\'' || str[*i] == '\"')
+			if (str[i] == '\'' || str[i] == '\"')
 			{
-				if (str[*i] == '\'')
+				if (str[i] == '\'')
 					*flags ^= QUOTE;
-				else if (str[*i] == '\"')
+				else if (str[i] == '\"')
 					*flags ^= DQUOTE;
 			}
-			if (str[*i] == *ptr && (*flags & (QUOTE | DQUOTE)) == 0)
-				return ;
+			if (str[i] == *ptr && (*flags & (QUOTE | DQUOTE)) == 0)
+				token_nb++;
 			ptr++;
 		}
-		(*i)++;
+		(i)++;
 	}
-	return ;
+	printf("number of token -> %zu\n", token_nb);
+	return (token_nb);
 }
 
 char	*ft_strtok(char *str, const char *delim, int *flags)
@@ -61,7 +66,7 @@ char	*ft_strtok(char *str, const char *delim, int *flags)
 	char		*token;
 
 	origin = i;
-	ft_strpbrk(str, delim, flags, &i);
+	ft_strpbrk(str, delim, flags);
 	if (str[i] == *delim)
 		token = ft_strldup(&str[origin], (i - 1) - origin);
 	else
