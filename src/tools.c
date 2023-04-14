@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 06:43:50 by jbernard          #+#    #+#             */
-/*   Updated: 2023/04/14 11:00:22 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/04/14 13:10:36 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ void	finish_flag_set(t_cmdlst **cmdlst)
 
 size_t	ft_strpbrk(const char *str, const char *delim, int *flags)
 {
-	const char	*ptr;
 	size_t		token_nb;
 	int		i;
 
@@ -39,20 +38,15 @@ size_t	ft_strpbrk(const char *str, const char *delim, int *flags)
 	i = 0;
 	while (str[i] != '\0')
 	{
-		ptr = delim;
-		while (*ptr != '\0')
+		if (str[i] == '\'' || str[i] == '\"')
 		{
-			if (str[i] == '\'' || str[i] == '\"')
-			{
-				if (str[i] == '\'')
-					*flags ^= QUOTE;
-				else if (str[i] == '\"')
-					*flags ^= DQUOTE;
-			}
-			if (str[i] == *ptr && (*flags & (QUOTE | DQUOTE)) == 0)
-				token_nb++;
-			ptr++;
+			if (str[i] == '\'')
+				*flags ^= QUOTE;
+			else if (str[i] == '\"')
+				*flags ^= DQUOTE;
 		}
+		if (str[i] == *delim && (*flags & (QUOTE | DQUOTE)) == 0)
+			token_nb++;
 		(i)++;
 	}
 	printf("number of token -> %zu\n", token_nb);

@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 13:33:11 by mgagnon           #+#    #+#             */
-/*   Updated: 2023/04/14 11:27:23 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/04/14 13:30:35 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,17 +21,22 @@ void	check_quotes(char *input, size_t *i, int *flags)
 
 	if (input[*i] == '\'')
 	{
-		*flags |= QUOTE;
+		*flags ^= QUOTE;
 		c = '\'';
 	}
-	else
+	else if (input[*i] == '\"')
 	{
-		*flags |= DQUOTE;
+		*flags ^= DQUOTE;
 		c = '\"';
 	}
 	(*i)++;
 	while (input[*i] && input[*i] != c)
 		(*i)++;
+	if (input[*i] == '\'')
+		*flags ^= QUOTE;
+	else if (input[*i] == '\"')
+		*flags ^= DQUOTE;
+	/* (*i)++; */
 }
 
 /* identify what operand is being used and */
@@ -64,13 +69,7 @@ void	what_is_it(char *input, size_t *i, int *flags)
 }
 
 /* problem still in second_divide : */
-/* 1- single token (wrong dup) but works with trailing ' ' */
-/* 2- every other trailing ' ' segfault */
-/* 3- fifth of five tokens (bad dup) */
-/* 4- same for ninth of nine */
-/* 5- elventh too */
-/* 6- segfault on 21st token of 21, empty token[0], only last word on token[1] */
-/*    and segfault */
+/* 1- don't work with quotes doubles quotes */
 
 void	second_divide(t_cmdlst **cmdlst)
 {
@@ -89,12 +88,7 @@ void	second_divide(t_cmdlst **cmdlst)
 		while (cmd[end] && (cmd[end] != ' ' && ((*cmdlst)->flags & (QUOTE | DQUOTE)) == 0))
 		{
 			if (cmd[end] == '\'' || cmd[end] == '\"')
-			{
-				if (cmd[end] == '\'')
-					(*cmdlst)->flags ^= QUOTE;
-				else if (cmd[end] == '\"')
-					(*cmdlst)->flags ^= DQUOTE;
-			}
+				check_quotes(cmd, &end, &(*cmdlst)->flags);
 			end++;
 		}
 		(*cmdlst)->token[i] = ft_strldup(&cmd[origin], end - origin);

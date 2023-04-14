@@ -6,13 +6,11 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:31:19 by jbernard          #+#    #+#             */
-/*   Updated: 2023/04/10 14:23:13 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/04/14 14:06:56 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-int is_working;
 
 void ctrlc_handle(){
 	ft_putchar_fd('\n', 1);
@@ -31,12 +29,18 @@ void	prompt_loop(void)
 		cmdlst = NULL;
 		input = readline("minishell> ");
 		if (input == NULL)
+		{
+			free(input);
 			exit(0);
-		add_history(input);
-		make_lst(input, &cmdlst);
-		ft_cmdlstiter(&cmdlst, &print_cmdlst_node);
-		free(input);
-		cmdlst_clear(&cmdlst, &empty_lst);
+		}
+		if (ft_strlen(input) != 0)
+		{
+			add_history(input);
+			make_lst(input, &cmdlst);
+			ft_cmdlstiter(&cmdlst, &print_cmdlst_node);
+			free(input);
+			cmdlst_clear(&cmdlst, &empty_lst);
+		}
 	}
 }
 

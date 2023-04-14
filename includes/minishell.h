@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:25:35 by jbernard          #+#    #+#             */
-/*   Updated: 2023/04/14 10:50:44 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/04/14 13:10:34 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ void		first_divide(char *input, t_cmdlst **cmdlst);
 void		*ft_realloc(void *ptr, size_t size);
 void		finish_flag_set(t_cmdlst **cmdlst);
 void		print_flags(int flags);
+void		check_quotes(char *input, size_t *i, int *flags);
 
 /* list managing functions */
 t_cmdlst	*new_node(char *cmd);
