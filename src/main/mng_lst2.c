@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mng_lst2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgagnon <mgagnon@student.42quebec.com      +#+  +:+       +#+        */
+/*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 20:22:14 by mgagnon           #+#    #+#             */
-/*   Updated: 2023/04/05 20:40:59 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/04/15 16:22:31 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ void	print_cmdlst_node(t_cmdlst *node)
 			printf("token[%i] -> %s\n", i, node->token[i]);
 		i++;
 	}
+	printf("token[%i] -> %s\n", i, node->token[i]);
 	print_flags(node->flags);
 }
 
