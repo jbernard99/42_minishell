@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:31:19 by jbernard          #+#    #+#             */
-/*   Updated: 2023/04/06 10:39:13 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/04/15 16:21:15 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,20 +26,26 @@ void sigquit_handle(int sig){
 
 void	prompt_loop(void)
 {
-	char	*input;
 	t_cmdlst	*cmdlst;
+	char		*input;
 
 	while (1)
 	{
 		cmdlst = NULL;
 		input = readline("minishell> ");
 		if (input == NULL)
+		{
+			free(input);
 			exit(0);
-		add_history(input);
-		make_lst(input, &cmdlst);
-		ft_cmdlstiter(&cmdlst, &print_cmdlst_node);
-		free(input);
-		cmdlst_clear(&cmdlst, &empty_lst);
+		}
+		if (ft_strlen(input) != 0)
+		{
+			add_history(input);
+			make_lst(input, &cmdlst);
+			ft_cmdlstiter(&cmdlst, &print_cmdlst_node);
+			free(input);
+			cmdlst_clear(&cmdlst, &empty_lst);
+		}
 	}
 }
 
