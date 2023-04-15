@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 06:43:50 by jbernard          #+#    #+#             */
-/*   Updated: 2023/04/06 11:06:44 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/04/15 16:24:15 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,49 +29,43 @@ void	finish_flag_set(t_cmdlst **cmdlst)
 	}
 }
 
-char	*ft_strpbrk(const char *str, const char *delim, int *flags)
+size_t	ft_strpbrk(const char *str, const char *delim, int *flags)
 {
-	const char	*ptr1;
-	const char	*ptr2;
+	size_t		token_nb;
+	int		i;
 
-	ptr1 = str;
-	while (*ptr1 != '\0')
+	token_nb = 1;
+	i = 0;
+	while (str[i] != '\0')
 	{
-		ptr2 = delim;
-		while (*ptr2 != '\0')
+		if (str[i] == '\'' || str[i] == '\"')
 		{
-			if (*ptr1 == '\'' || *ptr1 == '\"')
-			{
-				if (*ptr1 == '\'')
-					*flags ^= QUOTE;
-				else if (*ptr1 == '\"')
-					*flags ^= DQUOTE;
-			}
-			if (*ptr1 == *ptr2 && (*flags & (QUOTE | DQUOTE)) == 0)
-				return ((char *)ptr1);
-			ptr2++;
+			if (str[i] == '\'')
+				*flags ^= QUOTE;
+			else if (str[i] == '\"')
+				*flags ^= DQUOTE;
 		}
-		ptr1++;
+		if (str[i] == *delim && (*flags & (QUOTE | DQUOTE)) == 0)
+			token_nb++;
+		(i)++;
 	}
-	return (NULL);
+	printf("number of token -> %zu\n", token_nb);
+	return (token_nb);
 }
 
 char	*ft_strtok(char *str, const char *delim, int *flags)
 {
-	static char	*last_token;
+	static size_t	i = 0;
+	int		origin;
 	char		*token;
 
-	if (str != NULL)
-		last_token = ft_strdup(str);
-	else if (last_token == NULL)
-	{
-		free(last_token);
-		return (NULL);
-	}
-	token = last_token;
-	last_token = ft_strpbrk(last_token, delim, flags);
-	if (last_token)
-		*last_token++ = '\0';
+	origin = i;
+	ft_strpbrk(str, delim, flags);
+	if (str[i] == *delim)
+		token = ft_strldup(&str[origin], (i - 1) - origin);
+	else
+		token = ft_strldup(&str[origin], i - origin);
+	*str = *str + i;
 	return (token);
 }
 
