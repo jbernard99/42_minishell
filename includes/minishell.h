@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:25:35 by jbernard          #+#    #+#             */
-/*   Updated: 2023/04/15 16:26:05 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/04/15 17:08:04 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,17 @@ void		ft_cmdlstiter(t_cmdlst **cmdlst, void (*f)(t_cmdlst *));
 void		print_cmdlst_node(t_cmdlst *node);
 
 // envp_tools.c //
-int		is_name_in_line(char *envline, char *name);
-int		is_name_in_envp(char **envp, char *name);
-char	*build_envp_line(char *name, char *value);
+int			is_name_in_line(char *envline, char *name);
+int			is_name_in_envp(char **envp, char *name);
+char		*build_envp_line(char *name, char *value);
+
+// execution.c //
+int 		execution(t_cmdlst *cmdlst, char **envp);
+
+// built-ins //
+int			ft_cd(char *dirname);
+void		ft_echo(char **args, char **env, int fd_out);
+int			ft_env(char **envp);
+void		ft_export(char **args, char **envp, int fd_out);
 
 #endif
