@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgagnon <mgagnon@student.42quebec.com      +#+  +:+       +#+        */
+/*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 13:33:11 by mgagnon           #+#    #+#             */
-/*   Updated: 2023/04/05 22:16:27 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/04/15 16:23:38 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,17 +21,22 @@ void	check_quotes(char *input, size_t *i, int *flags)
 
 	if (input[*i] == '\'')
 	{
-		*flags |= QUOTE;
+		*flags ^= QUOTE;
 		c = '\'';
 	}
-	else
+	else if (input[*i] == '\"')
 	{
-		*flags |= DQUOTE;
+		*flags ^= DQUOTE;
 		c = '\"';
 	}
 	(*i)++;
 	while (input[*i] && input[*i] != c)
 		(*i)++;
+	if (input[*i] == '\'')
+		*flags ^= QUOTE;
+	else if (input[*i] == '\"')
+		*flags ^= DQUOTE;
+	/* (*i)++; */
 }
 
 /* identify what operand is being used and */
@@ -63,23 +68,34 @@ void	what_is_it(char *input, size_t *i, int *flags)
 	}
 }
 
+/* problem still in second_divide : */
+/* 1- don't work with quotes doubles quotes */
+
 void	second_divide(t_cmdlst **cmdlst)
 {
-	char	*token;
 	char	*cmd;
 	size_t	i;
+	size_t	origin;
+	size_t	end;
 
-	i = 1;
+	i = 0;
+	end = 0;
 	cmd = ft_strdup((*cmdlst)->cmd);
-	token = ft_strtok(cmd, " ", &(*cmdlst)->flags);
-	while (token != NULL)
+	(*cmdlst)->token = ft_calloc((ft_strpbrk(cmd, " ", &(*cmdlst)->flags) + 1), sizeof(char *));
+	while (end < ft_strlen(cmd) && &(*cmdlst)->token[i])
 	{
-		(*cmdlst)->token = ft_realloc((*cmdlst)->token, \
-				(sizeof(char *) * (i + 1)));
-		(*cmdlst)->token[(i - 1)] = ft_strdup(token);
-		token = ft_strtok(NULL, " ", &(*cmdlst)->flags);
+		origin = end;
+		while (cmd[end] && (cmd[end] != ' ' && ((*cmdlst)->flags & (QUOTE | DQUOTE)) == 0))
+		{
+			if (cmd[end] == '\'' || cmd[end] == '\"')
+				check_quotes(cmd, &end, &(*cmdlst)->flags);
+			end++;
+		}
+		(*cmdlst)->token[i] = ft_strldup(&cmd[origin], end - origin);
 		i++;
+		end++;
 	}
+	free(cmd);
 }
 
 /* makes a first split to separate multiple cmd and looks */
