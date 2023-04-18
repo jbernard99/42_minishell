@@ -6,7 +6,11 @@
 #    By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/16 04:45:18 by jbernard          #+#    #+#              #
+<<<<<<< HEAD
 #    Updated: 2023/04/15 17:05:46 by jbernard         ###   ########.fr        #
+=======
+#    Updated: 2023/04/18 12:12:08 by jbernard         ###   ########.fr        #
+>>>>>>> master
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +41,8 @@ MAIN_FILES = main.c			\
 			mng_lst2.c		\
 			envp.c			\
 			execution.c		\
-			envp_tools.c	
+			envp_tools.c	\
+			quotes.c
 
 BI_FILES = 	cd.c		\
 			echo.c		\
@@ -69,7 +74,7 @@ $(OBJ_DIR)%.o: %.c | $(OBJ_DIR)
 	@ printf "$(GREEN)- ⚡⚡⚡ -> Compiling $(PURPLE)$(notdir $@)$(GREEN) using $(PURPLE)$(notdir $<)$(GREEN)...           \r$(RESET)"
 	@ $(CC) $(CFLAGS) -I$(INC_DIR) -c $< -o $@
 
-$(OBJ_DIR):
+obj:
 	@ mkdir -p $(OBJ_DIR)
 
 # Download and install readline library
