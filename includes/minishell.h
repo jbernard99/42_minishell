@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:25:35 by jbernard          #+#    #+#             */
-/*   Updated: 2023/04/18 12:46:07 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/04/18 14:11:09 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ typedef struct s_cmdlst {
 	int				flags;
 	char			*cmd;
 	char			**token;
+	char			***envp;
 	struct s_cmdlst	*next;
 }		t_cmdlst;
 
@@ -69,7 +70,7 @@ char		*build_envp_line(char *name, char *value);
 char		*get_value(char *env_line);
 
 // execution.c //
-int 		execution(t_cmdlst *cmdlst, char **envp);
+int 		execution(t_cmdlst *cmdlst);
 
 // built-ins //
 void		ft_cd(char *dirname);

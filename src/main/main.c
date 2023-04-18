@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:31:19 by jbernard          #+#    #+#             */
-/*   Updated: 2023/04/15 16:56:50 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/04/18 14:08:46 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,10 @@ void	prompt_loop(char **envp)
 		{
 			add_history(input);
 			make_lst(input, &cmdlst);
-			ft_cmdlstiter(&cmdlst, &print_cmdlst_node);
+			//ft_cmdlstiter(&cmdlst, &print_cmdlst_node);
 			free(input);
-			execution(cmdlst, envp);
+			cmdlst->envp = &envp;
+			execution(cmdlst);
 			cmdlst_clear(&cmdlst, &empty_lst);
 		}
 	}
