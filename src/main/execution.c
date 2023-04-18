@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 16:37:35 by jbernard          #+#    #+#             */
-/*   Updated: 2023/04/18 14:11:25 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/04/18 16:24:54 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,9 @@ void (*get_built_in(char *name))()
 int execution(t_cmdlst *cmdlst)
 {
 	pid_t		pid;
-	void 	(*func)();
-	int		status;
+	void 		(*func)();
+	int			status;
+	int			e;
 	
 	pid = 0;
 	status = 0;
@@ -47,7 +48,11 @@ int execution(t_cmdlst *cmdlst)
 		cmdlst->token[0] = ft_strjoin("/bin/", cmdlst->token[0]);
 		pid = fork();
 		if (pid == 0)
-			execve(cmdlst->token[0], cmdlst->token, *cmdlst->envp);
+		{
+			e = execve(cmdlst->token[0], cmdlst->token, *cmdlst->envp);
+			if (e == -1)
+				perror(cmdlst->token[0]);
+		}
 		wait(&status);
 	}
 	return (1);
