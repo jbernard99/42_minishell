@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 13:40:48 by jbernard          #+#    #+#             */
-/*   Updated: 2023/03/24 13:41:45 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/04/18 12:43:55 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,14 @@
 	 	gcc echo.c -o echo
 */
 
+#include "../../includes/minishell.h"
+
 void	ft_echo(char **args, char **env, int fd_out)
 {
 	int	argc;
 	int	i;
 	int nl;
+	(void)env;
 	
 	nl = 1;
 	if (!ft_strncmp(args[0], "-n", 2))
