@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 13:42:15 by jbernard          #+#    #+#             */
-/*   Updated: 2023/03/28 14:55:54 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/04/18 12:43:12 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,9 @@ Exemples:
 			env {valid file} 	: Nothing, unknown???
 */
 
-#include <stdio.h>
-#include <dirent.h>
+#include "../../includes/minishell.h"
 
-int	ft_env(char **envp){
+void	ft_env(char **envp){
 	int	i;
 
 	i = 0;
@@ -31,5 +30,5 @@ int	ft_env(char **envp){
 		}
 		i++;
 	}
-	return (0);
+	return;
 }

@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 11:17:41 by mgagnon           #+#    #+#             */
-/*   Updated: 2023/04/18 11:22:28 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/04/18 14:07:31 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ t_cmdlst	*new_node(char *cmd)
 	if (!new_node)
 		return (NULL);
 	new_node->cmd = cmd;
+	new_node->envp = NULL;
 	new_node->next = NULL;
 	return (new_node);
 }

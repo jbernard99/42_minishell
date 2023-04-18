@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:25:35 by jbernard          #+#    #+#             */
-/*   Updated: 2023/04/15 16:26:05 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/04/18 14:11:09 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,9 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <signal.h>
-#include <termios.h>
-#include <errno.h>
+# include <termios.h>
+# include <errno.h>
+# include <dirent.h>
 # include "../libraries/42_libft/include/libft.h"
 # include "../libraries/readline/includes/readline.h"
 # include "../libraries/readline/includes/history.h"
@@ -26,6 +27,7 @@ typedef struct s_cmdlst {
 	int				flags;
 	char			*cmd;
 	char			**token;
+	char			***envp;
 	struct s_cmdlst	*next;
 }		t_cmdlst;
 
@@ -53,7 +55,7 @@ void		check_quotes(char *input, size_t *i, int *flags);
 /* list managing functions */
 t_cmdlst	*new_node(char *cmd);
 t_cmdlst	*cmdlst_last(t_cmdlst *cmdlst);
-t_cmdlst	*get_lst(void);
+//t_cmdlst	*get_lst(void);
 void		cmdlst_clear(t_cmdlst **cmdlst, void (*del)(t_cmdlst *));
 void		cmdlst_delone(t_cmdlst *cmdlst, void (*del)(t_cmdlst *));
 void		cmdlst_addback(t_cmdlst **cmdlst, t_cmdlst *new_node);
@@ -62,8 +64,18 @@ void		ft_cmdlstiter(t_cmdlst **cmdlst, void (*f)(t_cmdlst *));
 void		print_cmdlst_node(t_cmdlst *node);
 
 // envp_tools.c //
-int		is_name_in_line(char *envline, char *name);
-int		is_name_in_envp(char **envp, char *name);
-char	*build_envp_line(char *name, char *value);
+int			is_name_in_line(char *envline, char *name);
+int			is_name_in_envp(char **envp, char *name);
+char		*build_envp_line(char *name, char *value);
+char		*get_value(char *env_line);
+
+// execution.c //
+int 		execution(t_cmdlst *cmdlst);
+
+// built-ins //
+void		ft_cd(char *dirname);
+void		ft_echo(char **args, char **env, int fd_out);
+void		ft_env(char **envp);
+//void		ft_export(char **args, char **envp, int fd_out);
 
 #endif

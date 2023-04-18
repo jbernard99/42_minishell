@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 06:43:50 by jbernard          #+#    #+#             */
-/*   Updated: 2023/04/18 11:21:41 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/04/18 12:30:03 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ size_t	ft_strpbrk(const char *str, const char *delim, int *flags)
 			token_nb++;
 		(i)++;
 	}
-	printf("number of token -> %zu\n", token_nb);
 	return (token_nb);
 }
 

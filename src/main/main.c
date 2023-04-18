@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:31:19 by jbernard          #+#    #+#             */
-/*   Updated: 2023/04/15 16:21:15 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/04/18 14:08:46 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void sigquit_handle(int sig){
 	(void)sig;
 }
 
-void	prompt_loop(void)
+void	prompt_loop(char **envp)
 {
 	t_cmdlst	*cmdlst;
 	char		*input;
@@ -42,8 +42,10 @@ void	prompt_loop(void)
 		{
 			add_history(input);
 			make_lst(input, &cmdlst);
-			ft_cmdlstiter(&cmdlst, &print_cmdlst_node);
+			//ft_cmdlstiter(&cmdlst, &print_cmdlst_node);
 			free(input);
+			cmdlst->envp = &envp;
+			execution(cmdlst);
 			cmdlst_clear(&cmdlst, &empty_lst);
 		}
 	}
@@ -69,9 +71,8 @@ int main(int argc, char **argv, char **envp) {
 	
 	(void)argc;
 	(void)argv;
-	(void)envp;
 	
-	prompt_loop();
+	prompt_loop(envp);
 	tcsetattr(STDIN_FILENO, TCSANOW, &old_termios);		// Go back to old terminal settings.
 	
 	return 0;

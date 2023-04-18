@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 13:43:19 by jbernard          #+#    #+#             */
-/*   Updated: 2023/03/24 13:44:10 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/04/18 12:45:30 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ Export :
 		"export x=2"	: 2 will become string "2"
 		"export x='Bonjour''Allo'123" : Var x will be 'BonjourAllo123'
 */
+
+#include "../../includes/minishell.h"
 
 int	ft_strcmp(const char *s1, const char *s2)
 {

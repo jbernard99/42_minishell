@@ -6,9 +6,10 @@
 #    By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/16 04:45:18 by jbernard          #+#    #+#              #
-#    Updated: 2023/04/18 12:12:08 by jbernard         ###   ########.fr        #
+#    Updated: 2023/04/18 12:45:56 by jbernard         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
 
 #gcc -o minishell -I./libraries/readline/include ./src/main.c -L./libraries/readline/lib -lreadline -lncurses
 
@@ -21,7 +22,7 @@ NAME = minishell
 
 # Directories
 SRC_DIR = src/
-BI_DIR = $(SRC_DIR)/builtin
+BI_DIR = $(SRC_DIR)/builtins
 MAIN_DIR = $(SRC_DIR)/main
 INC_DIR = includes/
 OBJ_DIR = obj/
@@ -36,16 +37,17 @@ MAIN_FILES = main.c			\
 			mng_lst.c		\
 			mng_lst2.c		\
 			envp.c			\
+			execution.c		\
 			envp_tools.c	\
 			quotes.c
 
-#BI_FILES = cd.c		\
+BI_FILES = 	cd.c		\
 			echo.c		\
 			env.c		\
-			exit.c		\
+#			exit.c		\
 			export.c	\
 			pwd.c		\
-			unset.c
+			unset.cs
 
 #SRC_FILES = $(wildcard $(MAIN_DIR)/*.c) $(wildcard $(BI_DIR)/*.c)
 

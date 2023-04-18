@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 13:40:17 by jbernard          #+#    #+#             */
-/*   Updated: 2023/03/28 14:36:20 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/04/18 12:43:03 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,15 @@
 */
 
 
-#include <stdio.h>
-#include <dirent.h>
-#include <unistd.h>
-#include <stdlib.h>
+#include "../../includes/minishell.h"
 
-int	ft_cd(char *dirname)
+void	ft_cd(char *dirname)
 {
 	if (chdir(dirname) == 0){
-		return (0);
+		printf("Not working");
 	}
 	else{
-		return (1);
+		printf("Working");
 	}
 }
 
