@@ -6,11 +6,11 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 10:47:04 by mgagnon           #+#    #+#             */
-/*   Updated: 2023/04/15 16:21:56 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/04/18 11:21:51 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 void	*ft_realloc(void *ptr, size_t size)
 {

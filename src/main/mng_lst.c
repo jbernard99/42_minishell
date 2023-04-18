@@ -6,11 +6,11 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 11:17:41 by mgagnon           #+#    #+#             */
-/*   Updated: 2023/04/15 16:22:13 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/04/18 11:22:28 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 void	cmdlst_delone(t_cmdlst *cmdlst, void (*del)(t_cmdlst *))
 {
