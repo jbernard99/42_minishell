@@ -6,7 +6,7 @@
 #    By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/16 04:45:18 by jbernard          #+#    #+#              #
-#    Updated: 2023/04/18 12:45:56 by jbernard         ###   ########.fr        #
+#    Updated: 2023/04/19 11:06:42 by mgagnon          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,9 +37,9 @@ MAIN_FILES = main.c			\
 			mng_lst.c		\
 			mng_lst2.c		\
 			envp.c			\
-			execution.c		\
 			envp_tools.c	\
 			quotes.c
+			# execution.c		\
 
 BI_FILES = 	cd.c		\
 			echo.c		\
@@ -94,3 +94,5 @@ fclean: clean
 	@ $(MAKE) -C $(LIBFT_DIR) fclean
 
 re: clean all
+
+.PHONY:		all clean fclean re obj
