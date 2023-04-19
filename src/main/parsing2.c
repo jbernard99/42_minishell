@@ -1,18 +1,14 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit.c                                             :+:      :+:    :+:   */
+/*   parsing2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: mgagnon <mgagnon@student.42quebec.com      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/24 13:42:38 by jbernard          #+#    #+#             */
-/*   Updated: 2023/04/19 12:33:50 by mgagnon          ###   ########.fr       */
+/*   Created: 2023/04/19 12:09:57 by mgagnon           #+#    #+#             */
+/*   Updated: 2023/04/19 13:26:33 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
-/* NOTHING DONE YET */
-void	ft_exit(void)
-{
-	return ;
-}
+#include "../../includes/minishell.c"
+

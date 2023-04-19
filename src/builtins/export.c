@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 13:43:19 by jbernard          #+#    #+#             */
-/*   Updated: 2023/04/18 12:45:30 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/04/19 12:28:50 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,11 @@ int	ft_strcmp(const char *s1, const char *s2)
 
 char	**get_alpha_envp(char **envp)
 {
-	char 	**n_envp;
+	char	**n_envp;
 	char	*temp;
 	int		i;
 	int		j;
-	
+
 	n_envp = tabstrdup(envp);
 	while (n_envp[i])
 	{
@@ -56,7 +56,7 @@ char	**get_alpha_envp(char **envp)
 		}
 		i++;
 	}
-	return envp;
+	return (envp);
 }
 
 void	ft_export(char **args, char **envp, int fd_out)
@@ -64,7 +64,7 @@ void	ft_export(char **args, char **envp, int fd_out)
 	char	**new_envp;
 	int		argc;
 	int		i;
-	
+
 	new_envp = get_alpha_envp(envp);
 	argc = ft_strtablen(args);
 	i = 1;

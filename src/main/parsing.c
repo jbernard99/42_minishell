@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 13:33:11 by mgagnon           #+#    #+#             */
-/*   Updated: 2023/04/18 11:22:09 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/04/19 11:25:32 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ void	check_quotes(char *input, size_t *i, int *flags)
 		*flags ^= QUOTE;
 	else if (input[*i] == '\"')
 		*flags ^= DQUOTE;
-	/* (*i)++; */
 }
 
 /* identify what operand is being used and */
@@ -81,11 +80,13 @@ void	second_divide(t_cmdlst **cmdlst)
 	i = 0;
 	end = 0;
 	cmd = ft_strdup((*cmdlst)->cmd);
-	(*cmdlst)->token = ft_calloc((ft_strpbrk(cmd, " ", &(*cmdlst)->flags) + 1), sizeof(char *));
+	(*cmdlst)->token = ft_calloc((ft_strpbrk(cmd, " ", \
+					&(*cmdlst)->flags) + 1), sizeof(char *));
 	while (end < ft_strlen(cmd) && &(*cmdlst)->token[i])
 	{
 		origin = end;
-		while (cmd[end] && (cmd[end] != ' ' && ((*cmdlst)->flags & (QUOTE | DQUOTE)) == 0))
+		while (cmd[end] && (cmd[end] != ' ' && ((*cmdlst)->flags & \
+						(QUOTE | DQUOTE)) == 0))
 		{
 			if (cmd[end] == '\'' || cmd[end] == '\"')
 				check_quotes(cmd, &end, &(*cmdlst)->flags);

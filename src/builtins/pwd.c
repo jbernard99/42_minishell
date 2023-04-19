@@ -6,10 +6,11 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 13:44:33 by jbernard          #+#    #+#             */
-/*   Updated: 2023/03/24 13:44:51 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/04/19 12:26:39 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../../includes/minishell.h"
 /*
 	Exemples:
 		pwd : Show current working dir

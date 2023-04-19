@@ -6,7 +6,7 @@
 #    By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/16 04:45:18 by jbernard          #+#    #+#              #
-#    Updated: 2023/04/18 12:45:56 by jbernard         ###   ########.fr        #
+#    Updated: 2023/04/19 11:11:15 by mgagnon          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,8 +37,8 @@ MAIN_FILES = main.c			\
 			mng_lst.c		\
 			mng_lst2.c		\
 			envp.c			\
-			execution.c		\
 			envp_tools.c	\
+			execution.c		\
 			quotes.c
 
 BI_FILES = 	cd.c		\
@@ -71,7 +71,7 @@ $(OBJ_DIR)%.o: %.c | $(OBJ_DIR)
 	@ printf "$(GREEN)- ⚡⚡⚡ -> Compiling $(PURPLE)$(notdir $@)$(GREEN) using $(PURPLE)$(notdir $<)$(GREEN)...           \r$(RESET)"
 	@ $(CC) $(CFLAGS) -I$(INC_DIR) -c $< -o $@
 
-obj:
+$(OBJ_DIR):
 	@ mkdir -p $(OBJ_DIR)
 
 # Download and install readline library
@@ -94,3 +94,5 @@ fclean: clean
 	@ $(MAKE) -C $(LIBFT_DIR) fclean
 
 re: clean all
+
+.PHONY:		all clean fclean re obj

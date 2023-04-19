@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 13:40:48 by jbernard          #+#    #+#             */
-/*   Updated: 2023/04/18 14:40:58 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/04/19 12:23:55 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,16 +39,16 @@ void	ft_echo(char **args, char **env, int fd_out)
 {
 	int	argc;
 	int	i;
-	int nl;
+	int	nl;
+
 	(void)env;
-	
 	nl = 1;
 	if (!ft_strncmp(args[1], "-n", 2))
 	{
 		nl = 0;
 		args++;
 	}
-	argc = ft_strtablen(args); //// <--------- NOT IN MY LIBFT
+	argc = ft_strtablen(args);
 	i = 1;
 	while (i < argc)
 	{
@@ -60,3 +60,13 @@ void	ft_echo(char **args, char **env, int fd_out)
 	if (nl)
 		ft_putchar_fd('\n', fd_out);
 }
+
+// int	main(int argc, char **argv)
+// {
+// 	char **d_envp = NULL;
+
+// 	argc--;
+// 	argv++;
+// 	ft_echo(argv, d_envp, 1);
+// 	return (0);
+// }

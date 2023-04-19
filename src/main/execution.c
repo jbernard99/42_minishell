@@ -5,19 +5,19 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/15 16:37:35 by jbernard          #+#    #+#             */
+/*   Created: 2023/04/15 16:37:35 by jbernard          #+#    #+#             *
 /*   Updated: 2023/04/19 12:59:26 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void (*get_built_in(char *name))()
+void	(*get_built_in(char *name))()
 {
 	static void	(*funcs[3])() = {ft_cd, ft_echo, ft_env};
-	static char *funcs_name[3] = {"cd", "echo", "env"};
+	static char	*funcs_name[3] = {"cd", "echo", "env"};
 	int			i;
-	
+
 	i = 0;
 	while (i < 3)
 	{
@@ -27,6 +27,7 @@ void (*get_built_in(char *name))()
 	}
 	return (NULL);
 }
+
 
 void	execute_sh(t_cmdlst *cmdlst)
 {
@@ -60,7 +61,7 @@ void	execute_built_in(t_cmdlst *cmdlst, void (*func)())
 int execution(t_cmdlst *cmdlst)
 {
 	void 		(*func)();
-
+  
 	func = get_built_in(cmdlst->token[0]);
 	if (func)
 		execute_built_in(cmdlst, func);
@@ -69,4 +70,3 @@ int execution(t_cmdlst *cmdlst)
 		
 	return (1);
 }
-

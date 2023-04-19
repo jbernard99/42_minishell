@@ -6,7 +6,7 @@
 /*   By: mgagnon <mgagnon@student.42quebec.com      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 11:57:20 by mgagnon           #+#    #+#             */
-/*   Updated: 2023/04/18 12:04:10 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/04/19 11:27:30 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	trailing_quotes(char **arr)
 		while (arr[i][j])
 		{
 			if (arr[i][j] == '\'' || arr[i][j] == '\"')
-				return(1);
+				return (1);
 			j++;
 		}
 		i++;
@@ -36,7 +36,7 @@ char	*rmv_quotes(char *str)
 {
 	char	*proxy;
 
-	if (!str ||str[0] == '\0')
+	if (!str || str[0] == '\0')
 		return (NULL);
 	if (str[0] == '\'' || str[0] == '\"')
 	{
