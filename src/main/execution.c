@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/15 16:37:35 by jbernard          #+#    #+#             */
-/*   Updated: 2023/04/19 12:18:24 by mgagnon          ###   ########.fr       */
+/*   Created: 2023/04/15 16:37:35 by jbernard          #+#    #+#             *
+/*   Updated: 2023/04/19 12:59:26 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,27 +28,45 @@ void	(*get_built_in(char *name))()
 	return (NULL);
 }
 
-int	execution(t_cmdlst *cmdlst)
+
+void	execute_sh(t_cmdlst *cmdlst)
 {
 	pid_t	pid;
-	void	(*func)();
+	char	*exec;
 	int		status;
+	int		e;
+	
+	exec = ft_strjoin("/bin/", cmdlst->token[0]);
+	pid = fork();
+	if (pid == -1)
+		printf("Fork failed!\n");
+	else if (pid == 0)
+	{
+		e = execve(exec, cmdlst->token, *cmdlst->envp);
+		if (e == -1)
+		{
+			perror(cmdlst->token[0]);
+			exit(0);
+		}
+	} else 
+		pid = wait(&status);
+}
 
-	pid = 0;
-	status = 0;
+void	execute_built_in(t_cmdlst *cmdlst, void (*func)())
+{
+	func(cmdlst->token, *cmdlst->envp, 1);
+}
+
+
+int execution(t_cmdlst *cmdlst)
+{
+	void 		(*func)();
+  
 	func = get_built_in(cmdlst->token[0]);
 	if (func)
-	{
-		//printf("Funtion found!, PID : %d\n", getpid());
-		func(cmdlst->token, *cmdlst->envp, 1);
-	}	
+		execute_built_in(cmdlst, func);
 	else
-	{
-		cmdlst->token[0] = ft_strjoin("/bin/", cmdlst->token[0]);
-		pid = fork();
-		if (pid == 0)
-			execve(cmdlst->token[0], cmdlst->token, *cmdlst->envp);
-		wait(&status);
-	}
+		execute_sh(cmdlst);
+		
 	return (1);
 }

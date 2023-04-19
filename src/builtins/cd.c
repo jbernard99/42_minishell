@@ -15,17 +15,19 @@ Exemples :
 	cd: Return to /home
 	cd 'invalid folder': "cd: {invalid folder}: No such file or directory"
 	cd 'valid folder': Moves current working div to selected folder
-	cd 'valid folder' 'invalid folder': Moves current working div to selected                                             folder.
+	cd 'valid folder' 'invalid folder': Moves current working div to selected folder.
 */
 
 #include "../../includes/minishell.h"
 
 void	ft_cd(char *dirname)
 {
-	if (chdir(dirname) == 0)
-		printf("Not working");
-	else
-		printf("Working");
+	if (chdir(dirname) == 0){
+		printf("Not working\n");
+	}
+	else{
+		printf("Working\n");
+	}
 }
 
 /*
