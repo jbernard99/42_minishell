@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 13:40:48 by jbernard          #+#    #+#             */
-/*   Updated: 2023/04/19 12:23:55 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/04/19 15:02:14 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@
 				echo bonjour x : prints "bonjour x\n"
 				echo -n : Prints nothing
 				echo -n bonjour : prints "bonjour" (No newline)
-				echo "Bonjour" "Allo" : prints "Bonjour Allo" (With space in between each args)
+				echo "Bonjour" "Allo" : prints "Bonjour Allo"
+				               (With space in between each args)
  	# Process
 
 	# Edge case:

@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:31:19 by jbernard          #+#    #+#             */
-/*   Updated: 2023/04/19 11:44:35 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/04/19 16:08:23 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 // Rewrite prompt with empty str
 void	ctrlc_handle(int sig)
 {
+	(void)sig;
 	ft_putchar_fd('\n', 1);
 	rl_on_new_line();
 	rl_replace_line("", 0);
@@ -48,7 +49,6 @@ void	prompt_loop(char **envp)
 		{
 			add_history(input);
 			make_lst(input, &cmdlst);
-			//ft_cmdlstiter(&cmdlst, &print_cmdlst_node);
 			free(input);
 			cmdlst->envp = &envp;
 			execution(cmdlst);

@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:25:35 by jbernard          #+#    #+#             */
-/*   Updated: 2023/04/19 11:15:41 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/04/19 14:08:33 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ char		*build_envp_line(char *name, char *value);
 char		*get_value(char *env_line);
 
 // execution.c //
-int 		execution(t_cmdlst *cmdlst);
+int			execution(t_cmdlst *cmdlst);
 
 // built-ins //
 void		ft_cd(char *dirname);
