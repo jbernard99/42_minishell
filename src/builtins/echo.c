@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 13:40:48 by jbernard          #+#    #+#             */
-/*   Updated: 2023/04/19 15:02:14 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/04/19 17:40:52 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	ft_echo(char **args, char **env, int fd_out)
 	int	argc;
 	int	i;
 	int	nl;
-
+	
 	(void)env;
 	nl = 1;
 	if (!ft_strncmp(args[1], "-n", 2))

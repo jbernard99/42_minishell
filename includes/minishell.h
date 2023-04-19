@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:25:35 by jbernard          #+#    #+#             */
-/*   Updated: 2023/04/19 14:08:33 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/04/19 17:20:45 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,15 +69,17 @@ void		print_cmdlst_node(t_cmdlst *node);
 int			is_name_in_line(char *envline, char *name);
 int			is_name_in_envp(char **envp, char *name);
 char		*build_envp_line(char *name, char *value);
+char		*envp_get_value_line(char **envp, char *name);
 char		*get_value(char *env_line);
 
 // execution.c //
 int			execution(t_cmdlst *cmdlst);
 
 // built-ins //
-void		ft_cd(char *dirname);
+void		ft_cd(char **args, char **env, int fd_out);
 void		ft_echo(char **args, char **env, int fd_out);
-void		ft_env(char **envp);
+void		ft_env(char **args, char **env, int fd_out);
+void		ft_pwd(char **args, char **env, int fd_out);
 //void		ft_export(char **args, char **envp, int fd_out);
 
 #endif
