@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 13:40:48 by jbernard          #+#    #+#             */
-/*   Updated: 2023/04/18 14:12:08 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/04/18 14:40:58 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,13 +60,3 @@ void	ft_echo(char **args, char **env, int fd_out)
 	if (nl)
 		ft_putchar_fd('\n', fd_out);
 }
-
-// int	main(int argc, char **argv)
-// {
-// 	char **d_envp = NULL;
-
-// 	argc--;
-// 	argv++;
-// 	ft_echo(argv, d_envp, 1);
-// 	return (0);
-// }

@@ -6,13 +6,14 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:31:19 by jbernard          #+#    #+#             */
-/*   Updated: 2023/04/18 14:08:46 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/04/19 12:21:45 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void ctrlc_handle(){
+void ctrlc_handle(int sig){
+	(void)sig;
 	ft_putchar_fd('\n', 1); 							// Jump on a clean line
 	rl_on_new_line();									// Tell readline we are on a new line
 	rl_replace_line("", 0);								// Replace readline buffer with empty

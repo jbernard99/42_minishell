@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 13:40:17 by jbernard          #+#    #+#             */
-/*   Updated: 2023/04/18 12:43:03 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/04/19 12:22:37 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,10 @@
 void	ft_cd(char *dirname)
 {
 	if (chdir(dirname) == 0){
-		printf("Not working");
+		printf("Not working\n");
 	}
 	else{
-		printf("Working");
+		printf("Working\n");
 	}
 }
 
