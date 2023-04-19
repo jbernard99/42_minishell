@@ -6,21 +6,27 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:31:19 by jbernard          #+#    #+#             */
-/*   Updated: 2023/04/18 14:08:46 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/04/19 11:44:35 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void ctrlc_handle(){
-	ft_putchar_fd('\n', 1); 							// Jump on a clean line
-	rl_on_new_line();									// Tell readline we are on a new line
-	rl_replace_line("", 0);								// Replace readline buffer with empty
-	rl_redisplay();										// Rewrite prompt with empty str
+// Jump on a clean line
+// Tell readline we are on a new line
+// Replace readline buffer with empty
+// Rewrite prompt with empty str
+void	ctrlc_handle(int sig)
+{
+	ft_putchar_fd('\n', 1);
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	rl_redisplay();
 }
 
-void sigquit_handle(int sig){
-	//It's not because a function does nothing that it's useless
+//It's not because a function does nothing that it's useless
+void	sigquit_handle(int sig)
+{
 	(void)sig;
 }
 
@@ -51,29 +57,32 @@ void	prompt_loop(char **envp)
 	}
 }
 
-void set_new_termios(struct termios old_termios){
-	struct termios new_termios;
-	
+// Disable printing of ^\ when doing ctrl-\ --
+// Disable printing of ^c when doing ctrl-c
+// Set new settings to current terminal
+void	set_new_termios(struct termios old_termios)
+{
+	struct termios	new_termios;
+
 	new_termios = old_termios;
-	new_termios.c_cc[VQUIT] = _POSIX_VDISABLE;			// Disable printing of ^\ when doing ctrl-\ --
-	new_termios.c_lflag &= ~ECHOCTL;					// Disable printing of ^c when doing ctrl-c
-	tcsetattr(STDIN_FILENO, TCSANOW, &new_termios);		// Set new settings to current terminal
+	new_termios.c_cc[VQUIT] = _POSIX_VDISABLE;
+	new_termios.c_lflag &= ~ECHOCTL;
+	tcsetattr(STDIN_FILENO, TCSANOW, &new_termios);
 }
 
-int main(int argc, char **argv, char **envp) {
-	struct termios old_termios;
+// first tcgetattr() Get parent terminal settings
+//  second one Go back to old terminal settings.
+int	main(int argc, char **argv, char **envp)
+{
+	struct termios	old_termios;
 
-	tcgetattr(STDIN_FILENO, &old_termios);				// Get parent terminal settings
+	tcgetattr(STDIN_FILENO, &old_termios);
 	set_new_termios(old_termios);
-	
 	signal(SIGINT, ctrlc_handle);
 	signal(SIGQUIT, sigquit_handle);
-	
 	(void)argc;
 	(void)argv;
-	
 	prompt_loop(envp);
-	tcsetattr(STDIN_FILENO, TCSANOW, &old_termios);		// Go back to old terminal settings.
-	
-	return 0;
+	tcsetattr(STDIN_FILENO, TCSANOW, &old_termios);
+	return (0);
 }

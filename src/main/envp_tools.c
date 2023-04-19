@@ -6,15 +6,15 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 13:06:54 by jbernard          #+#    #+#             */
-/*   Updated: 2023/04/06 11:04:39 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/04/19 12:14:26 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
+// This fonction checks if the 'envline' has the variable name similar to 'name'
 int	is_name_in_line(char *envline, char *name)
 {
-	// This fonction checks if the 'envline' has the variable name similar to 'name'
 	int	len;
 
 	len = ft_strlen(name);
@@ -25,9 +25,9 @@ int	is_name_in_line(char *envline, char *name)
 	return (0);
 }
 
+//This function checks if a variable name is present in the envp
 int	is_name_in_envp(char **envp, char *name)
 {	
-	//This function checks if a variable name is present in the envp
 	int	i;
 
 	i = 0;
@@ -40,9 +40,9 @@ int	is_name_in_envp(char **envp, char *name)
 	return (-1);
 }
 
+//This function format a line in envp style so that it can be added to the envp
 char	*build_envp_line(char *name, char *value)
 {
-	//This function format a line in envp style so that it can be added to the envp
 	char	*line;
 
 	line = ft_strjoin(name, "=");
@@ -50,23 +50,23 @@ char	*build_envp_line(char *name, char *value)
 	return (line);
 }
 
+// This function get the variable name of a line found in the envp
 char	*get_name(char *env_line)
 {
-	// This function get the variable name of a line found in the envp
 	int	i;
 
 	i = 0;
 	while (env_line[i])
 	{
-		if(env_line[i] == '=')
+		if (env_line[i] == '=')
 			env_line[i] = '\0';
 	}
 	return (&env_line[0]);
 }
 
+// This function get the value of a line found in the envp.
 char	*get_value(char *env_line)
 {
-	// This function get the value of a line found in the envp.
 	int		i;
 
 	i = 0;
@@ -79,9 +79,9 @@ char	*get_value(char *env_line)
 	return (&env_line[i++]);
 }
 
+// This function prints the envp !!! FOR DEVELOPMENT USAGE ONLY !!!
 void	put_envp(char **envp)
 {
-	// This function prints the envp !!! FOR DEVELOPMENT USAGE ONLY !!!
 	int	i;
 
 	i = 0;
@@ -93,5 +93,3 @@ void	put_envp(char **envp)
 	}
 	printf("************ Line count (i) : %d ***************\n\n", i);
 }
-
-/* _____________________________________________________________________________________________*/

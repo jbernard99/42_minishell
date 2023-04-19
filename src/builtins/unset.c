@@ -6,10 +6,11 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 13:45:05 by jbernard          #+#    #+#             */
-/*   Updated: 2023/03/28 15:16:26 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/04/19 12:27:12 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../../includes/minishell.h"
 /*
 unset : 
 	Working unset  cases:

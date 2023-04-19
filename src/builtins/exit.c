@@ -6,13 +6,13 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 13:42:38 by jbernard          #+#    #+#             */
-/*   Updated: 2023/04/15 17:07:25 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/04/19 12:33:50 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
+#include "../../includes/minishell.h"
 /* NOTHING DONE YET */
 void	ft_exit(void)
 {
-	return;
+	return ;
 }
