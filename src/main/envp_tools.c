@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 13:06:54 by jbernard          #+#    #+#             */
-/*   Updated: 2023/04/20 15:33:04 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/04/20 16:52:38 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,10 @@ char	*get_value(char *env_line)
 	{
 		i++;
 	}
-	if (!env_line[i + 1])
+	printf("get_value : env_line[%d] = %c --", i, env_line[i]);
+	if (!env_line[i])
 		return ("");
+	printf("&env_line[i] = %s\n", &env_line[i]);
 	return (&env_line[i++]);
 }
 
