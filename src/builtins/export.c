@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 13:43:19 by jbernard          #+#    #+#             */
-/*   Updated: 2023/04/19 17:06:18 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/04/20 15:38:31 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,17 @@ Export :
 
 #include "../../includes/minishell.h"
 
-int	ft_strcmp(const char *s1, const char *s2)
+char	**tabstrdup(char **tab)
 {
-	while (*s1 && *s2 && *s1 == *s2)
-	{
-		s1++;
-		s2++;
-	}
-	return (*(unsigned char *) s1 - *(unsigned char *) s2);
+	char	**n_tab;
+	int		i;
+
+	n_tab = (char **)malloc(sizeof(char *) * (ft_strtablen(tab) + 1));
+	i = 0;
+	while (*tab)
+		n_tab[i++] = ft_strdup(*tab++);
+	n_tab[i] = NULL;
+	return (n_tab);
 }
 
 char	**get_alpha_envp(char **envp)
@@ -43,6 +46,7 @@ char	**get_alpha_envp(char **envp)
 	int		j;
 
 	n_envp = tabstrdup(envp);
+	i = 0;
 	while (n_envp[i])
 	{
 		j = i + 1;
@@ -67,18 +71,22 @@ void	ft_export(char **args, char **envp, int fd_out)
 	int		argc;
 	int		i;
 
-	new_envp = get_alpha_envp(envp);
+	(void)fd_out;
+	new_envp = NULL;
 	argc = ft_strtablen(args);
 	i = 1;
 	if (argc > 1)
 	{
 		while (args[i])
-		{	
-			envp_set_line(envp, get_name(args[i]), get_value(args[i]));
+		{
+			envp = envp_set_line(envp, get_name(args[i]), get_value(args[i]));
 			i++;
 		}	
 	}
 	else
+	{
+		new_envp = get_alpha_envp(envp);
 		put_envp(new_envp);
-	ft_freetabstr(&new_envp);
+	}
+	//ft_freetabstr(&new_envp);
 }

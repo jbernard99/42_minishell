@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 13:06:54 by jbernard          #+#    #+#             */
-/*   Updated: 2023/04/19 17:16:30 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/04/20 15:33:04 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ char	*get_name(char *env_line)
 	{
 		if (env_line[i] == '=')
 			env_line[i] = '\0';
+		i++;
 	}
 	return (&env_line[0]);
 }

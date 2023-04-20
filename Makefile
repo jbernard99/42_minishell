@@ -6,7 +6,7 @@
 #    By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/16 04:45:18 by jbernard          #+#    #+#              #
-#    Updated: 2023/04/19 17:15:36 by jbernard         ###   ########.fr        #
+#    Updated: 2023/04/20 12:31:33 by jbernard         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,9 +44,9 @@ MAIN_FILES = main.c			\
 BI_FILES = 	cd.c		\
 			echo.c		\
 			env.c		\
-			pwd.c
+			pwd.c		\
+			export.c	
 #			exit.c		\
-			export.c	\
 			unset.cs
 
 #SRC_FILES = $(wildcard $(MAIN_DIR)/*.c) $(wildcard $(BI_DIR)/*.c)
