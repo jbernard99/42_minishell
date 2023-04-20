@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 16:37:35 by jbernard          #+#    #+#             */
-/*   Updated: 2023/04/19 14:43:53 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/04/20 13:29:45 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ int	execution(t_cmdlst *cmdlst)
 {
 	void	(*func)(char **, char **, int);
 
+	cmdlst->token[0] = rmv_quotes(cmdlst->token[0]);
 	func = get_built_in(cmdlst->token[0]);
 	if (func)
 		execute_built_in(cmdlst, func);

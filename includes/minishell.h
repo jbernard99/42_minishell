@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:25:35 by jbernard          #+#    #+#             */
-/*   Updated: 2023/04/19 14:08:33 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/04/20 13:29:29 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ void		*ft_realloc(void *ptr, size_t size);
 void		finish_flag_set(t_cmdlst **cmdlst);
 void		print_flags(int flags);
 void		check_quotes(char *input, size_t *i, int *flags);
+char		*rmv_quotes(char *str);
 
 /* list managing functions */
 t_cmdlst	*new_node(char *cmd);

@@ -6,9 +6,16 @@
 /*   By: mgagnon <mgagnon@student.42quebec.com      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 12:09:57 by mgagnon           #+#    #+#             */
-/*   Updated: 2023/04/19 13:26:33 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/04/20 15:42:47 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.c"
+#include "../../includes/minishell.h"
 
+char	is_there_env_var(char *str)
+{
+	int	i;
+
+	while (str[i])
+	{
+		if (str[i] == '$')
