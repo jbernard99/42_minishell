@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 14:11:53 by jbernard          #+#    #+#             */
-/*   Updated: 2023/04/20 16:48:39 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/04/21 15:14:48 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,38 +42,46 @@ void	envp_remove_line(char **envp, char *name)
 	}
 }
 
+char 	**set_unknown_envp_var(char **envp, char *n_line)
+{
+	int 	i;
+	char 	**n_envp;
+	
+	i = 0;
+	n_envp = (char **)malloc(sizeof(char *) * (ft_strtablen(envp) + 2));
+	if (!n_envp)
+		return NULL; 
+	while (envp[i])
+	{
+		n_envp[i] = ft_strdup(envp[i]);
+		i++;
+	}
+	i++;
+	n_envp[i] = n_line;
+	i++;
+	n_envp[i] = NULL;
+	return (n_envp);
+}
+
 char	**envp_set_line(char **envp, char *name, char *value)
 {
 	int		i;
-	char	*n_line;
 	char	**n_envp;
 
 	i = is_name_in_envp(envp, name);
-	n_line = build_envp_line(name, value);
-	printf("value = %s, n_line = %s\n", value, n_line);
 	n_envp = NULL;
 	if (i >= 0)
 	{
-		free(envp[i]);
-		envp[i] = n_line;
+		if (value)
+		{
+			free(envp[i]);
+			envp[i] = build_envp_line(name, value);
+		}
 		return (envp);
 	}
 	else if (i < 0)
 	{
-		i = 0;
-		n_envp = (char **)malloc(sizeof(char *) * (ft_strtablen(envp) + 2));
-		if (!n_envp)
-			return NULL;
-		while (envp[i])
-		{
-			n_envp[i] = ft_strdup(envp[i]);
-			printf("n_envp[%d] is now : %s\n", i, n_envp[i]);
-			i++;
-		}
-		n_envp[i] = n_line;
-		printf("n_envp[%d] is now : %s\n", i, n_envp[i]);
-		i++;
-		n_envp[i] = NULL;
+		n_envp = set_unknown_envp_var(envp, build_envp_line(name, value));
 		ft_freetabstr(envp);
 	}
 	return (n_envp);

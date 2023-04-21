@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 13:06:54 by jbernard          #+#    #+#             */
-/*   Updated: 2023/04/20 16:52:38 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/04/21 15:14:13 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,23 +46,9 @@ char	*build_envp_line(char *name, char *value)
 	char	*line;
 
 	line = ft_strjoin(name, "=");
-	line = ft_strjoin(line, value);
+	if (value)
+		line = ft_strjoin(line, value);
 	return (line);
-}
-
-// This function get the variable name of a line found in the envp
-char	*get_name(char *env_line)
-{
-	int	i;
-
-	i = 0;
-	while (env_line[i])
-	{
-		if (env_line[i] == '=')
-			env_line[i] = '\0';
-		i++;
-	}
-	return (&env_line[0]);
 }
 
 // This function get the value of a line found in the envp.
@@ -72,14 +58,11 @@ char	*get_value(char *env_line)
 
 	i = 0;
 	while (env_line[i] != '=')
-	{
 		i++;
-	}
-	printf("get_value : env_line[%d] = %c --", i, env_line[i]);
-	if (!env_line[i])
+	if (!env_line[i + 1])
 		return ("");
-	printf("&env_line[i] = %s\n", &env_line[i]);
-	return (&env_line[i++]);
+	i++;
+	return (&env_line[i]);
 }
 
 // This function prints the envp !!! FOR DEVELOPMENT USAGE ONLY !!!
@@ -88,11 +71,6 @@ void	put_envp(char **envp)
 	int	i;
 
 	i = 0;
-	printf("************ Envp beginning : ***************\n");
 	while (envp[i])
-	{
-		printf("%s\n", envp[i]);
-		i++;
-	}
-	printf("************ Line count (i) : %d ***************\n\n", i);
+		printf("%s\n", envp[i++]);
 }
