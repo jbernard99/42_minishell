@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:25:35 by jbernard          #+#    #+#             */
-/*   Updated: 2023/04/21 15:16:08 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/04/23 14:24:02 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,11 @@ enum	e_flags{
 	DQUOTE = 1 << 7
 };
 
+// tools.c //
 char		*ft_strtok(char *str, const char *delim, int *flags);
 char		*ft_strldup(const char *str, size_t len);
 size_t		ft_strpbrk(const char *str, const char *delim, int *flags);
+
 void		make_lst(char *input, t_cmdlst **cmdlst);
 void		first_divide(char *input, t_cmdlst **cmdlst);
 void		*ft_realloc(void *ptr, size_t size);
@@ -74,6 +76,7 @@ char		*envp_get_value_line(char **envp, char *name);
 int			is_name_in_line(char *envline, char *name);
 int			is_name_in_envp(char **envp, char *name);
 char		*build_envp_line(char *name, char *value);
+char		*get_name(char *env_line);
 char		*get_value(char *env_line);
 void		put_envp(char **envp); // TEMPORARY
 

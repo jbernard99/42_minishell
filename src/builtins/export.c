@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 13:43:19 by jbernard          #+#    #+#             */
-/*   Updated: 2023/04/21 15:16:28 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/04/23 14:25:37 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,19 +25,6 @@ Export :
 
 #include "../../includes/minishell.h"
 
-char	**tabstrdup(char **tab)
-{
-	char	**n_tab;
-	int		i;
-
-	n_tab = (char **)malloc(sizeof(char *) * (ft_strtablen(tab) + 1));
-	i = 0;
-	while (*tab)
-		n_tab[i++] = ft_strdup(*tab++);
-	n_tab[i] = NULL;
-	return (n_tab);
-}
-
 char	**get_alpha_envp(char **envp)
 {
 	char	**n_envp;
@@ -45,7 +32,7 @@ char	**get_alpha_envp(char **envp)
 	int		i;
 	int		j;
 
-	n_envp = tabstrdup(envp);
+	n_envp = ft_tabstrdup(envp);
 	i = 0;
 	while (n_envp[i])
 	{
@@ -62,7 +49,7 @@ char	**get_alpha_envp(char **envp)
 		}
 		i++;
 	}
-	return (envp);
+	return (n_envp);
 }
 
 void	ft_export(char **args, char **envp, int fd_out)
@@ -87,6 +74,7 @@ void	ft_export(char **args, char **envp, int fd_out)
 	{
 		new_envp = get_alpha_envp(envp);
 		put_envp(new_envp);
+		free(new_envp);
 	}
 	//ft_freetabstr(&new_envp);
 }

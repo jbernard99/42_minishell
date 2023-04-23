@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 13:06:54 by jbernard          #+#    #+#             */
-/*   Updated: 2023/04/21 15:14:13 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/04/23 14:27:06 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,17 @@ char	*build_envp_line(char *name, char *value)
 	return (line);
 }
 
+char	*get_name(char *env_line)
+{
+	size_t	i;
+
+	i = 0;
+	while (env_line[i + 1] != '=' && env_line[i + 1])
+		i++;
+
+	return (ft_strldup(env_line, i));
+}
+
 // This function get the value of a line found in the envp.
 char	*get_value(char *env_line)
 {
@@ -71,6 +82,6 @@ void	put_envp(char **envp)
 	int	i;
 
 	i = 0;
-	while (envp[i])
+	while (envp[i] != NULL)
 		printf("%s\n", envp[i++]);
 }
