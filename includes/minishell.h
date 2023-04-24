@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:25:35 by jbernard          #+#    #+#             */
-/*   Updated: 2023/04/23 14:24:02 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/04/24 16:24:09 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,10 +84,11 @@ void		put_envp(char **envp); // TEMPORARY
 int			execution(t_cmdlst *cmdlst);
 
 // built-ins //
-void		ft_cd(char **args, char **envp, int fd_out);
-void		ft_echo(char **args, char **envp, int fd_out);
-void		ft_env(char **args, char **envp, int fd_out);
-void		ft_pwd(char **args, char **envp, int fd_out);
-void		ft_export(char **args, char **envp, int fd_out);
+void		ft_cd(char **args, char ***envp, int fd_out);
+void		ft_echo(char **args, char ***envp, int fd_out);
+void		ft_exit(char **args, char ***envp, int fd_out);
+void		ft_env(char **args, char ***envp, int fd_out);
+void		ft_pwd(char **args, char ***envp, int fd_out);
+void		ft_export(char **args, char ***envp, int fd_out);
 
 #endif

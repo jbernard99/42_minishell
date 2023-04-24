@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 13:40:48 by jbernard          #+#    #+#             */
-/*   Updated: 2023/04/20 12:32:15 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/04/24 16:23:52 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 
 #include "../../includes/minishell.h"
 
-void	ft_echo(char **args, char **envp, int fd_out)
+void	ft_echo(char **args, char ***envp, int fd_out)
 {
 	int	argc;
 	int	i;

@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 13:40:17 by jbernard          #+#    #+#             */
-/*   Updated: 2023/04/19 17:11:46 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/04/24 16:22:06 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@ Exemples :
 
 #include "../../includes/minishell.h"
 
-void	ft_cd(char **args, char **env, int fd_out)
+void	ft_cd(char **args, char ***envp, int fd_out)
 {
 	(void)fd_out;
-	(void)env;
+	(void)envp;
 	if (chdir(args[1]) == 0)
 		printf("Folder found\n");
 	else

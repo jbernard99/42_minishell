@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 13:44:33 by jbernard          #+#    #+#             */
-/*   Updated: 2023/04/20 12:32:25 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/04/24 15:57:46 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,12 @@
 		pwd x : Show current working dir
 */
 
-void	ft_pwd(char **args, char **envp, int fd_out)
+void	ft_pwd(char **args, char ***envp, int fd_out)
 {
 	char	*pwd;
 
 	(void)args;
-	pwd = envp_get_value_line(envp, "PWD");
+	pwd = envp_get_value_line(*envp, "PWD");
 	ft_putstr_fd(pwd, fd_out);
 	ft_putchar_fd('\n', fd_out);
 }

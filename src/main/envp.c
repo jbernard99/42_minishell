@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 14:11:53 by jbernard          #+#    #+#             */
-/*   Updated: 2023/04/21 15:14:48 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/04/24 15:05:34 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ char 	**set_unknown_envp_var(char **envp, char *n_line)
 	char 	**n_envp;
 	
 	i = 0;
-	n_envp = (char **)malloc(sizeof(char *) * (ft_strtablen(envp) + 2));
+	n_envp = malloc(sizeof(char *) * (ft_strtablen(envp) + 2));
 	if (!n_envp)
 		return NULL; 
 	while (envp[i])
@@ -56,7 +56,6 @@ char 	**set_unknown_envp_var(char **envp, char *n_line)
 		n_envp[i] = ft_strdup(envp[i]);
 		i++;
 	}
-	i++;
 	n_envp[i] = n_line;
 	i++;
 	n_envp[i] = NULL;
@@ -71,7 +70,7 @@ char	**envp_set_line(char **envp, char *name, char *value)
 	i = is_name_in_envp(envp, name);
 	n_envp = NULL;
 	if (i >= 0)
-	{
+	{	
 		if (value)
 		{
 			free(envp[i]);

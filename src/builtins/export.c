@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 13:43:19 by jbernard          #+#    #+#             */
-/*   Updated: 2023/04/23 14:25:37 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/04/24 16:21:12 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ char	**get_alpha_envp(char **envp)
 	return (n_envp);
 }
 
-void	ft_export(char **args, char **envp, int fd_out)
+void	ft_export(char **args, char ***envp, int fd_out)
 {
 	char	**new_envp;
 	int		argc;
@@ -66,13 +66,13 @@ void	ft_export(char **args, char **envp, int fd_out)
 	{
 		while (args[i])
 		{
-			envp = envp_set_line(envp, get_name(args[i]), get_value(args[i]));
+			*envp = envp_set_line(*envp, get_name(args[i]), get_value(args[i]));
 			i++;
 		}	
 	}
 	else
 	{
-		new_envp = get_alpha_envp(envp);
+		new_envp = get_alpha_envp(*envp);
 		put_envp(new_envp);
 		free(new_envp);
 	}
