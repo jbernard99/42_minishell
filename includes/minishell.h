@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:25:35 by jbernard          #+#    #+#             */
-/*   Updated: 2023/04/19 14:08:33 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/04/24 16:24:09 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,11 @@ enum	e_flags{
 	DQUOTE = 1 << 7
 };
 
+// tools.c //
 char		*ft_strtok(char *str, const char *delim, int *flags);
 char		*ft_strldup(const char *str, size_t len);
 size_t		ft_strpbrk(const char *str, const char *delim, int *flags);
+
 void		make_lst(char *input, t_cmdlst **cmdlst);
 void		first_divide(char *input, t_cmdlst **cmdlst);
 void		*ft_realloc(void *ptr, size_t size);
@@ -65,19 +67,28 @@ void		empty_lst(t_cmdlst *cmdlst);
 void		ft_cmdlstiter(t_cmdlst **cmdlst, void (*f)(t_cmdlst *));
 void		print_cmdlst_node(t_cmdlst *node);
 
+// envp.c //
+void		envp_remove_line(char **envp, char *name);
+char		**envp_set_line(char **envp, char *name, char *value);
+char		*envp_get_value_line(char **envp, char *name);
+
 // envp_tools.c //
 int			is_name_in_line(char *envline, char *name);
 int			is_name_in_envp(char **envp, char *name);
 char		*build_envp_line(char *name, char *value);
+char		*get_name(char *env_line);
 char		*get_value(char *env_line);
+void		put_envp(char **envp); // TEMPORARY
 
 // execution.c //
 int			execution(t_cmdlst *cmdlst);
 
 // built-ins //
-void		ft_cd(char *dirname);
-void		ft_echo(char **args, char **env, int fd_out);
-void		ft_env(char **envp);
-//void		ft_export(char **args, char **envp, int fd_out);
+void		ft_cd(char **args, char ***envp, int fd_out);
+void		ft_echo(char **args, char ***envp, int fd_out);
+void		ft_exit(char **args, char ***envp, int fd_out);
+void		ft_env(char **args, char ***envp, int fd_out);
+void		ft_pwd(char **args, char ***envp, int fd_out);
+void		ft_export(char **args, char ***envp, int fd_out);
 
 #endif
