@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 13:42:15 by jbernard          #+#    #+#             */
-/*   Updated: 2023/04/19 15:04:40 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/04/24 15:10:28 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,19 @@ Exemples:
 
 #include "../../includes/minishell.h"
 
-void	ft_env(char **envp)
+void	ft_env(char **args, char ***envp, int fd_out)
 {
-	int	i;
+	int		i;
+	char	**env;
 
+	(void)args;
+	(void)fd_out;
 	i = 0;
-	while (envp[i])
+	env = *envp;
+	while (env[i])
 	{
-		if (ft_strlen(get_value(envp[i])) > 0)
-			printf("%s\n", envp[i]);
+		if (get_value(env[i]))
+			printf("%s\n", env[i]);
 		i++;
 	}
-	return ;
 }
