@@ -6,7 +6,7 @@
 #    By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/16 04:45:18 by jbernard          #+#    #+#              #
-#    Updated: 2023/04/24 16:22:48 by jbernard         ###   ########.fr        #
+#    Updated: 2023/04/26 14:45:04 by jbernard         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,8 +36,9 @@ MAIN_FILES = main.c			\
 			tools.c			\
 			mng_lst.c		\
 			mng_lst2.c		\
-			envp.c			\
-			envp_tools.c	\
+			mng_envp.c		\
+			mng_envp2.c		\
+			mng_envp_temp.c \
 			execution.c		\
 			quotes.c
 
@@ -71,7 +72,7 @@ $(OBJ_DIR)%.o: %.c | $(OBJ_DIR)
 	@ printf "$(GREEN)- ⚡⚡⚡ -> Compiling $(PURPLE)$(notdir $@)$(GREEN) using $(PURPLE)$(notdir $<)$(GREEN)...           \r$(RESET)"
 	@ $(CC) $(CFLAGS) -I$(INC_DIR) -c $< -o $@
 
-$(OBJ_DIR):
+obj:
 	@ mkdir -p $(OBJ_DIR)
 
 # Download and install readline library
