@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   envp_tools.c                                       :+:      :+:    :+:   */
+/*   mng_envp2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 13:06:54 by jbernard          #+#    #+#             */
-/*   Updated: 2023/04/25 11:22:36 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/04/26 11:08:21 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ char	*get_value(char *env_line)
 	i = 0;
 	while (env_line[i] != '=')
 		i++;
-	if (!env_line[i + 1] || (env_line[i + 1])
+	if (!env_line[i + 1] || (env_line[i + 1]))
 		return ("");
 	i++;
 	return (&env_line[i]);

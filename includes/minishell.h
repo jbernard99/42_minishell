@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:25:35 by jbernard          #+#    #+#             */
-/*   Updated: 2023/04/24 16:24:09 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/04/25 11:42:13 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,12 @@ typedef struct s_cmdlst {
 	char			***envp;
 	struct s_cmdlst	*next;
 }		t_cmdlst;
+
+typdedef struct s_envplst {
+	char				*name;
+	char				*value;
+	struct s_envplst	*next;
+}	t_envplst;
 
 enum	e_flags{
 	PIPEI = 1 << 0,
