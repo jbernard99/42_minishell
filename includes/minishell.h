@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:25:35 by jbernard          #+#    #+#             */
-/*   Updated: 2023/04/27 10:31:44 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/04/27 11:10:24 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,10 @@ typedef struct s_cmdlst {
 	struct s_cmdlst	*next;
 }		t_cmdlst;
 
-typedef struct s_envlst {
+typedef struct s_envplst {
 	char				*name;
 	char				*value;
-	struct s_envlst	*next;
+	struct s_envplst	*next;
 }	t_envlst;
 
 enum	e_flags{
@@ -97,5 +97,9 @@ void		ft_exit(char **args, char ***envp, int fd_out);
 void		ft_env(char **args, char ***envp, int fd_out);
 void		ft_pwd(char **args, char ***envp, int fd_out);
 void		ft_export(char **args, char ***envp, int fd_out);
+
+// mng_envp.c //
+void	create_envplst_from_envp(t_envlst **envlst, char **envp);
+void	put_envlst(t_envlst *envlst);
 
 #endif

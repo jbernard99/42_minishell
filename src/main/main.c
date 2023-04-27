@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:31:19 by jbernard          #+#    #+#             */
-/*   Updated: 2023/04/27 10:24:53 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/04/27 11:09:27 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,14 +77,16 @@ void	set_new_termios(struct termios old_termios)
 int	main(int argc, char **argv, char **envp)
 {
 	struct termios	old_termios;
+	t_envlst		*envlst;
 
+	create_envplst_from_envp(&envlst, envp);
+	//put_envlst(envlst);
 	tcgetattr(STDIN_FILENO, &old_termios);
 	set_new_termios(old_termios);
 	signal(SIGINT, ctrlc_handle);
 	signal(SIGQUIT, sigquit_handle);
 	(void)argc;
 	(void)argv;
-	envp = ft_tabstrdup(envp);
 	prompt_loop(envp);
 	tcsetattr(STDIN_FILENO, TCSANOW, &old_termios);
 	return (0);
