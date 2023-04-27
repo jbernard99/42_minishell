@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 13:06:54 by jbernard          #+#    #+#             */
-/*   Updated: 2023/04/19 12:14:26 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/04/21 15:39:56 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,8 @@ char	*get_value(char *env_line)
 	}
 	if (!env_line[i + 1])
 		return ("");
-	return (&env_line[i++]);
+	i++;
+	return (&env_line[i]);
 }
 
 // This function prints the envp !!! FOR DEVELOPMENT USAGE ONLY !!!

@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:25:35 by jbernard          #+#    #+#             */
-/*   Updated: 2023/04/20 13:29:29 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/04/27 10:18:44 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ enum	e_flags{
 	DQUOTE = 1 << 7
 };
 
+char		*ft_strjoinfree(char *s1, char *s2);
 char		*ft_strtok(char *str, const char *delim, int *flags);
 char		*ft_strldup(const char *str, size_t len);
 size_t		ft_strpbrk(const char *str, const char *delim, int *flags);
