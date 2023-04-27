@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:31:19 by jbernard          #+#    #+#             */
-/*   Updated: 2023/04/20 13:31:37 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/04/27 10:24:53 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	ctrlc_handle(int sig)
 //It's not because a function does nothing that it's useless
 void	sigquit_handle(int sig)
 {
+	write(1, "exit\n", 5);
 	(void)sig;
 }
 
@@ -83,6 +84,7 @@ int	main(int argc, char **argv, char **envp)
 	signal(SIGQUIT, sigquit_handle);
 	(void)argc;
 	(void)argv;
+	envp = ft_tabstrdup(envp);
 	prompt_loop(envp);
 	tcsetattr(STDIN_FILENO, TCSANOW, &old_termios);
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 13:40:48 by jbernard          #+#    #+#             */
-/*   Updated: 2023/04/19 15:02:14 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/04/24 16:23:52 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 	# Options
 		-n
 	
-	# Faire des test de la vrai fonction:
 	Exemples:
 				echo : prints empty newline
 				echo x : prints "x\n"
@@ -23,26 +22,17 @@
 				echo -n bonjour : prints "bonjour" (No newline)
 				echo "Bonjour" "Allo" : prints "Bonjour Allo"
 				               (With space in between each args)
- 	# Process
-
-	# Edge case:
-
-	# Errors:
-		[ ]  
-
-	# COMPILE :
-	 	gcc echo.c -o echo
 */
 
 #include "../../includes/minishell.h"
 
-void	ft_echo(char **args, char **env, int fd_out)
+void	ft_echo(char **args, char ***envp, int fd_out)
 {
 	int	argc;
 	int	i;
 	int	nl;
-
-	(void)env;
+	
+	(void)envp;
 	nl = 1;
 	if (!ft_strncmp(args[1], "-n", 2))
 	{
@@ -61,13 +51,3 @@ void	ft_echo(char **args, char **env, int fd_out)
 	if (nl)
 		ft_putchar_fd('\n', fd_out);
 }
-
-// int	main(int argc, char **argv)
-// {
-// 	char **d_envp = NULL;
-
-// 	argc--;
-// 	argv++;
-// 	ft_echo(argv, d_envp, 1);
-// 	return (0);
-// }

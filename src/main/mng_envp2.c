@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   envp_tools.c                                       :+:      :+:    :+:   */
+/*   mng_envp2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 13:06:54 by jbernard          #+#    #+#             */
-/*   Updated: 2023/04/21 15:39:56 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/04/27 10:26:31 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,22 +46,21 @@ char	*build_envp_line(char *name, char *value)
 	char	*line;
 
 	line = ft_strjoin(name, "=");
-	line = ft_strjoin(line, value);
+	if (value)
+		line = ft_strjoin(line, value);
+	else
+		line = ft_strjoin(line, "''");
 	return (line);
 }
 
-// This function get the variable name of a line found in the envp
 char	*get_name(char *env_line)
 {
-	int	i;
+	size_t	i;
 
 	i = 0;
-	while (env_line[i])
-	{
-		if (env_line[i] == '=')
-			env_line[i] = '\0';
-	}
-	return (&env_line[0]);
+	while (env_line[i + 1] != '=' && env_line[i + 1])
+		i++;
+	return (ft_strldup(env_line, i + 1));
 }
 
 // This function get the value of a line found in the envp.
@@ -71,10 +70,8 @@ char	*get_value(char *env_line)
 
 	i = 0;
 	while (env_line[i] != '=')
-	{
 		i++;
-	}
-	if (!env_line[i + 1])
+	if (!env_line[i + 1] || (env_line[i + 1]))
 		return ("");
 	i++;
 	return (&env_line[i]);
@@ -86,11 +83,6 @@ void	put_envp(char **envp)
 	int	i;
 
 	i = 0;
-	printf("************ Envp beginning : ***************\n");
-	while (envp[i])
-	{
-		printf("%s\n", envp[i]);
-		i++;
-	}
-	printf("************ Line count (i) : %d ***************\n\n", i);
+	while (envp[i] != NULL)
+		printf("declare -x %s\n", envp[i++]);
 }
