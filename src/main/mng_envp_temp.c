@@ -6,11 +6,27 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 11:44:16 by jbernard          #+#    #+#             */
-/*   Updated: 2023/04/26 15:05:33 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/04/27 22:12:31 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+size_t		ft_envlstlen(t_envlst *envlst)
+{
+	size_t	i;
+
+	i = 0;	
+	if (envlst)
+	{
+		while (envlst->next)
+		{
+			i++;
+			envlst = envlst->next;	
+		}
+	}
+	return (i);
+}
 
 t_envlst	*envlst_last(t_envlst *envlst)
 {
@@ -58,10 +74,19 @@ void	create_envplst_from_envp(t_envlst **envlst, char **envp)
 
 void	put_envlst(t_envlst *envlst)
 {
-	printf("Entering put\n");
 	while (envlst)
 	{
 		printf("Name: %s\nValue: %s\n", envlst->name, envlst->value);
 		envlst = envlst->next;
+	}
+}
+
+char	**get_envp_from_envlst(t_envlst *envlst)
+{
+	char	**envp;
+	
+	envp = malloc(sizeof(char *) * (ft_envlstlen(envlst)));
+	while (envlst)
+	{
 	}
 }

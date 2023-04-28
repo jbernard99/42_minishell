@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 16:37:35 by jbernard          #+#    #+#             */
-/*   Updated: 2023/04/24 16:26:12 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/04/27 21:51:52 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	execute_sh(t_cmdlst *cmdlst)
 
 void	execute_built_in(t_cmdlst *cmdlst, void (*func)())
 {
-	func(cmdlst->token, cmdlst->envp, 1);
+	func(cmdlst->token, get_envp_from_envlst(cmdlst->envlst), 1);
 }
 
 int	execution(t_cmdlst *cmdlst)
@@ -72,7 +72,7 @@ int	execution(t_cmdlst *cmdlst)
 			execute_sh(cmdlst);
 		if (cmdlst->next != NULL)
 		{
-			cmdlst->next->envp = cmdlst->envp;
+			cmdlst->next->envlst = cmdlst->envlst;
 			cmdlst = cmdlst->next;
 		}
 		else

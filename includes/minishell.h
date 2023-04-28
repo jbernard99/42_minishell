@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:25:35 by jbernard          #+#    #+#             */
-/*   Updated: 2023/04/26 14:46:54 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/04/27 22:13:23 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,19 +25,20 @@
 # include "../libraries/readline/includes/readline.h"
 # include "../libraries/readline/includes/history.h"
 
+typedef struct s_envplst {
+	char				*name;
+	char				*value;
+	int					index;
+	struct s_envplst	*next;
+}	t_envlst;
+
 typedef struct s_cmdlst {
 	int				flags;
 	char			*cmd;
 	char			**token;
-	char			***envp;
+	t_envlst		*envlst;
 	struct s_cmdlst	*next;
 }		t_cmdlst;
-
-typedef struct s_envplst {
-	char				*name;
-	char				*value;
-	struct s_envplst	*next;
-}	t_envlst;
 
 enum	e_flags{
 	PIPEI = 1 << 0,
