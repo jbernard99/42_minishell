@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 11:44:16 by jbernard          #+#    #+#             */
-/*   Updated: 2023/04/27 22:12:31 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/04/28 13:54:34 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,19 +74,54 @@ void	create_envplst_from_envp(t_envlst **envlst, char **envp)
 
 void	put_envlst(t_envlst *envlst)
 {
-	while (envlst)
-	{
-		printf("Name: %s\nValue: %s\n", envlst->name, envlst->value);
-		envlst = envlst->next;
-	}
+	printf("Name: %s\nValue: %s\n", envlst->name, envlst->value);
 }
 
-char	**get_envp_from_envlst(t_envlst *envlst)
+char	*get_fomatted_env(t_envlst *envlst)
+{
+	char	*line;
+	
+	if (envlst->value)
+	{
+		line = ft_strjoin(envlst->name, "=");
+		if (envlst->value)
+		{}
+	}
+	return (line);
+}
+
+char	**get_envp_from_envlst_for_env(t_envlst *envlst)
 {
 	char	**envp;
+	char	*temp;
+	int		i;
 	
+	i = 0;
 	envp = malloc(sizeof(char *) * (ft_envlstlen(envlst)));
 	while (envlst)
 	{
+		temp = ft_strjoin(envlst->name, "=");
+		if (envlst->value)
+			temp = ft_strfreejoin(temp, envlst->value);
+		else
+			temp = ft_strfreejoin(temp, "\'\'");
+		envp[i] = temp;
+		envlst = envlst->next;
+		i++;
+	}
+	return (envp);
+}
+
+void	envlst_iter(t_envlst **envlst, void (*f)(t_envlst *))
+{
+	t_envlst	*curr;
+	
+	if (!envlst || !f)
+		return ;
+	curr = *envlst;
+	while (curr)
+	{
+		f(curr);
+		curr = curr->next;
 	}
 }
