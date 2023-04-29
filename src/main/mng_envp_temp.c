@@ -6,13 +6,13 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 11:44:16 by jbernard          #+#    #+#             */
-/*   Updated: 2023/04/28 13:54:34 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/04/29 16:56:27 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-size_t		ft_envlstlen(t_envlst *envlst)
+size_t		count_total_envlst(t_envlst *envlst)
 {
 	size_t	i;
 
@@ -22,6 +22,23 @@ size_t		ft_envlstlen(t_envlst *envlst)
 		while (envlst->next)
 		{
 			i++;
+			envlst = envlst->next;	
+		}
+	}
+	return (i);
+}
+
+size_t		count_initiated_envlst(t_envlst *envlst)
+{
+	size_t	i;
+
+	i = 0;	
+	if (envlst)
+	{
+		while (envlst->next)
+		{
+			if (envlst->value != NULL)
+				i++;
 			envlst = envlst->next;	
 		}
 	}
@@ -77,38 +94,44 @@ void	put_envlst(t_envlst *envlst)
 	printf("Name: %s\nValue: %s\n", envlst->name, envlst->value);
 }
 
-char	*get_fomatted_env(t_envlst *envlst)
+char	*get_formatted_env(t_envlst *envlst)
 {
 	char	*line;
 	
-	if (envlst->value)
+	printf("Formatting var %s ... with value %s\n", envlst->name, envlst->value);
+	if (envlst->value != NULL)
 	{
 		line = ft_strjoin(envlst->name, "=");
-		if (envlst->value)
-		{}
+		if (ft_strcmp(envlst->value, "\"\"") != 0)
+			line = ft_strfreejoin(line, envlst->value);
+		else
+			line = ft_strfreejoin(line, "\"\"");
+		printf("Line is : %s\n\n", line);
 	}
+	else
+		return (NULL);
 	return (line);
 }
 
-char	**get_envp_from_envlst_for_env(t_envlst *envlst)
+char	**get_envp_from_envlst(t_envlst *envlst)
 {
 	char	**envp;
-	char	*temp;
-	int		i;
-	
+	char	*line;
+	int 	i;
+
 	i = 0;
-	envp = malloc(sizeof(char *) * (ft_envlstlen(envlst)));
+	envp = ft_calloc(count_initiated_envlst(envlst), sizeof(char *));
 	while (envlst)
 	{
-		temp = ft_strjoin(envlst->name, "=");
-		if (envlst->value)
-			temp = ft_strfreejoin(temp, envlst->value);
-		else
-			temp = ft_strfreejoin(temp, "\'\'");
-		envp[i] = temp;
+		line = get_formatted_env(envlst);
+		if (line)
+		{
+			envp[i] = line;
+			i++;
+		}
 		envlst = envlst->next;
-		i++;
 	}
+	envp[i] = NULL;
 	return (envp);
 }
 

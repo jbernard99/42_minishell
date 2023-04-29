@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 16:37:35 by jbernard          #+#    #+#             */
-/*   Updated: 2023/04/28 13:35:48 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/04/29 16:44:07 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	execute_sh(t_cmdlst *cmdlst)
 		printf("Fork failed!\n");
 	else if (pid == 0)
 	{
-		e = execve(exec, cmdlst->token, cmdlst->envlst);
+		e = execve(exec, cmdlst->token, get_envp_from_envlst(cmdlst->envlst));
 		if (e == -1)
 		{
 			printf("bash: %s: command not found\n", cmdlst->token[0]);

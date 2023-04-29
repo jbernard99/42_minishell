@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:25:35 by jbernard          #+#    #+#             */
-/*   Updated: 2023/04/28 13:35:05 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/04/29 16:44:32 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,11 @@
 # include "../libraries/readline/includes/readline.h"
 # include "../libraries/readline/includes/history.h"
 
-typedef struct s_envplst {
+typedef struct s_envlst {
 	char				*name;
 	char				*value;
 	int					index;
-	struct s_envplst	*next;
+	struct s_envlst	*next;
 }	t_envlst;
 
 typedef struct s_cmdlst {
@@ -100,6 +100,7 @@ void		ft_export(char **args, char ***envp, int fd_out);
 
 // mng_envp.c //
 void	create_envplst_from_envp(t_envlst **envlst, char **envp);
+char	**get_envp_from_envlst(t_envlst *envlst);
 void	envlst_iter(t_envlst **envlst, void (*f)(t_envlst *));
 void	put_envlst(t_envlst *envlst);
 

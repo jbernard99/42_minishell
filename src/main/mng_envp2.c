@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 13:06:54 by jbernard          #+#    #+#             */
-/*   Updated: 2023/04/26 14:57:06 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/04/29 16:50:45 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,5 +84,6 @@ void	put_envp(char **envp)
 
 	i = 0;
 	while (envp[i] != NULL)
-		printf("declare -x %s\n", envp[i++]);
+		printf("%s\n", envp[i++]);
+		//printf("declare -x %s\n", envp[i++]);
 }

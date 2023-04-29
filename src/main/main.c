@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:31:19 by jbernard          #+#    #+#             */
-/*   Updated: 2023/04/28 13:34:37 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/04/29 16:45:32 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,8 @@ int	main(int argc, char **argv, char **envp)
 	t_envlst		*envlst;
 
 	create_envplst_from_envp(&envlst, envp);
-	envlst_iter(&envlst, put_envlst);
+	//envlst_iter(&envlst, put_envlst);
+	put_envp(get_envp_from_envlst(envlst));
 	tcgetattr(STDIN_FILENO, &old_termios);
 	set_new_termios(old_termios);
 	signal(SIGINT, ctrlc_handle);
