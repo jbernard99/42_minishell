@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 11:44:16 by jbernard          #+#    #+#             */
-/*   Updated: 2023/04/29 16:56:27 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/04/29 19:19:48 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,8 +97,7 @@ void	put_envlst(t_envlst *envlst)
 char	*get_formatted_env(t_envlst *envlst)
 {
 	char	*line;
-	
-	printf("Formatting var %s ... with value %s\n", envlst->name, envlst->value);
+
 	if (envlst->value != NULL)
 	{
 		line = ft_strjoin(envlst->name, "=");
@@ -106,7 +105,6 @@ char	*get_formatted_env(t_envlst *envlst)
 			line = ft_strfreejoin(line, envlst->value);
 		else
 			line = ft_strfreejoin(line, "\"\"");
-		printf("Line is : %s\n\n", line);
 	}
 	else
 		return (NULL);
@@ -120,7 +118,7 @@ char	**get_envp_from_envlst(t_envlst *envlst)
 	int 	i;
 
 	i = 0;
-	envp = ft_calloc(count_initiated_envlst(envlst), sizeof(char *));
+	envp = ft_calloc(count_initiated_envlst(envlst) + 1, sizeof(char *));
 	while (envlst)
 	{
 		line = get_formatted_env(envlst);
@@ -132,6 +130,7 @@ char	**get_envp_from_envlst(t_envlst *envlst)
 		envlst = envlst->next;
 	}
 	envp[i] = NULL;
+
 	return (envp);
 }
 
