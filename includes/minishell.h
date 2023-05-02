@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:25:35 by jbernard          #+#    #+#             */
-/*   Updated: 2023/04/29 16:44:32 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/05/02 15:17:44 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,17 +91,20 @@ void		put_envp(char **envp); // TEMPORARY
 int			execution(t_cmdlst *cmdlst);
 
 // built-ins //
-void		ft_cd(char **args, char ***envp, int fd_out);
-void		ft_echo(char **args, char ***envp, int fd_out);
-void		ft_exit(char **args, char ***envp, int fd_out);
-void		ft_env(char **args, char ***envp, int fd_out);
-void		ft_pwd(char **args, char ***envp, int fd_out);
-void		ft_export(char **args, char ***envp, int fd_out);
+void		ft_cd(char **args, t_envlst *envlst, int fd_out);
+void		ft_echo(char **args, t_envlst *envlst, int fd_out);
+void		ft_exit(char **args, t_envlst *envlst, int fd_out);
+void		ft_env(char **args, t_envlst *envlst, int fd_out);
+void		ft_pwd(char **args, t_envlst *envlst, int fd_out);
+void		ft_export(char **args, t_envlst *envlst, int fd_out);
 
 // mng_envp.c //
-void	create_envplst_from_envp(t_envlst **envlst, char **envp);
-char	**get_envp_from_envlst(t_envlst *envlst);
-void	envlst_iter(t_envlst **envlst, void (*f)(t_envlst *));
-void	put_envlst(t_envlst *envlst);
+t_envlst	*create_envlst_from_line(char *line);
+void		create_envlst_from_envp(t_envlst **envlst, char **envp);
+char		*get_formatted_env_var(t_envlst *envlst);
+char		**get_envp_from_envlst(t_envlst *envlst);
+void		envlst_iter(t_envlst **envlst, void (*f)(t_envlst *));
+void		put_envlst(t_envlst *envlst);
+t_envlst	*envlst_last(t_envlst *envlst);
 
 #endif

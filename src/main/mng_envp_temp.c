@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 11:44:16 by jbernard          #+#    #+#             */
-/*   Updated: 2023/04/29 19:19:48 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/05/02 15:14:31 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ t_envlst	*envlst_last(t_envlst *envlst)
 	return (envlst);
 }
 
-t_envlst	*create_envplst_from_line(char *line)
+t_envlst	*create_envlst_from_line(char *line)
 {
 	t_envlst 	*envlst;
 
@@ -69,7 +69,7 @@ t_envlst	*create_envplst_from_line(char *line)
 	return (envlst);
 }
 
-void	create_envplst_from_envp(t_envlst **envlst, char **envp)
+void	create_envlst_from_envp(t_envlst **envlst, char **envp)
 {
 	int			i;
 	t_envlst	*proxy;
@@ -78,11 +78,11 @@ void	create_envplst_from_envp(t_envlst **envlst, char **envp)
 	if (envlst)
 	{
 		if (!*envlst)
-			*envlst = create_envplst_from_line(envp[i++]);
+			*envlst = create_envlst_from_line(envp[i++]);
 		proxy = envlst_last(*envlst);
 		while (envp[i])
 		{
-			proxy->next = create_envplst_from_line(envp[i]);
+			proxy->next = create_envlst_from_line(envp[i]);
 			proxy = proxy->next;
 			i++;
 		}
@@ -94,7 +94,7 @@ void	put_envlst(t_envlst *envlst)
 	printf("Name: %s\nValue: %s\n", envlst->name, envlst->value);
 }
 
-char	*get_formatted_env(t_envlst *envlst)
+char	*get_formatted_env_var(t_envlst *envlst)
 {
 	char	*line;
 
@@ -119,17 +119,20 @@ char	**get_envp_from_envlst(t_envlst *envlst)
 
 	i = 0;
 	envp = ft_calloc(count_initiated_envlst(envlst) + 1, sizeof(char *));
+	write(1, "A\n", 2);
 	while (envlst)
 	{
-		line = get_formatted_env(envlst);
+		line = get_formatted_env_var(envlst);
 		if (line)
 		{
 			envp[i] = line;
 			i++;
 		}
 		envlst = envlst->next;
+		write(1, "B\n", 2);
 	}
 	envp[i] = NULL;
+	write(1, "C\n", 2);
 
 	return (envp);
 }

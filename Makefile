@@ -6,7 +6,7 @@
 #    By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/16 04:45:18 by jbernard          #+#    #+#              #
-#    Updated: 2023/04/26 14:45:04 by jbernard         ###   ########.fr        #
+#    Updated: 2023/05/02 13:08:28 by jbernard         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,11 +42,11 @@ MAIN_FILES = main.c			\
 			execution.c		\
 			quotes.c
 
-BI_FILES = 	cd.c		\
-			echo.c		\
-			env.c		\
-			pwd.c		\
+BI_FILES = 	echo.c		\
 			export.c	\
+			env.c		\
+			cd.c		\
+			pwd.c		\
 			exit.c		
 #			unset.cs
 
