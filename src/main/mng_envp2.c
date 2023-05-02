@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 13:06:54 by jbernard          #+#    #+#             */
-/*   Updated: 2023/05/02 14:04:31 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/05/02 17:10:35 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,10 +69,12 @@ char	*get_value(char *env_line)
 	size_t	i;
 
 	i = 0;
+	if (!ft_strchr(env_line, '='))
+		return (NULL);
 	while (env_line[i] != '=')
 		i++;
 	if (!env_line[i + 1])
-		return (NULL);
+		return ("\"\"");
 	i++;
 	return (ft_strdup(&env_line[i]));
 }

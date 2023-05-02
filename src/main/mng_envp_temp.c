@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 11:44:16 by jbernard          #+#    #+#             */
-/*   Updated: 2023/05/02 15:14:31 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/05/02 17:21:46 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,17 +101,14 @@ char	*get_formatted_env_var(t_envlst *envlst)
 	if (envlst->value != NULL)
 	{
 		line = ft_strjoin(envlst->name, "=");
-		if (ft_strcmp(envlst->value, "\"\"") != 0)
-			line = ft_strfreejoin(line, envlst->value);
-		else
-			line = ft_strfreejoin(line, "\"\"");
+		line = ft_strfreejoin(line, envlst->value);
 	}
 	else
 		return (NULL);
 	return (line);
 }
 
-char	**get_envp_from_envlst(t_envlst *envlst)
+char	**get_initiated_from_envlst(t_envlst *envlst)
 {
 	char	**envp;
 	char	*line;
@@ -119,7 +116,6 @@ char	**get_envp_from_envlst(t_envlst *envlst)
 
 	i = 0;
 	envp = ft_calloc(count_initiated_envlst(envlst) + 1, sizeof(char *));
-	write(1, "A\n", 2);
 	while (envlst)
 	{
 		line = get_formatted_env_var(envlst);
@@ -129,11 +125,44 @@ char	**get_envp_from_envlst(t_envlst *envlst)
 			i++;
 		}
 		envlst = envlst->next;
-		write(1, "B\n", 2);
 	}
 	envp[i] = NULL;
-	write(1, "C\n", 2);
 
+	return (envp);
+}
+
+char	*get_formatted_exp_var(t_envlst *envlst)
+{
+	char	*line;
+
+	if (envlst->value != NULL)
+	{
+		line = ft_strjoin(envlst->name, "=");
+		line = ft_strfreejoin(line, "\"");
+		line = ft_strfreejoin(line, envlst->value);
+		line = ft_strfreejoin(line, "\"");
+		return (line);
+	}
+	else
+		return (ft_strdup(envlst->name));
+}
+
+char	**get_all_from_envlst(t_envlst *envlst)
+{
+	char	**envp;
+	char	*line;
+	int		i;
+
+	i = 0;
+	envp = ft_calloc(count_total_envlst(envlst) + 1, sizeof(char *));
+	while (envlst)
+	{
+		line = get_formatted_exp_var(envlst);
+		envp[i] = line;
+		i++;
+		envlst = envlst->next;
+	}
+	envp[i] = NULL;
 	return (envp);
 }
 

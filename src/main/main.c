@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:31:19 by jbernard          #+#    #+#             */
-/*   Updated: 2023/05/02 15:14:56 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/05/02 16:37:15 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,10 +78,9 @@ int	main(int argc, char **argv, char **envp)
 	struct termios	old_termios;
 	t_envlst		*envlst;
 
-	char **n_envp;
 
 	create_envlst_from_envp(&envlst, envp);
-	n_envp = get_envp_from_envlst(envlst);
+	//char **n_envp = get_envp_from_envlst(envlst);
 	//put_envp(n_envp);
 	tcgetattr(STDIN_FILENO, &old_termios);
 	set_new_termios(old_termios);

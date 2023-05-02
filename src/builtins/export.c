@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 13:43:19 by jbernard          #+#    #+#             */
-/*   Updated: 2023/05/02 15:14:46 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/05/02 17:22:21 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,7 @@ char	**get_alpha_envp(t_envlst *envlst)
 	int		i;
 	int		j;
 
-	envp = get_envp_from_envlst(envlst);
-	write(1, "D\n", 2);
+	envp = get_all_from_envlst(envlst);
 	i = 0;
 	while (envp[i])
 	{
@@ -51,6 +50,18 @@ char	**get_alpha_envp(t_envlst *envlst)
 		i++;
 	}
 	return (envp);
+}
+
+void	put_export_envp(char **envp)
+{
+	int	i;
+
+	i = 0;
+	while (envp[i])
+	{
+		printf("declare -x %s\n", envp[i]);
+		i++;
+	}
 }
 
 void	ft_export(char **args, t_envlst *envlst, int fd_out)
@@ -74,7 +85,7 @@ void	ft_export(char **args, t_envlst *envlst, int fd_out)
 	else
 	{
 		alpha_envp = get_alpha_envp(envlst);
-		put_envp(alpha_envp);
+		put_export_envp(alpha_envp);
 		free(alpha_envp);
 	}
 	//ft_freetabstr(&new_envp);
