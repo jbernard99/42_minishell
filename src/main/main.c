@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:31:19 by jbernard          #+#    #+#             */
-/*   Updated: 2023/04/27 11:09:27 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/05/01 13:08:38 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	sigquit_handle(int sig)
 	(void)sig;
 }
 
-void	prompt_loop(char **envp)
+void	prompt_loop(t_envlst **envlst)
 {
 	t_cmdlst	*cmdlst;
 	char		*input;
@@ -52,8 +52,12 @@ void	prompt_loop(char **envp)
 			make_lst(input, &cmdlst);
 			/* ft_cmdlstiter(&cmdlst, &print_cmdlst_node); */
 			free(input);
-			cmdlst->envp = &envp;
-			execution(cmdlst);
+			/* if (is_there_env_var(cmdlst->token[0])) */
+			/* 	cmdlst->token[0] = rplc_env_var(*envlst, cmdlst->token[0]); */
+			/* ft_cmdlstiter(&cmdlst, &print_cmdlst_node); */
+			/* cmdlst->envp = &envp; */
+			/* execution(cmdlst); */
+			(void)envlst;
 			cmdlst_clear(&cmdlst, &empty_lst);
 		}
 	}
@@ -87,7 +91,7 @@ int	main(int argc, char **argv, char **envp)
 	signal(SIGQUIT, sigquit_handle);
 	(void)argc;
 	(void)argv;
-	prompt_loop(envp);
+	prompt_loop(&envlst);
 	tcsetattr(STDIN_FILENO, TCSANOW, &old_termios);
 	return (0);
 }

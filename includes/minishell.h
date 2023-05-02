@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:25:35 by jbernard          #+#    #+#             */
-/*   Updated: 2023/04/27 11:10:24 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/05/01 08:52:19 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,10 @@ typedef struct s_cmdlst {
 	struct s_cmdlst	*next;
 }		t_cmdlst;
 
-typedef struct s_envplst {
+typedef struct s_envlst {
 	char				*name;
 	char				*value;
-	struct s_envplst	*next;
+	struct s_envlst			*next;
 }	t_envlst;
 
 enum	e_flags{
@@ -86,6 +86,10 @@ char		*build_envp_line(char *name, char *value);
 char		*get_name(char *env_line);
 char		*get_value(char *env_line);
 void		put_envp(char **envp); // TEMPORARY
+char		*m_get_value(t_envlst **envp, char *name);
+int			m_is_name_in_envp(t_envlst **envp, char *name);
+int			is_there_env_var(char *str);
+char		*rplc_env_var(t_envlst *envplst, char *str);
 
 // execution.c //
 int			execution(t_cmdlst *cmdlst);

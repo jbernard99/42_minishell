@@ -6,7 +6,7 @@
 /*   By: mgagnon <mgagnon@student.42quebec.com      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 12:09:57 by mgagnon           #+#    #+#             */
-/*   Updated: 2023/04/27 10:40:59 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/05/01 09:07:30 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char	*get_var_name(char *str)
 	return (name);
 }
 
-char	*rplc_env_var(t_envlst *envlst, char *str)
+char	*rplc_env_var(t_envlst *envplst, char *str)
 {
 	int	i;
 	char	*old;
@@ -32,10 +32,12 @@ char	*rplc_env_var(t_envlst *envlst, char *str)
 	char	*replacement;
 
 	i = 0;
+	replacement = NULL;
 	while (str[i] != '$')
 		i++;
 	var = get_var_name(&str[++i]);
-	replacement = get_value(envlst, var);
+	if (m_is_name_in_envp(&envplst, var))
+		replacement = ft_strdup(m_get_value(&envplst, var));
 	free(var);
 	old = ft_strldup(str, --i);
 	var = ft_strjoinfree(old, replacement);
@@ -53,8 +55,6 @@ char	*rplc_env_var(t_envlst *envlst, char *str)
 int	is_there_env_var(char *str)
 {
 	int	i;
-	int	j;
-	char	*var;
 
 	i = 0;
 	while (str[i])
