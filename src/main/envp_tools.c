@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mng_envp2.c                                        :+:      :+:    :+:   */
+/*   envp_tools.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 13:06:54 by jbernard          #+#    #+#             */
-/*   Updated: 2023/04/27 11:10:35 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/05/02 10:56:21 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ char	*get_value(char *env_line)
 	while (env_line[i] != '=')
 		i++;
 	if (!env_line[i + 1])
-		return (NULL);
+		return ("");
 	i++;
 	return (ft_strdup(&env_line[i]));
 }
