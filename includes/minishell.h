@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:25:35 by jbernard          #+#    #+#             */
-/*   Updated: 2023/05/02 17:18:10 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/05/03 14:58:43 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,5 +107,7 @@ char		**get_initiated_from_envlst(t_envlst *envlst);
 void		envlst_iter(t_envlst **envlst, void (*f)(t_envlst *));
 void		put_envlst(t_envlst *envlst);
 t_envlst	*envlst_last(t_envlst *envlst);
+t_envlst	*is_name_in_envlst(t_envlst *envlst, char *name);
+void		add_to_envlst(t_envlst *envlst, char *line);
 
 #endif

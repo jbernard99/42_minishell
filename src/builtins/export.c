@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 13:43:19 by jbernard          #+#    #+#             */
-/*   Updated: 2023/05/02 17:22:21 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/05/03 16:06:47 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,18 @@ Export :
 
 #include "../../includes/minishell.h"
 
+void	put_export_envp(char **envp)
+{
+	int	i;
+
+	i = 0;
+	while (envp[i])
+	{
+		printf("declare -x %s\n", envp[i]);
+		i++;
+	}
+}
+
 char	**get_alpha_envp(t_envlst *envlst)
 {
 	char	**envp;
@@ -34,10 +46,10 @@ char	**get_alpha_envp(t_envlst *envlst)
 
 	envp = get_all_from_envlst(envlst);
 	i = 0;
-	while (envp[i])
+	while (envp[i] != NULL)
 	{
 		j = i + 1;
-		while (envp[j])
+		while (envp[j] != NULL)
 		{
 			if (ft_strcmp(envp[i], envp[j]) > 0)
 			{
@@ -52,23 +64,13 @@ char	**get_alpha_envp(t_envlst *envlst)
 	return (envp);
 }
 
-void	put_export_envp(char **envp)
-{
-	int	i;
 
-	i = 0;
-	while (envp[i])
-	{
-		printf("declare -x %s\n", envp[i]);
-		i++;
-	}
-}
 
 void	ft_export(char **args, t_envlst *envlst, int fd_out)
 {
-	char 	**alpha_envp;
-	int		argc;
-	int		i;
+	char 		**alpha_envp;
+	int			argc;
+	int			i;
 
 	(void)fd_out;
 	argc = ft_strtablen(args);
@@ -77,16 +79,15 @@ void	ft_export(char **args, t_envlst *envlst, int fd_out)
 	{
 		while (args[i])
 		{
-			envlst = envlst_last(envlst);
-			envlst->next = create_envlst_from_line(args[i]);
-			i++;
-		}	
+			add_to_envlst(envlst, args[i]);
+			i++;	
+		}
 	}
 	else
 	{
+		envlst_iter(&envlst, put_envlst);
 		alpha_envp = get_alpha_envp(envlst);
 		put_export_envp(alpha_envp);
 		free(alpha_envp);
 	}
-	//ft_freetabstr(&new_envp);
 }
