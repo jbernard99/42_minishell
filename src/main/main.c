@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:31:19 by jbernard          #+#    #+#             */
-/*   Updated: 2023/05/01 13:08:38 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/05/02 10:59:10 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	sigquit_handle(int sig)
 	(void)sig;
 }
 
-void	prompt_loop(t_envlst **envlst)
+void	prompt_loop(t_envlst **envlst, char **envp)
 {
 	t_cmdlst	*cmdlst;
 	char		*input;
@@ -50,13 +50,13 @@ void	prompt_loop(t_envlst **envlst)
 		{
 			add_history(input);
 			make_lst(input, &cmdlst);
-			/* ft_cmdlstiter(&cmdlst, &print_cmdlst_node); */
+			ft_cmdlstiter(&cmdlst, &print_cmdlst_node);
 			free(input);
-			/* if (is_there_env_var(cmdlst->token[0])) */
-			/* 	cmdlst->token[0] = rplc_env_var(*envlst, cmdlst->token[0]); */
-			/* ft_cmdlstiter(&cmdlst, &print_cmdlst_node); */
-			/* cmdlst->envp = &envp; */
-			/* execution(cmdlst); */
+			if (is_there_env_var(cmdlst->token[0]))
+				cmdlst->token[0] = rplc_env_var(*envlst, cmdlst->token[0]);
+			ft_cmdlstiter(&cmdlst, &print_cmdlst_node);
+			cmdlst->envp = &envp;
+			execution(cmdlst);
 			(void)envlst;
 			cmdlst_clear(&cmdlst, &empty_lst);
 		}
@@ -91,7 +91,7 @@ int	main(int argc, char **argv, char **envp)
 	signal(SIGQUIT, sigquit_handle);
 	(void)argc;
 	(void)argv;
-	prompt_loop(&envlst);
+	prompt_loop(&envlst, envp);
 	tcsetattr(STDIN_FILENO, TCSANOW, &old_termios);
 	return (0);
 }
