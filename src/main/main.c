@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:31:19 by jbernard          #+#    #+#             */
-/*   Updated: 2023/04/23 14:05:43 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/05/02 16:37:15 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	sigquit_handle(int sig)
 	(void)sig;
 }
 
-void	prompt_loop(char **envp)
+void	prompt_loop(t_envlst *envlst)
 {
 	t_cmdlst	*cmdlst;
 	char		*input;
@@ -51,7 +51,7 @@ void	prompt_loop(char **envp)
 			add_history(input);
 			make_lst(input, &cmdlst);
 			free(input);
-			cmdlst->envp = &envp;
+			cmdlst->envlst = envlst;
 			execution(cmdlst);
 			cmdlst_clear(&cmdlst, &empty_lst);
 		}
@@ -76,15 +76,19 @@ void	set_new_termios(struct termios old_termios)
 int	main(int argc, char **argv, char **envp)
 {
 	struct termios	old_termios;
+	t_envlst		*envlst;
 
+
+	create_envlst_from_envp(&envlst, envp);
+	//char **n_envp = get_envp_from_envlst(envlst);
+	//put_envp(n_envp);
 	tcgetattr(STDIN_FILENO, &old_termios);
 	set_new_termios(old_termios);
 	signal(SIGINT, ctrlc_handle);
 	signal(SIGQUIT, sigquit_handle);
 	(void)argc;
 	(void)argv;
-	envp = ft_tabstrdup(envp);
-	prompt_loop(envp);
+	prompt_loop(envlst);
 	tcsetattr(STDIN_FILENO, TCSANOW, &old_termios);
 	return (0);
 }

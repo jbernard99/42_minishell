@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 13:43:19 by jbernard          #+#    #+#             */
-/*   Updated: 2023/04/24 16:21:12 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/05/08 10:28:57 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,56 +25,67 @@ Export :
 
 #include "../../includes/minishell.h"
 
-char	**get_alpha_envp(char **envp)
+void	put_export_envp(char **envp)
 {
-	char	**n_envp;
+	int	i;
+
+	i = 0;
+	while (envp[i])
+	{
+		printf("declare -x %s\n", envp[i]);
+		i++;
+	}
+}
+
+char	**get_alpha_envp(t_envlst *envlst)
+{
+	char	**envp;
 	char	*temp;
 	int		i;
 	int		j;
 
-	n_envp = ft_tabstrdup(envp);
+	envp = get_all_from_envlst(envlst);
 	i = 0;
-	while (n_envp[i])
+	while (envp[i] != NULL)
 	{
 		j = i + 1;
-		while (n_envp[j])
+		while (envp[j] != NULL)
 		{
-			if (ft_strcmp(n_envp[i], n_envp[j]) > 0)
+			if (ft_strcmp(envp[i], envp[j]) > 0)
 			{
-				temp = ft_strdup(n_envp[i]);
-				n_envp[i] = ft_strdup(n_envp[j]);
-				n_envp[j] = ft_strdup(temp);
+				temp = ft_strdup(envp[i]);
+				envp[i] = ft_strdup(envp[j]);
+				envp[j] = ft_strdup(temp);
 			}
 			j++;
 		}
 		i++;
 	}
-	return (n_envp);
+	return (envp);
 }
 
-void	ft_export(char **args, char ***envp, int fd_out)
+// NEED TO MAKE export x=""5"" -> x=5
+void	ft_export(char **args, t_envlst *envlst, int fd_out)
 {
-	char	**new_envp;
-	int		argc;
-	int		i;
+	char 		**alpha_envp;
+	int			argc;
+	int			i;
 
 	(void)fd_out;
-	new_envp = NULL;
 	argc = ft_strtablen(args);
 	i = 1;
 	if (argc > 1)
 	{
 		while (args[i])
 		{
-			*envp = envp_set_line(*envp, get_name(args[i]), get_value(args[i]));
-			i++;
-		}	
+			add_to_envlst(envlst, args[i]);
+			i++;	
+		}
 	}
 	else
 	{
-		new_envp = get_alpha_envp(*envp);
-		put_envp(new_envp);
-		free(new_envp);
+		alpha_envp = get_alpha_envp(envlst);
+		put_export_envp(alpha_envp);
+		free(alpha_envp);
 	}
-	//ft_freetabstr(&new_envp);
 }

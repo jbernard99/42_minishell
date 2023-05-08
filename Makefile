@@ -6,7 +6,7 @@
 #    By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/16 04:45:18 by jbernard          #+#    #+#              #
-#    Updated: 2023/04/24 16:22:48 by jbernard         ###   ########.fr        #
+#    Updated: 2023/05/08 11:35:35 by jbernard         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,24 +30,25 @@ LIBFT_DIR = ./libraries/42_libft
 RL_DIR = ./libraries/readline
 
 # Files
-MAIN_FILES = main.c			\
-			ft_realloc.c	\
-			parsing.c		\
-			tools.c			\
-			mng_lst.c		\
-			mng_lst2.c		\
-			envp.c			\
-			envp_tools.c	\
-			execution.c		\
-			quotes.c
+MAIN_FILES = 	main.c					\
+				execution.c				\
+				tools.c					\
+				mng_lst.c				\
+				mng_lst2.c				\
+				envlst_to_envp.c		\
+				envp_to_envlst.c		\
+				envlst_tools.c			\
+				parsing.c				\
+				quotes.c
+#				ft_realloc.c
 
-BI_FILES = 	cd.c		\
-			echo.c		\
-			env.c		\
-			pwd.c		\
+BI_FILES = 	echo.c		\
 			export.c	\
+			env.c		\
+			cd.c		\
+			pwd.c		\
 			exit.c		
-#			unset.cs
+#			unset.c
 
 #SRC_FILES = $(wildcard $(MAIN_DIR)/*.c) $(wildcard $(BI_DIR)/*.c)
 
@@ -71,7 +72,7 @@ $(OBJ_DIR)%.o: %.c | $(OBJ_DIR)
 	@ printf "$(GREEN)- ⚡⚡⚡ -> Compiling $(PURPLE)$(notdir $@)$(GREEN) using $(PURPLE)$(notdir $<)$(GREEN)...           \r$(RESET)"
 	@ $(CC) $(CFLAGS) -I$(INC_DIR) -c $< -o $@
 
-$(OBJ_DIR):
+obj:
 	@ mkdir -p $(OBJ_DIR)
 
 # Download and install readline library
