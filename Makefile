@@ -6,7 +6,7 @@
 #    By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/16 04:45:18 by jbernard          #+#    #+#              #
-#    Updated: 2023/05/08 11:35:35 by jbernard         ###   ########.fr        #
+#    Updated: 2023/05/08 12:44:23 by jbernard         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,8 +47,8 @@ BI_FILES = 	echo.c		\
 			env.c		\
 			cd.c		\
 			pwd.c		\
+			unset.c		\
 			exit.c		
-#			unset.c
 
 #SRC_FILES = $(wildcard $(MAIN_DIR)/*.c) $(wildcard $(BI_DIR)/*.c)
 
