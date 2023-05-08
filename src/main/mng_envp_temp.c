@@ -6,12 +6,13 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 11:44:16 by jbernard          #+#    #+#             */
-/*   Updated: 2023/05/03 16:16:56 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/05/08 11:33:42 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
+// OK
 size_t		count_total_envlst(t_envlst *envlst)
 {
 	size_t	i;
@@ -25,10 +26,11 @@ size_t		count_total_envlst(t_envlst *envlst)
 			envlst = envlst->next;	
 		}
 	}
-	printf("IIII ==== %zu\n\n", i);
 	return (i);
 }
 
+
+// OK
 size_t		count_initiated_envlst(t_envlst *envlst)
 {
 	size_t	i;
@@ -46,6 +48,7 @@ size_t		count_initiated_envlst(t_envlst *envlst)
 	return (i);
 }
 
+// OK
 t_envlst	*envlst_last(t_envlst *envlst)
 {
 	if (envlst)
@@ -56,6 +59,7 @@ t_envlst	*envlst_last(t_envlst *envlst)
 	return (envlst);
 }
 
+// OK
 t_envlst	*create_envlst_from_line(char *line)
 {
 	t_envlst 	*envlst;
@@ -70,6 +74,7 @@ t_envlst	*create_envlst_from_line(char *line)
 	return (envlst);
 }
 
+// OK
 void	create_envlst_from_envp(t_envlst **envlst, char **envp)
 {
 	int			i;
@@ -90,11 +95,13 @@ void	create_envlst_from_envp(t_envlst **envlst, char **envp)
 	}
 }
 
+//OK
 void	put_envlst(t_envlst *envlst)
 {
 	printf("Name: %s\nValue: %s\n", envlst->name, envlst->value);
 }
 
+// OK
 char	*get_formatted_env_var(t_envlst *envlst)
 {
 	char	*line;
@@ -110,6 +117,7 @@ char	*get_formatted_env_var(t_envlst *envlst)
 	return (line);
 }
 
+// OK
 char	**get_initiated_from_envlst(t_envlst *envlst)
 {
 	char	**envp;
@@ -133,6 +141,7 @@ char	**get_initiated_from_envlst(t_envlst *envlst)
 	return (envp);
 }
 
+// OK
 char	*get_formatted_exp_var(t_envlst *envlst)
 {
 	char	*line;
@@ -150,6 +159,7 @@ char	*get_formatted_exp_var(t_envlst *envlst)
 		return (ft_strdup(envlst->name));
 }
 
+// OK
 char	**get_all_from_envlst(t_envlst *envlst)
 {
 	char	**envp;
@@ -169,6 +179,7 @@ char	**get_all_from_envlst(t_envlst *envlst)
 	return (envp);
 }
 
+// OK
 t_envlst	*is_name_in_envlst(t_envlst *envlst, char *name)
 {
 	while (envlst)
@@ -181,6 +192,7 @@ t_envlst	*is_name_in_envlst(t_envlst *envlst, char *name)
 	return (NULL);
 }
 
+// OK
 void	add_to_envlst(t_envlst *envlst, char *line)
 {
 	t_envlst	*proxy;
@@ -199,6 +211,7 @@ void	add_to_envlst(t_envlst *envlst, char *line)
 	}
 }
 
+// OK
 void	envlst_iter(t_envlst **envlst, void (*f)(t_envlst *))
 {
 	t_envlst	*curr;

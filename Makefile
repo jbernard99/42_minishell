@@ -6,7 +6,7 @@
 #    By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/16 04:45:18 by jbernard          #+#    #+#              #
-#    Updated: 2023/05/02 13:08:28 by jbernard         ###   ########.fr        #
+#    Updated: 2023/05/08 11:35:35 by jbernard         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,17 +30,17 @@ LIBFT_DIR = ./libraries/42_libft
 RL_DIR = ./libraries/readline
 
 # Files
-MAIN_FILES = main.c			\
-			ft_realloc.c	\
-			parsing.c		\
-			tools.c			\
-			mng_lst.c		\
-			mng_lst2.c		\
-			mng_envp.c		\
-			mng_envp2.c		\
-			mng_envp_temp.c \
-			execution.c		\
-			quotes.c
+MAIN_FILES = 	main.c					\
+				execution.c				\
+				tools.c					\
+				mng_lst.c				\
+				mng_lst2.c				\
+				envlst_to_envp.c		\
+				envp_to_envlst.c		\
+				envlst_tools.c			\
+				parsing.c				\
+				quotes.c
+#				ft_realloc.c
 
 BI_FILES = 	echo.c		\
 			export.c	\
@@ -48,7 +48,7 @@ BI_FILES = 	echo.c		\
 			cd.c		\
 			pwd.c		\
 			exit.c		
-#			unset.cs
+#			unset.c
 
 #SRC_FILES = $(wildcard $(MAIN_DIR)/*.c) $(wildcard $(BI_DIR)/*.c)
 

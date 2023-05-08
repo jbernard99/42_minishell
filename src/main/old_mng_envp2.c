@@ -1,57 +1,57 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mng_envp2.c                                        :+:      :+:    :+:   */
+/*   old_mng_envp2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 13:06:54 by jbernard          #+#    #+#             */
-/*   Updated: 2023/05/02 17:10:35 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/05/08 11:02:24 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-// This fonction checks if the 'envline' has the variable name similar to 'name'
-int	is_name_in_line(char *envline, char *name)
-{
-	int	len;
+// // This fonction checks if the 'envline' has the variable name similar to 'name'
+// int	is_name_in_line(char *envline, char *name)
+// {
+// 	int	len;
 
-	len = ft_strlen(name);
-	if (!ft_strncmp(envline, name, len) && envline[len] == '=')
-	{
-		return (1);
-	}
-	return (0);
-}
+// 	len = ft_strlen(name);
+// 	if (!ft_strncmp(envline, name, len) && envline[len] == '=')
+// 	{
+// 		return (1);
+// 	}
+// 	return (0);
+// }
 
-//This function checks if a variable name is present in the envp
-int	is_name_in_envp(char **envp, char *name)
-{	
-	int	i;
+// //This function checks if a variable name is present in the envp
+// int	is_name_in_envp(char **envp, char *name)
+// {	
+// 	int	i;
 
-	i = 0;
-	while (envp[i])
-	{
-		if (is_name_in_line(envp[i], name))
-			return (i);
-		i++;
-	}
-	return (-1);
-}
+// 	i = 0;
+// 	while (envp[i])
+// 	{
+// 		if (is_name_in_line(envp[i], name))
+// 			return (i);
+// 		i++;
+// 	}
+// 	return (-1);
+// }
 
 //This function format a line in envp style so that it can be added to the envp
-char	*build_envp_line(char *name, char *value)
-{
-	char	*line;
+// char	*build_envp_line(char *name, char *value)
+// {
+// 	char	*line;
 
-	line = ft_strjoin(name, "=");
-	if (value)
-		line = ft_strjoin(line, value);
-	else
-		line = ft_strjoin(line, "''");
-	return (line);
-}
+// 	line = ft_strjoin(name, "=");
+// 	if (value)
+// 		line = ft_strjoin(line, value);
+// 	else
+// 		line = ft_strjoin(line, "''");
+// 	return (line);
+// }
 
 char	*get_name(char *env_line)
 {
