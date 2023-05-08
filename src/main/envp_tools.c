@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 13:06:54 by jbernard          #+#    #+#             */
-/*   Updated: 2023/05/02 10:56:21 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/05/08 15:01:04 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,15 +58,15 @@ char	*get_name(char *env_line)
 	size_t	i;
 
 	i = 0;
-	while (env_line[i] != '=' && env_line[i] != '\0')
+	while (env_line[i + 1] != '=' && env_line[i + 1])
 		i++;
-	return (ft_strldup(env_line, i));
+	return (ft_strldup(env_line, i + 1));
 }
 
 // This function get the value of a line found in the envp.
 char	*get_value(char *env_line)
 {
-	size_t	i;
+	int		i;
 
 	i = 0;
 	while (env_line[i] != '=')
@@ -74,7 +74,7 @@ char	*get_value(char *env_line)
 	if (!env_line[i + 1])
 		return ("");
 	i++;
-	return (ft_strdup(&env_line[i]));
+	return (&env_line[i]);
 }
 
 // This function prints the envp !!! FOR DEVELOPMENT USAGE ONLY !!!

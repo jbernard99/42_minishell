@@ -6,13 +6,13 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 16:37:35 by jbernard          #+#    #+#             */
-/*   Updated: 2023/04/27 10:26:04 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/05/08 15:00:51 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	(*get_built_in(char *name))(char **args, char ***env, int fd_out)
+void	(*get_built_in(char *name))(char **args, t_envlst *envlst, int fd_out)
 {
 	static void	(*funcs[6])() = {ft_cd, ft_echo, ft_env, ft_exit, ft_export, ft_pwd};
 	static char	*funcs_name[6] = {"cd", "echo", "env", "exit", "export", "pwd"};
@@ -41,7 +41,7 @@ void	execute_sh(t_cmdlst *cmdlst)
 		printf("Fork failed!\n");
 	else if (pid == 0)
 	{
-		e = execve(exec, cmdlst->token, *cmdlst->envp);
+		e = execve(exec, cmdlst->token, get_initiated_from_envlst(cmdlst->envlst));
 		if (e == -1)
 		{
 			printf("bash: %s: command not found\n", cmdlst->token[0]);
@@ -54,12 +54,12 @@ void	execute_sh(t_cmdlst *cmdlst)
 
 void	execute_built_in(t_cmdlst *cmdlst, void (*func)())
 {
-	func(cmdlst->token, cmdlst->envp, 1);
+	func(cmdlst->token, cmdlst->envlst, 1);
 }
 
 int	execution(t_cmdlst *cmdlst)
 {
-	void	(*func)(char **, char ***, int);
+	void	(*func)(char **, t_envlst *envlst, int);
 	int		i;
 
 	i = 1;
@@ -72,7 +72,7 @@ int	execution(t_cmdlst *cmdlst)
 			execute_sh(cmdlst);
 		if (cmdlst->next != NULL)
 		{
-			cmdlst->next->envp = cmdlst->envp;
+			cmdlst->next->envlst = cmdlst->envlst;
 			cmdlst = cmdlst->next;
 		}
 		else

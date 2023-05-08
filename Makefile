@@ -6,7 +6,7 @@
 #    By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/16 04:45:18 by jbernard          #+#    #+#              #
-#    Updated: 2023/05/03 13:58:17 by mgagnon          ###   ########.fr        #
+#    Updated: 2023/05/08 15:03:37 by mgagnon          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,28 +30,25 @@ LIBFT_DIR = ./libraries/42_libft
 RL_DIR = ./libraries/readline
 
 # Files
-MAIN_FILES = main.c			\
-			ft_realloc.c	\
-			parsing.c		\
-			parsing2.c		\
-			ft_strjoinfree.c	\
-			moths_mng_envp.c	\
-			tools.c			\
-			mng_lst.c		\
-			mng_lst2.c		\
-			mng_envp.c		\
-			mng_envp2.c		\
-			mng_envp_temp.c \
-			execution.c		\
-			quotes.c
+MAIN_FILES = 	main.c					\
+				execution.c				\
+				tools.c					\
+				mng_lst.c				\
+				mng_lst2.c				\
+				envlst_to_envp.c		\
+				envp_to_envlst.c		\
+				envlst_tools.c			\
+				parsing.c				\
+				quotes.c
+#				ft_realloc.c
 
-BI_FILES = 	cd.c		\
-			echo.c		\
-			env.c		\
-			pwd.c		\
+BI_FILES = 	echo.c		\
 			export.c	\
+			env.c		\
+			cd.c		\
+			pwd.c		\
 			exit.c		
-#			unset.cs
+#			unset.c
 
 #SRC_FILES = $(wildcard $(MAIN_DIR)/*.c) $(wildcard $(BI_DIR)/*.c)
 

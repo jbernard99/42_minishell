@@ -1,28 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mng_envp_temp.c                                    :+:      :+:    :+:   */
+/*   envp_to_envlst.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 11:44:16 by jbernard          #+#    #+#             */
-/*   Updated: 2023/04/28 10:13:25 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/05/08 15:01:31 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-t_envlst	*envlst_last(t_envlst *envlst)
+char	*get_name(char *env_line)
 {
-	if (envlst)
-	{
-		while (envlst->next)
-			envlst = envlst->next;
-	}
-	return (envlst);
+	size_t	i;
+
+	i = 0;
+	while (env_line[i] != '=' && env_line[i] != '\0')
+		i++;
+	return (ft_strldup(env_line, i));
 }
 
-t_envlst	*create_envplst_from_line(char *line)
+char	*get_value(char *env_line)
+{
+	size_t	i;
+
+	i = 0;
+	if (!ft_strchr(env_line, '='))
+		return (NULL);
+	while (env_line[i] != '=')
+		i++;
+	if (!env_line[i + 1])
+		return ("\"\"");
+	i++;
+	return (ft_strdup(&env_line[i]));
+}
+
+t_envlst	*create_envlst_from_line(char *line)
 {
 	t_envlst 	*envlst;
 
@@ -36,7 +51,7 @@ t_envlst	*create_envplst_from_line(char *line)
 	return (envlst);
 }
 
-void	create_envplst_from_envp(t_envlst **envlst, char **envp)
+void	create_envlst_from_envp(t_envlst **envlst, char **envp)
 {
 	int			i;
 	t_envlst	*proxy;
@@ -45,23 +60,31 @@ void	create_envplst_from_envp(t_envlst **envlst, char **envp)
 	if (envlst)
 	{
 		if (!*envlst)
-			*envlst = create_envplst_from_line(envp[i++]);
+			*envlst = create_envlst_from_line(envp[i++]);
 		proxy = envlst_last(*envlst);
 		while (envp[i])
 		{
-			proxy->next = create_envplst_from_line(envp[i]);
+			proxy->next = create_envlst_from_line(envp[i]);
 			proxy = proxy->next;
 			i++;
 		}
 	}
 }
 
-void	put_envlst(t_envlst *envlst)
+void	add_to_envlst(t_envlst *envlst, char *line)
 {
-	printf("Entering put\n");
-	while (envlst)
+	t_envlst	*proxy;
+
+	proxy = is_name_in_envlst(envlst, get_name(line));
+	if (!proxy)
 	{
-		printf("Name: %s\nValue: %s\n", envlst->name, envlst->value);
-		envlst = envlst->next;
+		envlst = envlst_last(envlst);
+		envlst->next = create_envlst_from_line(line);
+	}
+	else
+	{
+		line = get_value(line);
+		if (line)
+			proxy->value = line;
 	}
 }

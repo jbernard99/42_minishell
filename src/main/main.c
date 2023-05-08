@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:31:19 by jbernard          #+#    #+#             */
-/*   Updated: 2023/05/02 10:59:10 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/05/08 15:00:32 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	sigquit_handle(int sig)
 	(void)sig;
 }
 
-void	prompt_loop(t_envlst **envlst, char **envp)
+void	prompt_loop(t_envlst *envlst)
 {
 	t_cmdlst	*cmdlst;
 	char		*input;
@@ -55,7 +55,7 @@ void	prompt_loop(t_envlst **envlst, char **envp)
 			if (is_there_env_var(cmdlst->token[0]))
 				cmdlst->token[0] = rplc_env_var(*envlst, cmdlst->token[0]);
 			ft_cmdlstiter(&cmdlst, &print_cmdlst_node);
-			cmdlst->envp = &envp;
+			cmdlst->envlst = envlst;
 			execution(cmdlst);
 			(void)envlst;
 			cmdlst_clear(&cmdlst, &empty_lst);
@@ -83,15 +83,17 @@ int	main(int argc, char **argv, char **envp)
 	struct termios	old_termios;
 	t_envlst		*envlst;
 
-	create_envplst_from_envp(&envlst, envp);
-	//put_envlst(envlst);
+
+	create_envlst_from_envp(&envlst, envp);
+	//char **n_envp = get_envp_from_envlst(envlst);
+	//put_envp(n_envp);
 	tcgetattr(STDIN_FILENO, &old_termios);
 	set_new_termios(old_termios);
 	signal(SIGINT, ctrlc_handle);
 	signal(SIGQUIT, sigquit_handle);
 	(void)argc;
 	(void)argv;
-	prompt_loop(&envlst, envp);
+	prompt_loop(envlst);
 	tcsetattr(STDIN_FILENO, TCSANOW, &old_termios);
 	return (0);
 }

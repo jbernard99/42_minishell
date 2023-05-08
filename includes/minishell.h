@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:25:35 by jbernard          #+#    #+#             */
-/*   Updated: 2023/05/02 10:55:09 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/05/08 15:20:00 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,19 +25,20 @@
 # include "../libraries/readline/includes/readline.h"
 # include "../libraries/readline/includes/history.h"
 
+typedef struct s_envlst {
+	char				*name;
+	char				*value;
+	int					index;
+	struct s_envlst	*next;
+}	t_envlst;
+
 typedef struct s_cmdlst {
 	int				flags;
 	char			*cmd;
 	char			**token;
-	char			***envp;
+	t_envlst		*envlst;
 	struct s_cmdlst	*next;
 }		t_cmdlst;
-
-typedef struct s_envlst {
-	char				*name;
-	char				*value;
-	struct s_envlst			*next;
-}	t_envlst;
 
 enum	e_flags{
 	PIPEI = 1 << 0,
@@ -50,60 +51,82 @@ enum	e_flags{
 	DQUOTE = 1 << 7
 };
 
-char		*ft_strjoinfree(char *s1, char *s2);
-char		*ft_strtok(char *str, const char *delim, int *flags);
-char		*ft_strldup(const char *str, size_t len);
-size_t		ft_strpbrk(const char *str, const char *delim, int *flags);
-
-void		make_lst(char *input, t_cmdlst **cmdlst);
-void		first_divide(char *input, t_cmdlst **cmdlst);
-void		*ft_realloc(void *ptr, size_t size);
-void		finish_flag_set(t_cmdlst **cmdlst);
-void		print_flags(int flags);
-void		check_quotes(char *input, size_t *i, int *flags);
-char		*rmv_quotes(char *str);
-
-/* list managing functions */
-t_cmdlst	*new_node(char *cmd);
-t_cmdlst	*cmdlst_last(t_cmdlst *cmdlst);
-//t_cmdlst	*get_lst(void);
-void		cmdlst_clear(t_cmdlst **cmdlst, void (*del)(t_cmdlst *));
-void		cmdlst_delone(t_cmdlst *cmdlst, void (*del)(t_cmdlst *));
-void		cmdlst_addback(t_cmdlst **cmdlst, t_cmdlst *new_node);
-void		empty_lst(t_cmdlst *cmdlst);
-void		ft_cmdlstiter(t_cmdlst **cmdlst, void (*f)(t_cmdlst *));
-void		print_cmdlst_node(t_cmdlst *node);
-
-// envp.c //
-void		envp_remove_line(char **envp, char *name);
-char		**envp_set_line(char **envp, char *name, char *value);
-char		*envp_get_value_line(char **envp, char *name);
-
-// envp_tools.c //
-int			is_name_in_line(char *envline, char *name);
-int			is_name_in_envp(char **envp, char *name);
-char		*build_envp_line(char *name, char *value);
-char		*get_name(char *env_line);
-char		*get_value(char *env_line);
-void		put_envp(char **envp); // TEMPORARY
-char		*m_get_value(t_envlst **envp, char *name);
-int			m_is_name_in_envp(t_envlst **envp, char *name);
-int			is_there_env_var(char *str);
-char		*rplc_env_var(t_envlst *envplst, char *str);
-
 // execution.c //
 int			execution(t_cmdlst *cmdlst);
 
 // built-ins //
-void		ft_cd(char **args, char ***envp, int fd_out);
-void		ft_echo(char **args, char ***envp, int fd_out);
-void		ft_exit(char **args, char ***envp, int fd_out);
-void		ft_env(char **args, char ***envp, int fd_out);
-void		ft_pwd(char **args, char ***envp, int fd_out);
-void		ft_export(char **args, char ***envp, int fd_out);
+void		ft_cd(char **args, t_envlst *envlst, int fd_out);
+void		ft_echo(char **args, t_envlst *envlst, int fd_out);
+void		ft_exit(char **args, t_envlst *envlst, int fd_out);
+void		ft_env(char **args, t_envlst *envlst, int fd_out);
+void		ft_pwd(char **args, t_envlst *envlst, int fd_out);
+void		ft_export(char **args, t_envlst *envlst, int fd_out);
 
-// mng_envp.c //
-void	create_envplst_from_envp(t_envlst **envlst, char **envp);
-void	put_envlst(t_envlst *envlst);
+// tools.c //
+void		finish_flag_set(t_cmdlst **cmdlst);
+size_t		ft_strpbrk(const char *str, const char *delim, int *flags);
+char		*ft_strtok(char *str, const char *delim, int *flags);
+char		*ft_strldup(const char *str, size_t len);
+
+// mng_lst.c //
+void		cmdlst_delone(t_cmdlst *cmdlst, void (*del)(t_cmdlst *));
+void		cmdlst_clear(t_cmdlst **cmdlst, void (*del)(t_cmdlst *));
+t_cmdlst	*cmdlst_last(t_cmdlst *cmdlst);
+void		cmdlst_addback(t_cmdlst **cmdlst, t_cmdlst *new_node);
+t_cmdlst	*new_node(char *cmd);
+
+// mng_lst2.c //
+void		print_flags(int flags); // TEMPORARY
+void		print_cmdlst_node(t_cmdlst *node);
+void		ft_cmdlstiter(t_cmdlst **cmdlst, void (*f)(t_cmdlst *));
+void		empty_lst(t_cmdlst *cmdlst);
+
+// envlst_tools.c //
+size_t		count_total_envlst(t_envlst *envlst);
+size_t		count_initiated_envlst(t_envlst *envlst);
+t_envlst	*envlst_last(t_envlst *envlst);
+t_envlst	*is_name_in_envlst(t_envlst *envlst, char *name);
+void		envlst_iter(t_envlst **envlst, void (*f)(t_envlst *));
+void		put_envlst(t_envlst *envlst);
+
+// envp_to_envlst.c //
+char		*get_name(char *env_line);
+char		*get_value(char *env_line);
+t_envlst	*create_envlst_from_line(char *line);
+void		create_envlst_from_envp(t_envlst **envlst, char **envp);
+void		add_to_envlst(t_envlst *envlst, char *line);
+
+// envlst_to_envp.c //
+char		**get_initiated_from_envlst(t_envlst *envlst);
+char		**get_all_from_envlst(t_envlst *envlst);
+
+// parsing.c //
+void		make_lst(char *input, t_cmdlst **cmdlst);
+void		first_divide(char *input, t_cmdlst **cmdlst);
+void		*ft_realloc(void *ptr, size_t size);
+void		check_quotes(char *input, size_t *i, int *flags);
+
+// parsing2.c //
+char		*get_var_name(char *str);
+char		*rplc_env_var(t_envlst *envplst, char *str);
+int			is_there_env_var(char *str);
+
+// ft_strjoinfree.c //
+char		*ft_strjoinfree(char *s1, char *s2);
+
+void		put_envp(char **envp); // TEMPORARY
+char		*m_get_value(t_envlst **envp, char *name);
+int			m_is_name_in_envp(t_envlst **envp, char *name);
+// UNDER THIS IS OLD SHIIIIIT //
+// envp.c //
+// void		envp_remove_line(char **envp, char *name);
+// char		**envp_set_line(char **envp, char *name, char *value);
+// char		*envp_get_value_line(char **envp, char *name);
+
+// envp_tools.c //
+// int			is_name_in_line(char *envline, char *name);
+// int			is_name_in_envp(char **envp, char *name);
+// char		*build_envp_line(char *name, char *value);
+// void		put_envp(char **envp); // TEMPORARY
 
 #endif
