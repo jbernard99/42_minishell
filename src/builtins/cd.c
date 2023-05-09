@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 13:40:17 by jbernard          #+#    #+#             */
-/*   Updated: 2023/05/09 12:23:40 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/05/09 13:55:14 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,22 +21,35 @@ Exemples :
 
 #include "../../includes/minishell.h"
 
-void	manage_pwd(t_envlst *envlst, char *arg)
+char	*pwd_previous_directory(char *pwd)
 {
 	int	i;
 
+	i = ft_strlen(pwd) - 1;
+	while (pwd[i] != '/')
+		i--;
+	pwd[i] = '\0';
+	return (pwd);
+}
+
+void	manage_pwd(t_envlst *envlst, char **args)
+{
+	int	i;
+	
 	envlst = is_name_in_envlst(envlst, "PWD");
-	i = ft_strlen(envlst->value) - 1;
-	if (ft_strcmp(arg, "..") == 0)
+	i = 0;
+	while (args[i])
 	{
-		while (envlst->value[i] != '/')
-			i--;
-		envlst->value[i] = '\0';
-	}
-	else if (ft_strcmp(arg, ".") != 0)
-	{
-		envlst->value = ft_strfreejoin(envlst->value, "/");
-		envlst->value = ft_strfreejoin(envlst->value, arg);
+		if (ft_strcmp(args[i], "..") == 0)
+		{
+			envlst->value = pwd_previous_directory(envlst->value);
+		}
+		else if (ft_strcmp(args[i], ".") != 0)
+		{
+			envlst->value = ft_strfreejoin(envlst->value, "/");
+			envlst->value = ft_strfreejoin(envlst->value, args[i]);
+		}
+		i++;
 	}
 }
 
@@ -45,9 +58,7 @@ void	ft_cd(char **args, t_envlst *envlst, int fd_out)
 	(void)fd_out;
 	(void)envlst;
 	if (chdir(args[1]) == 0)
-	{
-		manage_pwd(envlst, args[1]);
-	}
+		manage_pwd(envlst, ft_split(args[1], '/'));
 	else
 		printf("minishell: cd: %s: No such file or directory\n", args[1]);
 }
