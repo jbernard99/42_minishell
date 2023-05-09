@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:25:35 by jbernard          #+#    #+#             */
-/*   Updated: 2023/05/08 12:11:09 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/05/09 11:26:00 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void		cmdlst_addback(t_cmdlst **cmdlst, t_cmdlst *new_node);
 t_cmdlst	*new_node(char *cmd);
 
 // mng_lst2.c //
-void		print_flags(int flags);
+void		print_flags(int flags); // TEMPORARY
 void		print_cmdlst_node(t_cmdlst *node);
 void		ft_cmdlstiter(t_cmdlst **cmdlst, void (*f)(t_cmdlst *));
 void		empty_lst(t_cmdlst *cmdlst);
@@ -106,6 +106,20 @@ void		first_divide(char *input, t_cmdlst **cmdlst);
 void		*ft_realloc(void *ptr, size_t size);
 void		check_quotes(char *input, size_t *i, int *flags);
 
+// parsing2.c //
+char		*get_var_name(char *str);
+char		*rplc_env_var(t_envlst *envlst, char *str);
+int			is_there_env_var(char *str);
+
+// ft_strjoinfree.c //
+char		*ft_strjoinfree(char *s1, char *s2);
+
+// quotes.c //
+char		*rmv_quotes(char *str);
+
+void		put_envp(char **envp); // TEMPORARY
+char		*m_get_value(t_envlst **envp, char *name);
+int			m_is_name_in_envp(t_envlst **envp, char *name);
 // UNDER THIS IS OLD SHIIIIIT //
 // envp.c //
 // void		envp_remove_line(char **envp, char *name);

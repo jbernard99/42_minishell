@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 13:33:11 by mgagnon           #+#    #+#             */
-/*   Updated: 2023/05/08 11:29:43 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/05/08 14:58:52 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,8 @@ void	second_divide(t_cmdlst **cmdlst)
 	i = 0;
 	end = 0;
 	cmd = ft_strdup((*cmdlst)->cmd);
+	while (cmd[end] == ' ')
+		end++;
 	(*cmdlst)->token = ft_calloc((ft_strpbrk(cmd, " ", \
 					&(*cmdlst)->flags) + 1), sizeof(char *));
 	while (end < ft_strlen(cmd) && &(*cmdlst)->token[i])
@@ -94,7 +96,8 @@ void	second_divide(t_cmdlst **cmdlst)
 		}
 		(*cmdlst)->token[i] = ft_strldup(&cmd[origin], end - origin);
 		i++;
-		end++;
+		while (cmd[end] == ' ')
+			end++;
 	}
 	free(cmd);
 }
