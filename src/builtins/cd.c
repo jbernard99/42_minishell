@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 13:40:17 by jbernard          #+#    #+#             */
-/*   Updated: 2023/05/03 13:54:13 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/05/09 12:23:40 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,46 @@ Exemples :
 
 #include "../../includes/minishell.h"
 
+void	manage_pwd(t_envlst *envlst, char *arg)
+{
+	int	i;
+
+	envlst = is_name_in_envlst(envlst, "PWD");
+	i = ft_strlen(envlst->value) - 1;
+	if (ft_strcmp(arg, "..") == 0)
+	{
+		while (envlst->value[i] != '/')
+			i--;
+		envlst->value[i] = '\0';
+	}
+	else if (ft_strcmp(arg, ".") != 0)
+	{
+		envlst->value = ft_strfreejoin(envlst->value, "/");
+		envlst->value = ft_strfreejoin(envlst->value, arg);
+	}
+}
+
 void	ft_cd(char **args, t_envlst *envlst, int fd_out)
 {
 	(void)fd_out;
 	(void)envlst;
 	if (chdir(args[1]) == 0)
-		printf("Folder found\n");
+	{
+		manage_pwd(envlst, args[1]);
+	}
 	else
-		printf("Folder not found\n");
+		printf("minishell: cd: %s: No such file or directory\n", args[1]);
 }
+
+/*
+	 opendir, readdir, closedir
+	 chdir, 
+*/
+
+
+
+
+
 
 /*
 void print_folder_content(void){
