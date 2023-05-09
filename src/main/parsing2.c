@@ -6,11 +6,12 @@
 /*   By: mgagnon <mgagnon@student.42quebec.com      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 12:09:57 by mgagnon           #+#    #+#             */
-/*   Updated: 2023/05/01 09:07:30 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/05/09 11:18:29 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+#include <stdlib.h>
 
 char	*get_var_name(char *str)
 {
@@ -24,7 +25,7 @@ char	*get_var_name(char *str)
 	return (name);
 }
 
-char	*rplc_env_var(t_envlst *envplst, char *str)
+char	*rplc_env_var(t_envlst *envlst, char *str)
 {
 	int	i;
 	char	*old;
@@ -36,11 +37,13 @@ char	*rplc_env_var(t_envlst *envplst, char *str)
 	while (str[i] != '$')
 		i++;
 	var = get_var_name(&str[++i]);
-	if (m_is_name_in_envp(&envplst, var))
-		replacement = ft_strdup(m_get_value(&envplst, var));
+	if (is_name_in_envlst(envlst, var) != NULL)
+		replacement = m_get_value(&envlst, var);
 	free(var);
 	old = ft_strldup(str, --i);
+	printf("old -> %s\n", old);
 	var = ft_strjoinfree(old, replacement);
+	printf("var -> %s\n", var);
 	while (str[i] && str[i] != ' ')
 		i++;
 	if (!str[i])
@@ -48,7 +51,10 @@ char	*rplc_env_var(t_envlst *envplst, char *str)
 		free(str);
 		return (var);
 	}
-	replacement = ft_strjoinfree(var, &str[i]);
+	replacement = ft_strjoin(var, &str[i]);
+	free(var);
+	free(str);
+	printf("replacement -> %s\n", replacement);
 	return (replacement);
 }
 

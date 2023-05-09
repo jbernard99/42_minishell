@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:31:19 by jbernard          #+#    #+#             */
-/*   Updated: 2023/05/08 15:23:39 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/05/09 11:48:11 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,7 @@ void	prompt_loop(t_envlst *envlst)
 		{
 			add_history(input);
 			make_lst(input, &cmdlst);
-			ft_cmdlstiter(&cmdlst, &print_cmdlst_node);
 			free(input);
-			if (is_there_env_var(cmdlst->token[0]))
-				cmdlst->token[0] = rplc_env_var(envlst, cmdlst->token[0]);
-			ft_cmdlstiter(&cmdlst, &print_cmdlst_node);
 			cmdlst->envlst = envlst;
 			execution(cmdlst);
 			(void)envlst;

@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 13:06:54 by jbernard          #+#    #+#             */
-/*   Updated: 2023/04/28 09:45:23 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/05/09 10:38:42 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	m_is_name_in_envp(t_envlst **envp, char *name)
 	proxy = *envp;
 	while (proxy)
 	{
-		if (!strcmp(name, proxy->name))
+		if (strcmp(name, proxy->name) == 0)
 			return (1);
 		proxy = proxy->next;
 	}
@@ -28,15 +28,19 @@ int	m_is_name_in_envp(t_envlst **envp, char *name)
 }
 
 // This function get the value of a line found in the envp.
-char	*m_get_value(t_envlst **envp, char *name)
+char	*m_get_value(t_envlst **envlst, char *name)
 {
 	t_envlst	*proxy;
+	char		*ret;
 
-	proxy = *envp;
-	while (envp)
+	proxy = *envlst;
+	while (proxy)
 	{
-		if (!ft_strcmp(name, proxy->name))
-			return (proxy->name);
+		if (ft_strcmp(name, proxy->name) == 0)
+		{
+			ret = strdup(proxy->value);
+			return (ret);
+		}
 		proxy = proxy->next;
 	}
 	return (NULL);
