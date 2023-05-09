@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 13:40:17 by jbernard          #+#    #+#             */
-/*   Updated: 2023/05/09 14:12:54 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/05/09 15:16:31 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	ft_cd(char **args, t_envlst *envlst, int fd_out)
 	if (chdir(args[1]) == 0)
 		manage_pwd(envlst, ft_split(args[1], '/'));
 	else
-		printf("minishell: cd: %s: No such file or directory\n", args[1]);
+		printf("minishell: cd: %s: Not a directory\n", args[1]);
 }
 
 /*
