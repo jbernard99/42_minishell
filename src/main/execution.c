@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 16:37:35 by jbernard          #+#    #+#             */
-/*   Updated: 2023/05/08 15:00:51 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/05/10 19:29:17 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 void	(*get_built_in(char *name))(char **args, t_envlst *envlst, int fd_out)
 {
-	static void	(*funcs[6])() = {ft_cd, ft_echo, ft_env, ft_exit, ft_export, ft_pwd};
-	static char	*funcs_name[6] = {"cd", "echo", "env", "exit", "export", "pwd"};
+	static void	(*funcs[7])() = {ft_cd, ft_echo, ft_env, ft_exit, ft_export, ft_pwd, ft_unset};
+	static char	*funcs_name[7] = {"cd", "echo", "env", "exit", "export", "pwd", "unset"};
 	int			i;
 	
 	i = 0;
-	while (i < 6)
+	while (i < 7)
 	{
 		if (ft_strcmp(name, funcs_name[i]) == 0)
 			return (funcs[i]);
