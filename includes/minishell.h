@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:25:35 by jbernard          #+#    #+#             */
-/*   Updated: 2023/05/08 12:11:09 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/05/08 12:44:19 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ void		ft_exit(char **args, t_envlst *envlst, int fd_out);
 void		ft_env(char **args, t_envlst *envlst, int fd_out);
 void		ft_pwd(char **args, t_envlst *envlst, int fd_out);
 void		ft_export(char **args, t_envlst *envlst, int fd_out);
+void		ft_unset(char **args, t_envlst *envlst, int fd_out);
 
 // tools.c //
 void		finish_flag_set(t_cmdlst **cmdlst);
