@@ -6,7 +6,7 @@
 #    By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/16 04:45:18 by jbernard          #+#    #+#              #
-#    Updated: 2023/05/08 12:44:23 by jbernard         ###   ########.fr        #
+#    Updated: 2023/05/10 19:28:30 by mgagnon          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,7 +39,10 @@ MAIN_FILES = 	main.c					\
 				envp_to_envlst.c		\
 				envlst_tools.c			\
 				parsing.c				\
-				quotes.c
+				parsing2.c				\
+				quotes.c				\
+				moths_mng_envp.c			\
+				ft_strjoinfree.c
 #				ft_realloc.c
 
 BI_FILES = 	echo.c		\
