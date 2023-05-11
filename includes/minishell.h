@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:25:35 by jbernard          #+#    #+#             */
-/*   Updated: 2023/05/09 11:26:00 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/05/11 14:31:32 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <termios.h>
 # include <errno.h>
 # include <dirent.h>
+# include <fcntl.h>
 # include <sys/wait.h>
 # include "../libraries/42_libft/include/libft.h"
 # include "../libraries/readline/includes/readline.h"
@@ -48,7 +49,11 @@ enum	e_flags{
 	ORI = 1 << 4,
 	ORO = 1 << 5,
 	QUOTE = 1 << 6,
-	DQUOTE = 1 << 7
+	DQUOTE = 1 << 7,
+	R_IN = 1 << 8,
+	R_OUT = 1 << 9,
+	APP_OUT = 1 << 10,
+	HR_DOC = 1 << 11
 };
 
 // execution.c //
@@ -116,6 +121,9 @@ char		*ft_strjoinfree(char *s1, char *s2);
 
 // quotes.c //
 char		*rmv_quotes(char *str);
+
+// redirect_parsing.c //
+void		scan_redirect(t_cmdlst *cmdlst);
 
 void		put_envp(char **envp); // TEMPORARY
 char		*m_get_value(t_envlst **envp, char *name);

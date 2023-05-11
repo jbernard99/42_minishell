@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:31:19 by jbernard          #+#    #+#             */
-/*   Updated: 2023/05/09 11:48:11 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/05/11 14:38:11 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ void	prompt_loop(t_envlst *envlst)
 			make_lst(input, &cmdlst);
 			free(input);
 			cmdlst->envlst = envlst;
+			ft_cmdlstiter(&cmdlst, &print_cmdlst_node);
 			execution(cmdlst);
 			(void)envlst;
 			cmdlst_clear(&cmdlst, &empty_lst);

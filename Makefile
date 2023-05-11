@@ -6,7 +6,7 @@
 #    By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/16 04:45:18 by jbernard          #+#    #+#              #
-#    Updated: 2023/05/10 14:41:03 by mgagnon          ###   ########.fr        #
+#    Updated: 2023/05/11 14:44:53 by mgagnon          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,7 @@ NAME = minishell
 SRC_DIR = src/
 BI_DIR = $(SRC_DIR)/builtins
 MAIN_DIR = $(SRC_DIR)/main
+RD_DIR = $(SRC_DIR)/redirect
 INC_DIR = includes/
 OBJ_DIR = obj/
 LIBFT_DIR = ./libraries/42_libft
@@ -40,7 +41,6 @@ MAIN_FILES = 	main.c					\
 				envlst_tools.c			\
 				cmd_parsing.c				\
 				env_var_parse.c				\
-				redirect_parsing			\
 				quotes.c				\
 				moths_mng_envp.c			\
 				ft_strjoinfree.c
@@ -50,17 +50,20 @@ BI_FILES = 	echo.c		\
 			env.c		\
 			cd.c		\
 			pwd.c		\
-			exit.c		\
-			unset.c
+			exit.c		
+			# unset.c
+
+RD_FILES =	redirect_parsing.c
 
 #SRC_FILES = $(wildcard $(MAIN_DIR)/*.c) $(wildcard $(BI_DIR)/*.c)
 
 OBJ_FILES = $(MAIN_FILES:%.c=$(OBJ_DIR)%.o)	\
-			$(BI_FILES:%.c=$(OBJ_DIR)%.o)
+			$(BI_FILES:%.c=$(OBJ_DIR)%.o)	\
+			$(RD_FILES:%.c=$(OBJ_DIR)%.o)
 
 LIB_FILES = -L$(LIBFT_DIR) -lft -L$(RL_DIR) -lreadline -lncurses
 
-VPATH =	$(SRC_DIR) $(MAIN_DIR) $(BI_DIR)
+VPATH =	$(SRC_DIR) $(MAIN_DIR) $(BI_DIR) $(RD_DIR)
 
 # Build rule
 all: $(NAME)
