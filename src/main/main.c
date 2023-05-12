@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:31:19 by jbernard          #+#    #+#             */
-/*   Updated: 2023/05/11 14:38:11 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/05/12 13:53:21 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,9 @@ void	ctrlc_handle(int sig)
 }
 
 //It's not because a function does nothing that it's useless
-void	sigquit_handle(int sig)
+void	sigquit_handle(void)
 {
 	write(1, "exit\n", 5);
-	(void)sig;
 }
 
 void	prompt_loop(t_envlst *envlst)
@@ -43,6 +42,7 @@ void	prompt_loop(t_envlst *envlst)
 		input = readline("minishell> ");
 		if (input == NULL)
 		{
+			sigquit_handle();
 			free(input);
 			exit(0);
 		}
@@ -87,7 +87,6 @@ int	main(int argc, char **argv, char **envp)
 	tcgetattr(STDIN_FILENO, &old_termios);
 	set_new_termios(old_termios);
 	signal(SIGINT, ctrlc_handle);
-	signal(SIGQUIT, sigquit_handle);
 	(void)argc;
 	(void)argv;
 	prompt_loop(envlst);

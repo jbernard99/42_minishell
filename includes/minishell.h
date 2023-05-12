@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:25:35 by jbernard          #+#    #+#             */
-/*   Updated: 2023/05/11 14:31:32 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/05/12 14:01:14 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,8 @@ char		*rmv_quotes(char *str);
 // redirect_parsing.c //
 void		scan_redirect(t_cmdlst *cmdlst);
 
+// main.c //
+void		sigquit_handle(void);
 void		put_envp(char **envp); // TEMPORARY
 char		*m_get_value(t_envlst **envp, char *name);
 int			m_is_name_in_envp(t_envlst **envp, char *name);
