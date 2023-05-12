@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 16:37:35 by jbernard          #+#    #+#             */
-/*   Updated: 2023/05/10 19:29:17 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/05/12 13:27:19 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,12 @@
 
 void	(*get_built_in(char *name))(char **args, t_envlst *envlst, int fd_out)
 {
-	static void	(*funcs[7])() = {ft_cd, ft_echo, ft_env, ft_exit, ft_export, ft_pwd, ft_unset};
-	static char	*funcs_name[7] = {"cd", "echo", "env", "exit", "export", "pwd", "unset"};
+	static void	(*funcs[7])() = {ft_cd, ft_echo, ft_env, ft_exit, \
+		ft_export, ft_pwd, ft_unset};
+	static char	*funcs_name[7] = {"cd", "echo", "env", "exit", \
+		"export", "pwd", "unset"};
 	int			i;
-	
+
 	i = 0;
 	while (i < 7)
 	{
@@ -26,6 +28,14 @@ void	(*get_built_in(char *name))(char **args, t_envlst *envlst, int fd_out)
 		i++;
 	}
 	return (NULL);
+}
+
+void	get_exec_location(t_envlst *envlst)
+{
+	char	**path;
+	
+	path = ft_split(is_name_in_envlst(envlst, "PATH")->value, ':');
+	
 }
 
 void	execute_sh(t_cmdlst *cmdlst)

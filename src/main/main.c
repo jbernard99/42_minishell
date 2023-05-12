@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:31:19 by jbernard          #+#    #+#             */
-/*   Updated: 2023/05/09 11:48:11 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/05/12 14:15:07 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ void	prompt_loop(t_envlst *envlst)
 		if (input == NULL)
 		{
 			free(input);
+			printf("\x1B[u\x1B[1Aexit\n");
 			exit(0);
 		}
 		if (ft_strlen(input) != 0)
@@ -86,7 +87,7 @@ int	main(int argc, char **argv, char **envp)
 	tcgetattr(STDIN_FILENO, &old_termios);
 	set_new_termios(old_termios);
 	signal(SIGINT, ctrlc_handle);
-	signal(SIGQUIT, sigquit_handle);
+	signal(SIGABRT, sigquit_handle);
 	(void)argc;
 	(void)argv;
 	prompt_loop(envlst);
