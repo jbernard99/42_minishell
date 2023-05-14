@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:31:19 by jbernard          #+#    #+#             */
-/*   Updated: 2023/05/12 14:15:07 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/05/14 14:20:05 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,11 @@ void	prompt_loop(t_envlst *envlst)
 	while (1)
 	{
 		cmdlst = NULL;
-		input = readline("minishell> ");
+		input = readline("minishell> \x1B[s");
 		if (input == NULL)
 		{
 			free(input);
-			printf("\x1B[u\x1B[1Aexit\n");
+			printf("\x1B[u\x1B[Aexit\n");
 			exit(0);
 		}
 		if (ft_strlen(input) != 0)
@@ -54,7 +54,6 @@ void	prompt_loop(t_envlst *envlst)
 			free(input);
 			cmdlst->envlst = envlst;
 			execution(cmdlst);
-			(void)envlst;
 			cmdlst_clear(&cmdlst, &empty_lst);
 		}
 	}
