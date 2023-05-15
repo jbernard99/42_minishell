@@ -6,7 +6,7 @@
 /*   By: mgagnon <mgagnon@student.42quebec.com      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 10:09:47 by mgagnon           #+#    #+#             */
-/*   Updated: 2023/05/12 13:59:47 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/05/15 15:18:36 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,21 +26,22 @@ int	append(char *input, char *file)
 		return (0);
 	}
 	wr_bytes = write(fd, input, input_len);
+	close(fd);
 	if (wr_bytes == -1)
 	{
 		perror("write");
-		close(fd);
 		return (0);
 	}
-	close(fd);
 	return (1);
 }
 
 void	here_doc(const char *delim)
 {
 	char	*input;
+	int	pipefd[2];
+	pid_t	pid;
 
-	write(1, "\n", 1);
+	/* write(1, "\n", 1); */
 	while (ft_strcmp(input, delim) != 0)
 	{
 		input = readline("> ");

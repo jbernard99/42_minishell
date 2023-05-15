@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:25:35 by jbernard          #+#    #+#             */
-/*   Updated: 2023/05/12 14:01:14 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/05/15 15:28:31 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ typedef struct s_envlst {
 
 typedef struct s_cmdlst {
 	int				flags;
+	int				pipefd[2];
 	char			*cmd;
 	char			**token;
 	t_envlst		*envlst;
@@ -85,6 +86,7 @@ void		print_flags(int flags); // TEMPORARY
 void		print_cmdlst_node(t_cmdlst *node);
 void		ft_cmdlstiter(t_cmdlst **cmdlst, void (*f)(t_cmdlst *));
 void		empty_lst(t_cmdlst *cmdlst);
+int			lst_len(t_cmdlst *cmdlst);
 
 // envlst_tools.c //
 size_t		count_total_envlst(t_envlst *envlst);
