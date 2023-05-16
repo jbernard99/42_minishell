@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.c                                          :+:      :+:    :+:   */
+/*   cmd_parsing.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 13:33:11 by mgagnon           #+#    #+#             */
-/*   Updated: 2023/05/08 14:58:52 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/05/11 14:35:43 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,4 +141,5 @@ void	make_lst(char *input, t_cmdlst **cmdlst)
 		second_divide(&cur);
 		cur = cur->next;
 	}
+	ft_cmdlstiter(cmdlst, &scan_redirect);
 }

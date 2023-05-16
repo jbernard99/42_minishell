@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 20:22:14 by mgagnon           #+#    #+#             */
-/*   Updated: 2023/04/18 11:22:49 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/05/15 15:21:51 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,25 @@ void	print_flags(int flags)
 	else
 		printf("ORI: OFF, ");
 	if (flags & ORO)
-		printf("ORO: ON\n");
+		printf("ORO: ON, ");
 	else
-		printf("ORO: OFF\n");
+		printf("ORO: OFF, ");
+	if (flags & APP_OUT)
+		printf("APP_OUT: ON, ");
+	else
+		printf("APP_OUT: OFF, ");
+	if (flags & HR_DOC)
+		printf("HR_DOC: ON, ");
+	else
+		printf("HR_DOC: OFF, ");
+	if (flags & R_IN)
+		printf("R_IN: ON, ");
+	else
+		printf("R_IN: OFF, ");
+	if (flags & R_OUT)
+		printf("R_OUT: ON\n");
+	else
+		printf("R_OUT: OFF\n");
 }
 
 void	print_cmdlst_node(t_cmdlst *node)
@@ -88,4 +104,17 @@ void	empty_lst(t_cmdlst *cmdlst)
 			i++;
 		}
 	}
+}
+
+int	lst_len(t_cmdlst *cmdlst)
+{
+	int	i;
+
+	i = 0;
+	while (cmdlst)
+	{
+		i++;
+		cmdlst = cmdlst->next;
+	}
+	return (i);
 }

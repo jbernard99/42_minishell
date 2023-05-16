@@ -1,24 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit.c                                             :+:      :+:    :+:   */
+/*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: mgagnon <mgagnon@student.42quebec.com      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/24 13:42:38 by jbernard          #+#    #+#             */
-/*   Updated: 2023/05/16 15:17:04 by mgagnon          ###   ########.fr       */
+/*   Created: 2023/05/15 15:17:28 by mgagnon           #+#    #+#             */
+/*   Updated: 2023/05/15 15:37:33 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-/* NOTHING DONE YET */
-void	ft_exit(char **args, t_envlst *envlst, int fd_out)
+
+int	create_pipes(t_cmdlst *cmdlst)
 {
-	(void)args;
-	(void)envlst	;
-	(void)fd_out;
-	sigquit_handle();
-	// ft_putchar_fd('\n', fd_out);
-	ft_putstr_fd("exit\n", fd_out);
-	exit(0);
+	int	len;
+
+	len = lst_len(cmdlst);
+	while (len > 1)
+	{
+		if (pipe(cmdlst->pipefd) == -1)
+		{
+			perror("pipe creation");
+			return (0);
+		}
+		cmdlst = cmdlst->next;
+		len--;
+	}
+	return (1);
 }
