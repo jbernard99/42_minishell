@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:25:35 by jbernard          #+#    #+#             */
-/*   Updated: 2023/05/16 15:22:44 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/05/16 15:24:06 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <termios.h>
 # include <errno.h>
 # include <dirent.h>
+# include <fcntl.h>
 # include <sys/wait.h>
 # include <sys/stat.h>
 # include "../libraries/42_libft/include/libft.h"
@@ -35,6 +36,7 @@ typedef struct s_envlst {
 
 typedef struct s_cmdlst {
 	int				flags;
+	int				pipefd[2];
 	char			*cmd;
 	char			**token;
 	t_envlst		*envlst;
@@ -49,7 +51,11 @@ enum	e_flags{
 	ORI = 1 << 4,
 	ORO = 1 << 5,
 	QUOTE = 1 << 6,
-	DQUOTE = 1 << 7
+	DQUOTE = 1 << 7,
+	R_IN = 1 << 8,
+	R_OUT = 1 << 9,
+	APP_OUT = 1 << 10,
+	HR_DOC = 1 << 11
 };
 
 // execution.c //
@@ -82,6 +88,7 @@ void		print_flags(int flags); // TEMPORARY
 void		print_cmdlst_node(t_cmdlst *node);
 void		ft_cmdlstiter(t_cmdlst **cmdlst, void (*f)(t_cmdlst *));
 void		empty_lst(t_cmdlst *cmdlst);
+int			lst_len(t_cmdlst *cmdlst);
 
 // envlst_tools.c //
 size_t		count_total_envlst(t_envlst *envlst);
@@ -119,6 +126,11 @@ char		*ft_strjoinfree(char *s1, char *s2);
 // quotes.c //
 char		*rmv_quotes(char *str);
 
+// redirect_parsing.c //
+void		scan_redirect(t_cmdlst *cmdlst);
+
+// main.c //
+void		sigquit_handle(void);
 void		put_envp(char **envp); // TEMPORARY
 char		*m_get_value(t_envlst **envp, char *name);
 int			m_is_name_in_envp(t_envlst **envp, char *name);
