@@ -6,7 +6,7 @@
 #    By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/16 04:45:18 by jbernard          #+#    #+#              #
-#    Updated: 2023/05/16 15:24:39 by jbernard         ###   ########.fr        #
+#    Updated: 2023/05/16 15:43:30 by jbernard         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,10 +39,10 @@ MAIN_FILES = 	main.c					\
 				envlst_to_envp.c		\
 				envp_to_envlst.c		\
 				envlst_tools.c			\
-				cmd_parsing.c				\
-				env_var_parse.c				\
+				cmd_parsing.c			\
+				env_var_parse.c			\
 				quotes.c				\
-				moths_mng_envp.c			\
+				moths_mng_envp.c		\
 				ft_strjoinfree.c
 
 BI_FILES = 	echo.c		\
@@ -54,8 +54,8 @@ BI_FILES = 	echo.c		\
 			exit.c		
 			# unset.c
 
-RD_FILES =	redirect_parsing.c	\
-			redirect_out_tools.c	\
+RD_FILES =	#redirect_parsing.c	\
+ 			redirect_out_tools.c	\
 			redirect_in_tools.c
 
 #SRC_FILES = $(wildcard $(MAIN_DIR)/*.c) $(wildcard $(BI_DIR)/*.c)
