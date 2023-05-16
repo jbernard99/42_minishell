@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 13:43:19 by jbernard          #+#    #+#             */
-/*   Updated: 2023/05/09 10:45:54 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/05/16 14:03:55 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ char	**get_alpha_envp(t_envlst *envlst)
 // NEED TO MAKE export x=""5"" -> x=5
 void	ft_export(char **args, t_envlst *envlst, int fd_out)
 {
-	char 		**alpha_envp;
+	char		**alpha_envp;
 	int			argc;
 	int			i;
 

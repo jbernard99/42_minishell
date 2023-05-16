@@ -6,40 +6,40 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 10:58:07 by jbernard          #+#    #+#             */
-/*   Updated: 2023/05/08 12:34:34 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/05/16 14:06:47 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-size_t		count_total_envlst(t_envlst *envlst)
+size_t	count_total_envlst(t_envlst *envlst)
 {
 	size_t	i;
 
-	i = 0;	
+	i = 0;
 	if (envlst)
 	{
 		while (envlst->next)
 		{
 			i++;
-			envlst = envlst->next;	
+			envlst = envlst->next;
 		}
 	}
 	return (i);
 }
 
-size_t		count_initiated_envlst(t_envlst *envlst)
+size_t	count_initiated_envlst(t_envlst *envlst)
 {
 	size_t	i;
 
-	i = 0;	
+	i = 0;
 	if (envlst)
 	{
 		while (envlst->next)
 		{
 			if (envlst->value != NULL)
 				i++;
-			envlst = envlst->next;	
+			envlst = envlst->next;
 		}
 	}
 	return (i);
@@ -70,7 +70,7 @@ t_envlst	*is_name_in_envlst(t_envlst *envlst, char *name)
 void	envlst_iter(t_envlst **envlst, void (*f)(t_envlst *))
 {
 	t_envlst	*curr;
-	
+
 	if (!envlst || !f)
 		return ;
 	curr = *envlst;
@@ -79,10 +79,4 @@ void	envlst_iter(t_envlst **envlst, void (*f)(t_envlst *))
 		f(curr);
 		curr = curr->next;
 	}
-}
-
-// TEMPORARY
-void	put_envlst(t_envlst *envlst) 
-{
-	printf("Name: %s\nValue: %s\n", envlst->name, envlst->value);
 }

@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 13:45:05 by jbernard          #+#    #+#             */
-/*   Updated: 2023/05/08 14:47:35 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/05/16 14:04:40 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	free_envlst(t_envlst *envlst)
 void	envlst_unset(t_envlst *envlst, char *name)
 {
 	t_envlst	*temp;
-	
+
 	if (is_name_in_envlst(envlst, name))
 	{
 		while (envlst)
@@ -41,14 +41,13 @@ void	envlst_unset(t_envlst *envlst, char *name)
 			envlst = envlst->next;
 		}
 	}
-		
 }
 
 void	ft_unset(char **args, t_envlst *envlst, int fd_out)
 {
-	int 	i;
-	(void)fd_out;
+	int	i;
 
+	(void)fd_out;
 	i = 1;
 	while (args[i])
 	{

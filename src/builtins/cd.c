@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 13:40:17 by jbernard          #+#    #+#             */
-/*   Updated: 2023/05/09 15:16:31 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/05/16 14:03:03 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ char	*pwd_previous_directory(char *pwd)
 void	manage_pwd(t_envlst *envlst, char **args)
 {
 	int	i;
-	
+
 	envlst = is_name_in_envlst(envlst, "PWD");
 	i = 0;
 	while (args[i])
@@ -69,46 +69,3 @@ void	ft_cd(char **args, t_envlst *envlst, int fd_out)
 	else
 		printf("minishell: cd: %s: Not a directory\n", args[1]);
 }
-
-/*
-	 opendir, readdir, closedir
-	 chdir, 
-*/
-
-
-
-
-
-
-/*
-void print_folder_content(void){
-	DIR *dir;
-	struct dirent *entry;
-
-	dir = opendir(".");
-	if (dir == NULL){
-		printf("Error");
-	}
-	while ((entry = readdir(dir)) != NULL){
-		printf("%s\n", entry->d_name);
-	}
-	printf("\n\n\n\n");
-	closedir(dir);
-}
-
-int main(int argc, char **argv, char **envp){
-	(void)argc;
-	(void)argv;
-	(void)envp;
-	
-	ft_cd("..");
-	print_folder_content();
-	ft_cd("main");
-	print_folder_content();
-	ft_cd("/Users/jbernard/Documents/Cursus/42_minishell");
-	printf("%s\n", getenv("PWD"));
-	print_folder_content();
-	
-	return (0);
-}
-*/

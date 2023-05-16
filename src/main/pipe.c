@@ -1,32 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit.c                                             :+:      :+:    :+:   */
+/*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/24 13:42:38 by jbernard          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2023/05/16 14:03:22 by jbernard         ###   ########.fr       */
-=======
-/*   Updated: 2023/05/16 15:17:04 by mgagnon          ###   ########.fr       */
->>>>>>> master
+/*   Created: 2023/05/10 14:37:01 by jbernard          #+#    #+#             */
+/*   Updated: 2023/05/14 14:41:02 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-/* NOTHING DONE YET */
-void	ft_exit(char **args, t_envlst *envlst, int fd_out)
+
+int		pipex(pid_t pid)
 {
-	(void)args;
-<<<<<<< HEAD
-	(void)envlst;
-=======
-	(void)envlst	;
-	(void)fd_out;
-	sigquit_handle();
-	// ft_putchar_fd('\n', fd_out);
->>>>>>> master
-	ft_putstr_fd("exit\n", fd_out);
-	exit(0);
+	int		fd[2];
+	if (pipe(fd) == -1) {
+		perror("pipe");
+	}
+	if (pid == 0) {
+		close(fd[1]);
+		if (dup2(fd[0], STDIN_FILENO) == -1)
+			perror("dup2");
+	}
+	else {
+		close(fd[0]);
+		if (dup2(fd[1], STDOUT_FILENO) == -1)
+			perror("dup2");
+	}
+	return fd[0];
 }

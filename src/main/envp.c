@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 14:11:53 by jbernard          #+#    #+#             */
-/*   Updated: 2023/05/08 15:03:51 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/05/16 14:08:08 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,15 +42,15 @@ void	envp_remove_line(char **envp, char *name)
 	}
 }
 
-char 	**set_unknown_envp_var(char **envp, char *n_line)
+char	**set_unknown_envp_var(char **envp, char *n_line)
 {
-	int 	i;
-	char 	**n_envp;
-	
+	int		i;
+	char	**n_envp;
+
 	i = 0;
 	n_envp = malloc(sizeof(char *) * (ft_strtablen(envp) + 2));
 	if (!n_envp)
-		return NULL; 
+		return (NULL);
 	while (envp[i])
 	{
 		n_envp[i] = ft_strdup(envp[i]);

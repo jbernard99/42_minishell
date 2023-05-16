@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 11:11:12 by jbernard          #+#    #+#             */
-/*   Updated: 2023/05/08 11:27:04 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/05/16 14:05:12 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ char	**get_initiated_from_envlst(t_envlst *envlst)
 {
 	char	**envp;
 	char	*line;
-	int 	i;
+	int		i;
 
 	i = 0;
 	envp = ft_calloc(count_initiated_envlst(envlst) + 1, sizeof(char *));
@@ -46,7 +46,6 @@ char	**get_initiated_from_envlst(t_envlst *envlst)
 		envlst = envlst->next;
 	}
 	envp[i] = NULL;
-
 	return (envp);
 }
 
