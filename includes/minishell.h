@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:25:35 by jbernard          #+#    #+#             */
-/*   Updated: 2023/05/10 19:28:52 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/05/16 12:07:10 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <errno.h>
 # include <dirent.h>
 # include <sys/wait.h>
+# include <sys/stat.h>
 # include "../libraries/42_libft/include/libft.h"
 # include "../libraries/readline/includes/readline.h"
 # include "../libraries/readline/includes/history.h"

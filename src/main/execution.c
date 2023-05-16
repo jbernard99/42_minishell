@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 16:37:35 by jbernard          #+#    #+#             */
-/*   Updated: 2023/05/12 13:27:19 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/05/16 13:04:10 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,28 +30,47 @@ void	(*get_built_in(char *name))(char **args, t_envlst *envlst, int fd_out)
 	return (NULL);
 }
 
-void	get_exec_location(t_envlst *envlst)
+int		exec_exists(char *exec)
+{
+	struct stat	buf;
+
+	if (lstat(exec, &buf) == 0)
+		return (1);
+    else
+        return (0);
+}
+
+char	*get_exec_location(t_envlst *envlst, char *exec)
 {
 	char	**path;
-	
+	int		i;
+
+	exec = ft_strjoin("/", exec);
 	path = ft_split(is_name_in_envlst(envlst, "PATH")->value, ':');
-	
+	i = 0;
+	while (path[i])
+	{
+		if (exec_exists(ft_strjoin(path[i], exec)))
+			return (ft_strjoin(path[i], exec));
+		i++;
+	}
+	return (0);
 }
 
 void	execute_sh(t_cmdlst *cmdlst)
 {
 	pid_t	pid;
-	char	*exec;
 	int		status;
 	int		e;
 
-	exec = ft_strjoin("/bin/", cmdlst->token[0]);
+	if (!ft_strchr(cmdlst->token[0], '/'))
+		cmdlst->token[0] = get_exec_location(cmdlst->envlst, cmdlst->token[0]);
 	pid = fork();
 	if (pid == -1)
 		printf("Fork failed!\n");
 	else if (pid == 0)
 	{
-		e = execve(exec, cmdlst->token, get_initiated_from_envlst(cmdlst->envlst));
+		e = execve(cmdlst->token[0], cmdlst->token, get_initiated_from_envlst(cmdlst->envlst));
 		if (e == -1)
 		{
 			printf("bash: %s: command not found\n", cmdlst->token[0]);
