@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 13:43:19 by jbernard          #+#    #+#             */
-/*   Updated: 2023/05/08 10:28:57 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/05/09 10:45:54 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,11 @@ void	ft_export(char **args, t_envlst *envlst, int fd_out)
 	{
 		while (args[i])
 		{
-			add_to_envlst(envlst, args[i]);
-			i++;	
+			if (ft_strchr(args[i], ' ') == 0)
+				add_to_envlst(envlst, args[i]);
+			else
+				printf("minishell: export: \'%s\': not a valid identifier\n", args[i]);
+			i++;
 		}
 	}
 	else

@@ -6,7 +6,7 @@
 #    By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/16 04:45:18 by jbernard          #+#    #+#              #
-#    Updated: 2023/05/11 14:44:53 by mgagnon          ###   ########.fr        #
+#    Updated: 2023/05/16 15:18:44 by mgagnon          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,10 +50,13 @@ BI_FILES = 	echo.c		\
 			env.c		\
 			cd.c		\
 			pwd.c		\
+			unset.c		\
 			exit.c		
 			# unset.c
 
-RD_FILES =	redirect_parsing.c
+RD_FILES =	redirect_parsing.c	\
+			redirect_out_tools.c	\
+			redirect_in_tools.c
 
 #SRC_FILES = $(wildcard $(MAIN_DIR)/*.c) $(wildcard $(BI_DIR)/*.c)
 

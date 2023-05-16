@@ -6,26 +6,56 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 13:45:05 by jbernard          #+#    #+#             */
-/*   Updated: 2023/04/19 15:01:07 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/05/08 14:47:35 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-/*
-unset : 
-	Working unset  cases:
-		"export test" 	: Var test will be created without any value -> 
-		                  MUST NOT SHOW IN "env" AFTER, ONLY IN "export"
-		"export"	: print envp in order
-		"export x =123" : OR "export x= 123" ERROR '=' must follow var
-		                  name (No spaces)
-		"export x="	: No value, x will equal ""
-		"export x=2"	: 2 will become string "2"
-		"export x='Bonjour''Allo'123" : Var x will be 'BonjourAllo123'
-*/
 
-void	ft_unset(char **args, char **env, int fd_out)
+void	free_envlst(t_envlst *envlst)
 {
+	free(envlst->name);
+	if (envlst->value)
+		free(envlst->value);
+	free(envlst);
+}
+
+void	envlst_unset(t_envlst *envlst, char *name)
+{
+	t_envlst	*temp;
+	
+	if (is_name_in_envlst(envlst, name))
+	{
+		while (envlst)
+		{
+			if (ft_strcmp(envlst->next->name, name) == 0)
+			{
+				temp = envlst->next;
+				if (temp->next)
+					envlst->next = temp->next;
+				else
+					envlst->next = NULL;
+				free_envlst(temp);
+				break ;
+			}
+			envlst = envlst->next;
+		}
+	}
+		
+}
+
+void	ft_unset(char **args, t_envlst *envlst, int fd_out)
+{
+	int 	i;
 	(void)fd_out;
-	envp_remove_line(env, args[0]);
+
+	i = 1;
+	while (args[i])
+	{
+		if (ft_strchr(args[i], ' ') == 0)
+			envlst_unset(envlst, args[i]);
+		else
+			printf("minishell: unset: \'%s\': not a valid identifier\n", args[i]);
+		i++;
+	}
 }
