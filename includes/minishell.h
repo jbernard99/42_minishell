@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:25:35 by jbernard          #+#    #+#             */
-/*   Updated: 2023/05/16 15:24:06 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/05/16 15:44:32 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,13 +109,13 @@ void		add_to_envlst(t_envlst *envlst, char *line);
 char		**get_initiated_from_envlst(t_envlst *envlst);
 char		**get_all_from_envlst(t_envlst *envlst);
 
-// parsing.c //
+// cmd_parsing.c //
 void		make_lst(char *input, t_cmdlst **cmdlst);
 void		first_divide(char *input, t_cmdlst **cmdlst);
 void		*ft_realloc(void *ptr, size_t size);
 void		check_quotes(char *input, size_t *i, int *flags);
 
-// parsing2.c //
+// env_var_parse.c //
 char		*get_var_name(char *str);
 char		*rplc_env_var(t_envlst *envlst, char *str);
 int			is_there_env_var(char *str);
@@ -127,10 +127,9 @@ char		*ft_strjoinfree(char *s1, char *s2);
 char		*rmv_quotes(char *str);
 
 // redirect_parsing.c //
-void		scan_redirect(t_cmdlst *cmdlst);
+/* void		scan_redirect(t_cmdlst *cmdlst); */
 
 // main.c //
-void		sigquit_handle(void);
 void		put_envp(char **envp); // TEMPORARY
 char		*m_get_value(t_envlst **envp, char *name);
 int			m_is_name_in_envp(t_envlst **envp, char *name);
