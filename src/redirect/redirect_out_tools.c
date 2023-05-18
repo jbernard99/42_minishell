@@ -6,7 +6,7 @@
 /*   By: mgagnon <mgagnon@student.42quebec.com      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 10:09:47 by mgagnon           #+#    #+#             */
-/*   Updated: 2023/05/16 15:14:13 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/05/18 10:57:10 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	reset_stdout(int old_fd)
 {
 	if (dup2(old_fd, STDOUT_FILENO) == -1)
 	{
-		perror("reset STDOUT");
+		perror("STDOUT reset");
 		return (0);
 	}
 	return (1);
