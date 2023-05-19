@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 12:09:57 by mgagnon           #+#    #+#             */
-/*   Updated: 2023/05/19 14:57:12 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/05/19 15:13:38 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ char	*rplc_env_var(t_envlst *envlst, char *str)
 	free(var);
 	old = ft_strldup(str, --i);
 	printf("old -> %s\n", old);
-	var = ft_strjoinfree(old, replacement);
+	var = ft_strfreejoinfree(old, replacement);
 	printf("var -> %s\n", var);
 	while (str[i] && str[i] != ' ')
 		i++;
