@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 16:37:35 by jbernard          #+#    #+#             */
-/*   Updated: 2023/05/16 14:12:32 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/05/19 14:21:19 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,18 +43,23 @@ int	exec_exists(char *exec)
 char	*get_exec_location(t_envlst *envlst, char *exec)
 {
 	char	**path;
+	char 	*t_p;
 	int		i;
 
 	exec = ft_strjoin("/", exec);
-	path = ft_split(is_name_in_envlst(envlst, "PATH")->value, ':');
+	t_p = is_name_in_envlst(envlst, "PATH")->value;
+	if (t_p)
+		path = ft_split(t_p, ':');
+	else
+		path = NULL;
 	i = 0;
-	while (path[i])
+	while (path && path[i])
 	{
 		if (exec_exists(ft_strjoin(path[i], exec)))
 			return (ft_strjoin(path[i], exec));
 		i++;
 	}
-	return (0);
+	return (exec);
 }
 
 void	execute_sh(t_cmdlst *cmdlst)
@@ -81,11 +86,6 @@ void	execute_sh(t_cmdlst *cmdlst)
 		pid = wait(&status);
 }
 
-void	execute_built_in(t_cmdlst *cmdlst, void (*func)())
-{
-	func(cmdlst->token, cmdlst->envlst, 1);
-}
-
 int	execution(t_cmdlst *cmdlst)
 {
 	void	(*func)(char **, t_envlst *envlst, int);
@@ -96,7 +96,7 @@ int	execution(t_cmdlst *cmdlst)
 	{
 		func = get_built_in(cmdlst->token[0]);
 		if (func)
-			execute_built_in(cmdlst, func);
+			func(cmdlst->token, cmdlst->envlst, 1);
 		else
 			execute_sh(cmdlst);
 		if (cmdlst->next != NULL)
