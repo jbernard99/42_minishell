@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:25:35 by jbernard          #+#    #+#             */
-/*   Updated: 2023/05/16 15:44:32 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/05/19 14:54:42 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,9 +119,6 @@ void		check_quotes(char *input, size_t *i, int *flags);
 char		*get_var_name(char *str);
 char		*rplc_env_var(t_envlst *envlst, char *str);
 int			is_there_env_var(char *str);
-
-// ft_strjoinfree.c //
-char		*ft_strjoinfree(char *s1, char *s2);
 
 // quotes.c //
 char		*rmv_quotes(char *str);
