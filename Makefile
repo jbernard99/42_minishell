@@ -6,7 +6,7 @@
 #    By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/16 04:45:18 by jbernard          #+#    #+#              #
-#    Updated: 2023/05/16 15:45:24 by mgagnon          ###   ########.fr        #
+#    Updated: 2023/05/19 14:34:08 by jbernard         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,9 +22,15 @@ NAME = minishell
 
 # Directories
 SRC_DIR = src/
-BI_DIR = $(SRC_DIR)/builtins
+
 MAIN_DIR = $(SRC_DIR)/main
+PARSE_DIR = $(SRC_DIR)/parsing
+CMD_DIR = $(SRC_DIR)/cmdlst
+ENV_DIR = $(SRC_DIR)/env
+EXEC_DIR = $(SRC_DIR)/execution
 RD_DIR = $(SRC_DIR)/redirect
+BI_DIR = $(SRC_DIR)/builtins
+
 INC_DIR = includes/
 OBJ_DIR = obj/
 LIBFT_DIR = ./libraries/42_libft
@@ -32,41 +38,55 @@ RL_DIR = ./libraries/readline
 
 # Files
 MAIN_FILES = 	main.c					\
-				execution.c				\
 				tools.c					\
-				mng_lst.c				\
-				mng_lst2.c				\
-				envlst_to_envp.c		\
+				moths_mng_envp.c		\
+				ft_strjoinfree.c
+				
+PARSE_FILES = 	cmd_parsing.c			\
+				quotes.c
+				
+CMD_FILES =		mng_lst.c				\
+				mng_lst2.c
+
+ENV_FILES = 	envlst_to_envp.c		\
 				envp_to_envlst.c		\
 				envlst_tools.c			\
-				cmd_parsing.c				\
-				env_var_parse.c				\
-				quotes.c				\
-				moths_mng_envp.c			\
-				ft_strjoinfree.c
+				env_var_parse.c
 
-BI_FILES = 	echo.c		\
-			export.c	\
-			env.c		\
-			cd.c		\
-			pwd.c		\
-			unset.c		\
-			exit.c		
-			# unset.c
+EXEC_FILES = 	execution.c
 
-RD_FILES =	# redirect_parsing.c	\
-			# redirect_out_tools.c	\
+RD_FILES =	# redirect_parsing.c		\
+			# redirect_out_tools.c		\
 			# redirect_in_tools.c
+			
+BI_FILES = 		echo.c					\
+				export.c				\
+				env.c					\
+				cd.c					\
+				pwd.c					\
+				unset.c					\
+				exit.c		
 
 #SRC_FILES = $(wildcard $(MAIN_DIR)/*.c) $(wildcard $(BI_DIR)/*.c)
 
-OBJ_FILES = $(MAIN_FILES:%.c=$(OBJ_DIR)%.o)	\
-			$(BI_FILES:%.c=$(OBJ_DIR)%.o)	\
-			$(RD_FILES:%.c=$(OBJ_DIR)%.o)
+OBJ_FILES = $(MAIN_FILES:%.c=$(OBJ_DIR)%.o)		\
+			$(PARSE_FILES:%.c=$(OBJ_DIR)%.o)	\
+			$(CMD_FILES:%.c=$(OBJ_DIR)%.o)		\
+			$(ENV_FILES:%.c=$(OBJ_DIR)%.o)		\
+			$(EXEC_FILES:%.c=$(OBJ_DIR)%.o)		\
+			$(RD_FILES:%.c=$(OBJ_DIR)%.o)		\
+			$(BI_FILES:%.c=$(OBJ_DIR)%.o)		
 
 LIB_FILES = -L$(LIBFT_DIR) -lft -L$(RL_DIR) -lreadline -lncurses
 
-VPATH =	$(SRC_DIR) $(MAIN_DIR) $(BI_DIR) $(RD_DIR)
+VPATH =	$(SRC_DIR) 		\
+		$(MAIN_DIR) 	\
+		$(PARSE_DIR)	\
+		$(CMD_DIR)		\
+		$(ENV_DIR)		\
+		$(EXEC_DIR) 	\
+		$(RD_DIR) 		\
+		$(BI_DIR)
 
 # Build rule
 all: $(NAME)
@@ -86,7 +106,7 @@ obj:
 
 # Download and install readline library
 $(RL_DIR)/libreadline.a:
-	@ curl -O https://ftp.gnu.org/gnu/readline/readline-8.1.tar.gz 
+	@ curl -O https://ftp.gnu.org/gnu/readline/readline-8.1.tar.gz
 	@ tar -xf readline-8.1.tar.gz
 	@ rm readline-8.1.tar.gz
 	@ cd readline-8.1 && bash configure && make
