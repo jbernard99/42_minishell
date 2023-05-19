@@ -6,7 +6,7 @@
 #    By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/16 04:45:18 by jbernard          #+#    #+#              #
-#    Updated: 2023/05/19 14:54:31 by jbernard         ###   ########.fr        #
+#    Updated: 2023/05/19 14:58:03 by jbernard         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,8 +38,7 @@ RL_DIR = ./libraries/readline
 
 # Files
 MAIN_FILES = 	main.c					\
-				tools.c					\
-				moths_mng_envp.c
+				tools.c
 				
 PARSE_FILES = 	cmd_parsing.c			\
 				quotes.c
