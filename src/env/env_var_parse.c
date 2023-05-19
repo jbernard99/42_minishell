@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_var_parse.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgagnon <mgagnon@student.42quebec.com      +#+  +:+       +#+        */
+/*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 12:09:57 by mgagnon           #+#    #+#             */
-/*   Updated: 2023/05/19 14:54:37 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/05/19 15:00:23 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,4 +67,22 @@ int	is_there_env_var(char *str)
 		i++;
 	}
 	return (0);
+}
+
+char	*m_get_value(t_envlst **envlst, char *name)
+{
+	t_envlst	*proxy;
+	char		*ret;
+
+	proxy = *envlst;
+	while (proxy)
+	{
+		if (ft_strcmp(name, proxy->name) == 0)
+		{
+			ret = strdup(proxy->value);
+			return (ret);
+		}
+		proxy = proxy->next;
+	}
+	return (NULL);
 }

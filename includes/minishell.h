@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:25:35 by jbernard          #+#    #+#             */
-/*   Updated: 2023/05/16 15:44:32 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/05/19 14:57:53 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,30 +119,12 @@ void		check_quotes(char *input, size_t *i, int *flags);
 char		*get_var_name(char *str);
 char		*rplc_env_var(t_envlst *envlst, char *str);
 int			is_there_env_var(char *str);
-
-// ft_strjoinfree.c //
-char		*ft_strjoinfree(char *s1, char *s2);
+char		*m_get_value(t_envlst **envp, char *name);
 
 // quotes.c //
 char		*rmv_quotes(char *str);
 
 // redirect_parsing.c //
 /* void		scan_redirect(t_cmdlst *cmdlst); */
-
-// main.c //
-void		put_envp(char **envp); // TEMPORARY
-char		*m_get_value(t_envlst **envp, char *name);
-int			m_is_name_in_envp(t_envlst **envp, char *name);
-// UNDER THIS IS OLD SHIIIIIT //
-// envp.c //
-// void		envp_remove_line(char **envp, char *name);
-// char		**envp_set_line(char **envp, char *name, char *value);
-// char		*envp_get_value_line(char **envp, char *name);
-
-// envp_tools.c //
-// int			is_name_in_line(char *envline, char *name);
-// int			is_name_in_envp(char **envp, char *name);
-// char		*build_envp_line(char *name, char *value);
-// void		put_envp(char **envp); // TEMPORARY
 
 #endif
