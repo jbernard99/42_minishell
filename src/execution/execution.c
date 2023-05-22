@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 16:37:35 by jbernard          #+#    #+#             */
-/*   Updated: 2023/05/22 15:59:36 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/05/22 16:11:49 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,57 +76,6 @@ void	execute_sh(t_cmdlst *cmdlst)
 	}
 }
 
-// ----------------------
-
-int	reset_stdin(int old_fd)
-{
-	if (dup2(old_fd, STDIN_FILENO) == -1)
-	{
-		perror("reset STDIN");
-		return (0);
-	}
-	return (1);
-}
-
-int	change_stdin(int *new_fd)
-{
-	if (dup2(*new_fd, STDIN_FILENO) == -1)
-	{
-		perror("dup2 change STDIN");
-		return (0);
-	}
-	return (1);
-}
-
-void	pipe_it(t_cmdlst *cmdlst)
-{
-	int	fd[2];
-
-	pipe(fd);
-	cmdlst->pipefd[1] = fd[1];
-	cmdlst->next->pipefd[0] = fd[0];
-}
-
-int	change_stdout(int *new_fd)
-{
-	if (dup2(*new_fd, STDOUT_FILENO) == -1)
-	{
-		perror("dup2 change STDOUT");
-		return (0);
-	}
-	return (1);
-}
-
-int	reset_stdout(int old_fd)
-{
-	if (dup2(old_fd, STDOUT_FILENO) == -1)
-	{
-		perror("STDOUT reset");
-		return (0);
-	}
-	return (1);
-}
-
 int exectry(t_cmdlst *cmdlst)
 {
 	pid_t	pid;
@@ -144,12 +93,12 @@ int exectry(t_cmdlst *cmdlst)
 			if (cmdlst->flags & PIPEI)
 			{
 				old_stds[1] = dup(STDOUT_FILENO);
-				change_stdout(&cmdlst->pipefd[1]);
+				change_stdout(cmdlst->pipefd[1]);
 			}
 			if (cmdlst->flags & PIPEO)
 			{
 				old_stds[0] = dup(STDIN_FILENO);
-				change_stdin(&cmdlst->pipefd[0]);
+				change_stdin(cmdlst->pipefd[0]);
 			}
 			execution(cmdlst);
 		}

@@ -6,7 +6,7 @@
 #    By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/16 04:45:18 by jbernard          #+#    #+#              #
-#    Updated: 2023/05/22 14:29:10 by jbernard         ###   ########.fr        #
+#    Updated: 2023/05/22 16:15:42 by jbernard         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -53,9 +53,10 @@ ENV_FILES = 	envlst_to_envp.c		\
 
 EXEC_FILES = 	execution.c
 
-RD_FILES =	# redirect_parsing.c		\
-			# redirect_out_tools.c		\
-			# redirect_in_tools.c
+RD_FILES =		pipe.c					\
+				redirect_parsing.c		\
+				redirect_out_tools.c	\
+				redirect_in_tools.c
 			
 BI_FILES = 		echo.c					\
 				export.c				\

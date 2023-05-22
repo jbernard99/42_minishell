@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:25:35 by jbernard          #+#    #+#             */
-/*   Updated: 2023/05/22 15:59:23 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/05/22 16:11:11 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,6 @@ size_t		count_initiated_envlst(t_envlst *envlst);
 t_envlst	*envlst_last(t_envlst *envlst);
 t_envlst	*is_name_in_envlst(t_envlst *envlst, char *name);
 void		envlst_iter(t_envlst **envlst, void (*f)(t_envlst *));
-void		put_envlst(t_envlst *envlst);
 
 // envp_to_envlst.c //
 char		*get_name(char *env_line);
@@ -113,7 +112,6 @@ char		**get_all_from_envlst(t_envlst *envlst);
 // cmd_parsing.c //
 void		make_lst(char *input, t_cmdlst **cmdlst, t_envlst *envlst);
 void		first_divide(char *input, t_cmdlst **cmdlst, t_envlst *envlst);
-void		*ft_realloc(void *ptr, size_t size);
 void		check_quotes(char *input, size_t *i, int *flags);
 
 // env_var_parse.c //
@@ -127,5 +125,12 @@ char		*rmv_quotes(char *str);
 
 // redirect_parsing.c //
 void		scan_redirect(t_cmdlst *cmdlst);
+
+// pipe.c //
+void	pipe_it(t_cmdlst *cmdlst);
+int		change_stdin(int new_fd);
+int		reset_stdin(int old_fd);
+int		change_stdout(int new_fd);
+int		reset_stdout(int old_fd);
 
 #endif
