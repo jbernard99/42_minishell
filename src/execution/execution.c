@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 16:37:35 by jbernard          #+#    #+#             */
-/*   Updated: 2023/05/21 22:35:53 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/05/22 15:53:22 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,31 @@ void	execute_sh(t_cmdlst *cmdlst)
 	e = execve(cmdlst->token[0], cmdlst->token, get_initiated_from_envlst(cmdlst->envlst));
 	if (e == -1)
 	{
-		printf("bash: %s: command not found\n", cmdlst->token[0]);
+		printf("bash: %s: command not found\n", &cmdlst->token[0][1]);
 		exit(0);
 	}
+}
+
+// ----------------------
+
+int	reset_stdin(int old_fd)
+{
+	if (dup2(old_fd, STDIN_FILENO) == -1)
+	{
+		perror("reset STDIN");
+		return (0);
+	}
+	return (1);
+}
+
+int	change_stdin(int *new_fd)
+{
+	if (dup2(*new_fd, STDIN_FILENO) == -1)
+	{
+		perror("dup2 change STDIN");
+		return (0);
+	}
+	return (1);
 }
 
 void	pipe_it(t_cmdlst *cmdlst)
@@ -83,6 +105,16 @@ void	pipe_it(t_cmdlst *cmdlst)
 	pipe(fd);
 	cmdlst->pipefd[1] = fd[1];
 	cmdlst->next->pipefd[0] = fd[0];
+}
+
+int	change_stdout(int *new_fd)
+{
+	if (dup2(*new_fd, STDOUT_FILENO) == -1)
+	{
+		perror("dup2 change STDOUT");
+		return (0);
+	}
+	return (1);
 }
 
 int	reset_stdout(int old_fd)
@@ -98,30 +130,43 @@ int	reset_stdout(int old_fd)
 int exectry(t_cmdlst *cmdlst)
 {
 	pid_t	pid;
-	int		status;
+	int 	old_stds[2];
 	
-	while (cmdlst)
+	while (cmdlst != NULL)
 	{
-		if (cmdlst->next != NULL)
-		{
-			if (cmdlst->next->flags & PIPEI)
-				pipe_it(cmdlst);
-		}
+		if (cmdlst->flags & PIPEI)
+			pipe_it(cmdlst);
 		pid = fork();
 		if (pid < 0)
 			perror("ERROR");
 		else if (pid == 0)
 		{
-			if (cmdlst->next != NULL && cmdlst->next->flags & PIPEI)
-				dup2(cmdlst->pipefd[1], STDOUT_FILENO);
 			if (cmdlst->flags & PIPEI)
-				dup2(cmdlst->pipefd[0], STDIN_FILENO);
+			{
+				old_stds[1] = dup(STDOUT_FILENO);
+				change_stdout(&cmdlst->pipefd[1]);
+			}
+			if (cmdlst->flags & PIPEO)
+			{
+				old_stds[0] = dup(STDIN_FILENO);
+				change_stdin(&cmdlst->pipefd[0]);
+			}
 			execution(cmdlst);
 		}
 		else
 		{
-			pid = wait(&status);
-			reset_stdout(STDOUT_FILENO);
+			wait(NULL);
+			if (cmdlst->flags & PIPEI)
+			{
+				reset_stdin(old_stds[0]);
+				close(cmdlst->pipefd[1]);	
+			}
+			if (cmdlst->flags & PIPEO)
+			{
+				reset_stdout(old_stds[1]);
+				close(cmdlst->pipefd[0]);
+			}
+			
 		}
 		cmdlst = cmdlst->next;
 	}
@@ -135,7 +180,7 @@ int	execution(t_cmdlst *cmdlst)
 	
 	func = get_built_in(cmdlst->token[0]);
 	if (func)
-		if (cmdlst->next->flags & PIPEI)
+		if (cmdlst->flags & PIPEI)
 			func(cmdlst->token, cmdlst->envlst, cmdlst->pipefd[1]);
 		else
 			func(cmdlst->token, cmdlst->envlst, 1);
