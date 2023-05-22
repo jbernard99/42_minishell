@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 16:37:35 by jbernard          #+#    #+#             */
-/*   Updated: 2023/05/22 15:53:22 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/05/22 15:59:36 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,7 +174,7 @@ int exectry(t_cmdlst *cmdlst)
 }
 
 
-int	execution(t_cmdlst *cmdlst)
+void	execution(t_cmdlst *cmdlst)
 {
 	void	(*func)(char **, t_envlst *envlst, int);
 	
@@ -186,5 +186,5 @@ int	execution(t_cmdlst *cmdlst)
 			func(cmdlst->token, cmdlst->envlst, 1);
 	else
 		execute_sh(cmdlst);
-	return (1);
+	exit(0);
 }

@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:25:35 by jbernard          #+#    #+#             */
-/*   Updated: 2023/05/21 22:12:44 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/05/22 15:59:23 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ enum	e_flags{
 
 // execution.c //
 int			exectry(t_cmdlst *cmdlst);
-int			execution(t_cmdlst *cmdlst);
+void		execution(t_cmdlst *cmdlst);
 
 // built-ins //
 void		ft_cd(char **args, t_envlst *envlst, int fd_out);
