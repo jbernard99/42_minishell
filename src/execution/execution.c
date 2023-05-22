@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 16:37:35 by jbernard          #+#    #+#             */
-/*   Updated: 2023/05/22 16:11:49 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/05/22 16:41:59 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,53 +75,6 @@ void	execute_sh(t_cmdlst *cmdlst)
 		exit(0);
 	}
 }
-
-int exectry(t_cmdlst *cmdlst)
-{
-	pid_t	pid;
-	int 	old_stds[2];
-	
-	while (cmdlst != NULL)
-	{
-		if (cmdlst->flags & PIPEI)
-			pipe_it(cmdlst);
-		pid = fork();
-		if (pid < 0)
-			perror("ERROR");
-		else if (pid == 0)
-		{
-			if (cmdlst->flags & PIPEI)
-			{
-				old_stds[1] = dup(STDOUT_FILENO);
-				change_stdout(cmdlst->pipefd[1]);
-			}
-			if (cmdlst->flags & PIPEO)
-			{
-				old_stds[0] = dup(STDIN_FILENO);
-				change_stdin(cmdlst->pipefd[0]);
-			}
-			execution(cmdlst);
-		}
-		else
-		{
-			wait(NULL);
-			if (cmdlst->flags & PIPEI)
-			{
-				reset_stdin(old_stds[0]);
-				close(cmdlst->pipefd[1]);	
-			}
-			if (cmdlst->flags & PIPEO)
-			{
-				reset_stdout(old_stds[1]);
-				close(cmdlst->pipefd[0]);
-			}
-			
-		}
-		cmdlst = cmdlst->next;
-	}
-	return (1);
-}
-
 
 void	execution(t_cmdlst *cmdlst)
 {
