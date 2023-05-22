@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 13:33:11 by mgagnon           #+#    #+#             */
-/*   Updated: 2023/05/19 15:11:53 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/05/21 21:43:32 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ void	second_divide(t_cmdlst **cmdlst)
 /* makes a first split to separate multiple cmd and looks */
 /* for PIPE, AND and OR operand */
 
-void	first_divide(char *input, t_cmdlst **cmdlst)
+void	first_divide(char *input, t_cmdlst **cmdlst, t_envlst *envlst)
 {
 	t_cmdlst	*cur;
 	size_t		i;
@@ -120,20 +120,20 @@ void	first_divide(char *input, t_cmdlst **cmdlst)
 		if (ft_strrchr("|&", input[i]) && input[i])
 			cmdlst_addback(cmdlst, \
 					new_node(ft_strldup(&input[origin], \
-							(i - 1) - origin)));
+							(i - 1) - origin), envlst));
 		else
 			cmdlst_addback(cmdlst, new_node(ft_strldup(&input[origin], \
-							i - origin)));
+							i - origin), envlst));
 		cur = cmdlst_last(*cmdlst);
 		what_is_it(input, &i, &cur->flags);
 	}
 }
 
-void	make_lst(char *input, t_cmdlst **cmdlst)
+void	make_lst(char *input, t_cmdlst **cmdlst, t_envlst *envlst)
 {
 	t_cmdlst	*cur;
 
-	first_divide(input, cmdlst);
+	first_divide(input, cmdlst, envlst);
 	finish_flag_set(cmdlst);
 	cur = *cmdlst;
 	while (cur != NULL)
@@ -141,5 +141,5 @@ void	make_lst(char *input, t_cmdlst **cmdlst)
 		second_divide(&cur);
 		cur = cur->next;
 	}
-	ft_cmdlstiter(cmdlst, &scan_redirect);
+	//ft_cmdlstiter(cmdlst, &scan_redirect);
 }

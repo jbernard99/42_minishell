@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:25:35 by jbernard          #+#    #+#             */
-/*   Updated: 2023/05/19 15:10:52 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/05/21 22:12:44 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ enum	e_flags{
 };
 
 // execution.c //
+int			exectry(t_cmdlst *cmdlst);
 int			execution(t_cmdlst *cmdlst);
 
 // built-ins //
@@ -81,7 +82,7 @@ void		cmdlst_delone(t_cmdlst *cmdlst, void (*del)(t_cmdlst *));
 void		cmdlst_clear(t_cmdlst **cmdlst, void (*del)(t_cmdlst *));
 t_cmdlst	*cmdlst_last(t_cmdlst *cmdlst);
 void		cmdlst_addback(t_cmdlst **cmdlst, t_cmdlst *new_node);
-t_cmdlst	*new_node(char *cmd);
+t_cmdlst	*new_node(char *cmd, t_envlst *envlst);
 
 // mng_lst2.c //
 void		print_flags(int flags); // TEMPORARY
@@ -110,8 +111,8 @@ char		**get_initiated_from_envlst(t_envlst *envlst);
 char		**get_all_from_envlst(t_envlst *envlst);
 
 // cmd_parsing.c //
-void		make_lst(char *input, t_cmdlst **cmdlst);
-void		first_divide(char *input, t_cmdlst **cmdlst);
+void		make_lst(char *input, t_cmdlst **cmdlst, t_envlst *envlst);
+void		first_divide(char *input, t_cmdlst **cmdlst, t_envlst *envlst);
 void		*ft_realloc(void *ptr, size_t size);
 void		check_quotes(char *input, size_t *i, int *flags);
 
