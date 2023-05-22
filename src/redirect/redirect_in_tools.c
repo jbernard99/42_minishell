@@ -6,29 +6,14 @@
 /*   By: mgagnon <mgagnon@student.42quebec.com      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 14:52:21 by mgagnon           #+#    #+#             */
-/*   Updated: 2023/05/18 11:05:38 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/05/22 13:25:56 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	reset_stdin(int old_fd)
+int	process_here_doc(void)
 {
-	if (dup2(old_fd, STDIN_FILENO) == -1)
-	{
-		perror("reset STDIN");
-		return (0);
-	}
-	return (1);
-}
-
-int	change_stdin(int new_fd)
-{
-	if (dup2(new_fd, STDIN_FILENO) == -1)
-	{
-		perror("dup2 change STDIN");
-		return (0);
-	}
 	return (1);
 }
 
@@ -64,7 +49,7 @@ int	redirect_in(int input_fd, char *file)
 		perror("stdin dup");
 		return (0);
 	}
-	if (change_stdin(fd) == 0)
+	if (change_stdin(&fd) == 0)
 		return (0);
 	fd = open(file, O_RDONLY);
 	if (fd == -1)

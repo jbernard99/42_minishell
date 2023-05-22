@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:31:19 by jbernard          #+#    #+#             */
-/*   Updated: 2023/05/21 22:12:11 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/05/22 16:51:25 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,12 @@ void	ctrlc_handle(int sig)
 	rl_redisplay();
 }
 
+// \x1B = start escape sequence 
+// 	printf escape sequence on line 42
+// 		[s = save cursor current position
+// 	printf escape sequence on line 46
+// 		[u = return cursor last position 
+// 		[A = bring cursor up a line
 void	prompt_loop(t_envlst *envlst)
 {
 	t_cmdlst	*cmdlst;
@@ -43,9 +49,9 @@ void	prompt_loop(t_envlst *envlst)
 		if (ft_strlen(input) != 0)
 		{
 			add_history(input);
-			make_lst(input, &cmdlst, envlst);
+			if (make_lst(input, &cmdlst, envlst))
+				exec_fork(cmdlst);
 			free(input);
-			exectry(cmdlst);
 			cmdlst_clear(&cmdlst, &empty_lst);
 		}
 	}

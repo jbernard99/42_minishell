@@ -6,27 +6,33 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 06:43:50 by jbernard          #+#    #+#             */
-/*   Updated: 2023/04/23 14:02:02 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/05/22 16:36:34 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	finish_flag_set(t_cmdlst **cmdlst)
+int	finish_flag_set(t_cmdlst **cmdlst)
 {
 	t_cmdlst	*cur;
 
 	cur = *cmdlst;
 	while (cur->next != NULL)
 	{
-		if (cur->flags & PIPEI)
+		if (cur->flags & PIPEI && cur->next)
 			cur->next->flags |= PIPEO;
-		else if (cur->flags & ORI)
+		else if (cur->flags & ORI && cur->next)
 			cur->next->flags |= ORO;
-		else if (cur->flags & ANDI)
+		else if (cur->flags & ANDI && cur->next)
 			cur->next->flags |= ANDO;
+		if (cur->flags & (PIPEI | ORI | ANDI) && cur->next == NULL)
+		{
+			perror("syntax error");
+			return (0);
+		}
 		cur = cur->next;
 	}
+	return (1);
 }
 
 size_t	ft_strpbrk(const char *str, const char *delim, int *flags)

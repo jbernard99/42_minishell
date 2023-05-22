@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:25:35 by jbernard          #+#    #+#             */
-/*   Updated: 2023/05/21 22:12:44 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/05/22 16:52:35 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,10 @@ enum	e_flags{
 };
 
 // execution.c //
-int			exectry(t_cmdlst *cmdlst);
 int			execution(t_cmdlst *cmdlst);
+
+// execution_fork.c //
+int			exec_fork(t_cmdlst *cmdlst);
 
 // built-ins //
 void		ft_cd(char **args, t_envlst *envlst, int fd_out);
@@ -72,7 +74,7 @@ void		ft_export(char **args, t_envlst *envlst, int fd_out);
 void		ft_unset(char **args, t_envlst *envlst, int fd_out);
 
 // tools.c //
-void		finish_flag_set(t_cmdlst **cmdlst);
+int			finish_flag_set(t_cmdlst **cmdlst);
 size_t		ft_strpbrk(const char *str, const char *delim, int *flags);
 char		*ft_strtok(char *str, const char *delim, int *flags);
 char		*ft_strldup(const char *str, size_t len);
@@ -111,7 +113,7 @@ char		**get_initiated_from_envlst(t_envlst *envlst);
 char		**get_all_from_envlst(t_envlst *envlst);
 
 // cmd_parsing.c //
-void		make_lst(char *input, t_cmdlst **cmdlst, t_envlst *envlst);
+int			make_lst(char *input, t_cmdlst **cmdlst, t_envlst *envlst);
 void		first_divide(char *input, t_cmdlst **cmdlst, t_envlst *envlst);
 void		*ft_realloc(void *ptr, size_t size);
 void		check_quotes(char *input, size_t *i, int *flags);
@@ -127,5 +129,12 @@ char		*rmv_quotes(char *str);
 
 // redirect_parsing.c //
 void		scan_redirect(t_cmdlst *cmdlst);
+
+// pipe.c //
+void		pipe_it(t_cmdlst *cmdlst);
+int			reset_stdin(int old_fd);
+int			change_stdin(int new_fd);
+int			reset_stdout(int old_fd);
+int			change_stdout(int new_fd);
 
 #endif

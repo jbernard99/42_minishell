@@ -6,31 +6,11 @@
 /*   By: mgagnon <mgagnon@student.42quebec.com      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 10:09:47 by mgagnon           #+#    #+#             */
-/*   Updated: 2023/05/18 10:57:10 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/05/22 16:49:23 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-int	reset_stdout(int old_fd)
-{
-	if (dup2(old_fd, STDOUT_FILENO) == -1)
-	{
-		perror("STDOUT reset");
-		return (0);
-	}
-	return (1);
-}
-
-int	change_stdout(int new_fd)
-{
-	if (dup2(new_fd, STDOUT_FILENO) == -1)
-	{
-		perror("dup2 change STDOUT");
-		return (0);
-	}
-	return (1);
-}
 
 int	append(int input_fd, char *file)
 {

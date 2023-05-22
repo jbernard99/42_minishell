@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 16:37:35 by jbernard          #+#    #+#             */
-/*   Updated: 2023/05/21 22:35:53 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/05/22 16:51:04 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,67 +67,16 @@ void	execute_sh(t_cmdlst *cmdlst)
 	int		e;
 
 	if (!ft_strchr(cmdlst->token[0], '/'))
-		cmdlst->token[0] = get_exec_location(cmdlst->envlst, cmdlst->token[0]);
-	e = execve(cmdlst->token[0], cmdlst->token, get_initiated_from_envlst(cmdlst->envlst));
+		cmdlst->token[0] = get_exec_location(cmdlst->envlst, \
+				cmdlst->token[0]);
+	e = execve(cmdlst->token[0], cmdlst->token, \
+			get_initiated_from_envlst(cmdlst->envlst));
 	if (e == -1)
 	{
 		printf("bash: %s: command not found\n", cmdlst->token[0]);
 		exit(0);
 	}
 }
-
-void	pipe_it(t_cmdlst *cmdlst)
-{
-	int	fd[2];
-
-	pipe(fd);
-	cmdlst->pipefd[1] = fd[1];
-	cmdlst->next->pipefd[0] = fd[0];
-}
-
-int	reset_stdout(int old_fd)
-{
-	if (dup2(old_fd, STDOUT_FILENO) == -1)
-	{
-		perror("STDOUT reset");
-		return (0);
-	}
-	return (1);
-}
-
-int exectry(t_cmdlst *cmdlst)
-{
-	pid_t	pid;
-	int		status;
-	
-	while (cmdlst)
-	{
-		if (cmdlst->next != NULL)
-		{
-			if (cmdlst->next->flags & PIPEI)
-				pipe_it(cmdlst);
-		}
-		pid = fork();
-		if (pid < 0)
-			perror("ERROR");
-		else if (pid == 0)
-		{
-			if (cmdlst->next != NULL && cmdlst->next->flags & PIPEI)
-				dup2(cmdlst->pipefd[1], STDOUT_FILENO);
-			if (cmdlst->flags & PIPEI)
-				dup2(cmdlst->pipefd[0], STDIN_FILENO);
-			execution(cmdlst);
-		}
-		else
-		{
-			pid = wait(&status);
-			reset_stdout(STDOUT_FILENO);
-		}
-		cmdlst = cmdlst->next;
-	}
-	return (1);
-}
-
 
 int	execution(t_cmdlst *cmdlst)
 {

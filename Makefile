@@ -6,7 +6,7 @@
 #    By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/16 04:45:18 by jbernard          #+#    #+#              #
-#    Updated: 2023/05/21 21:43:59 by jbernard         ###   ########.fr        #
+#    Updated: 2023/05/22 16:49:34 by mgagnon          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,11 +51,13 @@ ENV_FILES = 	envlst_to_envp.c		\
 				envlst_tools.c			\
 				env_var_parse.c
 
-EXEC_FILES = 	execution.c
+EXEC_FILES = 	execution.c				\
+				execution_fork.c
 
-RD_FILES =	# redirect_parsing.c		\
-			# redirect_out_tools.c		\
-			# redirect_in_tools.c
+RD_FILES =		pipe.c					\
+				redirect_parsing.c		\
+				# redirect_out_tools.c	\
+				redirect_in_tools.c
 			
 BI_FILES = 		echo.c					\
 				export.c				\
@@ -99,7 +101,7 @@ $(OBJ_DIR)%.o: %.c | $(OBJ_DIR)
 	@ printf "$(GREEN)- ⚡⚡⚡ -> Compiling $(PURPLE)$(notdir $@)$(GREEN) using $(PURPLE)$(notdir $<)$(GREEN)...           \r$(RESET)"
 	@ $(CC) $(CFLAGS) -I$(INC_DIR) -c $< -o $@
 
-$(OBJ_DIR):
+obj:
 	@ mkdir -p $(OBJ_DIR)
 
 # Download and install readline library
