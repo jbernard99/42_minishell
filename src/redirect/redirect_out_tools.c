@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect_out_tools.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgagnon <mgagnon@student.42quebec.com      +#+  +:+       +#+        */
+/*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 10:09:47 by mgagnon           #+#    #+#             */
-/*   Updated: 2023/05/22 16:49:23 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/05/22 17:00:22 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int	append(int input_fd, char *file)
 	int	stdout_cpy;
 	size_t	rd_bytes;
 
+	fd = 0;
 	stdout_cpy = dup(STDOUT_FILENO);
 	if (stdout_cpy == -1)
 	{
@@ -48,6 +49,7 @@ int	redirect_out(int input_fd, char *file)
 	int	stdout_cpy;
 	size_t	rd_bytes;
 
+	fd = 0;
 	stdout_cpy = dup(STDOUT_FILENO);
 	if (stdout_cpy == -1)
 	{

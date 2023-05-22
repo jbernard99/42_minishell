@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 16:37:35 by jbernard          #+#    #+#             */
-/*   Updated: 2023/05/22 16:51:04 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/05/22 16:56:26 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,22 +73,22 @@ void	execute_sh(t_cmdlst *cmdlst)
 			get_initiated_from_envlst(cmdlst->envlst));
 	if (e == -1)
 	{
-		printf("bash: %s: command not found\n", cmdlst->token[0]);
+		printf("bash: %s: command not found\n", &cmdlst->token[0][1]);
 		exit(0);
 	}
 }
 
-int	execution(t_cmdlst *cmdlst)
+void	execution(t_cmdlst *cmdlst)
 {
 	void	(*func)(char **, t_envlst *envlst, int);
 	
 	func = get_built_in(cmdlst->token[0]);
 	if (func)
-		if (cmdlst->next->flags & PIPEI)
+		if (cmdlst->flags & PIPEI)
 			func(cmdlst->token, cmdlst->envlst, cmdlst->pipefd[1]);
 		else
 			func(cmdlst->token, cmdlst->envlst, 1);
 	else
 		execute_sh(cmdlst);
-	return (1);
+	exit(0);
 }

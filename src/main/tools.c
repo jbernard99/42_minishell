@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 06:43:50 by jbernard          #+#    #+#             */
-/*   Updated: 2023/05/22 16:36:34 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/05/22 17:04:38 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,18 @@ int	finish_flag_set(t_cmdlst **cmdlst)
 	cur = *cmdlst;
 	while (cur->next != NULL)
 	{
-		if (cur->flags & PIPEI && cur->next)
+		if (cur->flags & PIPEI)
 			cur->next->flags |= PIPEO;
-		else if (cur->flags & ORI && cur->next)
+		else if (cur->flags & ORI)
 			cur->next->flags |= ORO;
-		else if (cur->flags & ANDI && cur->next)
+		else if (cur->flags & ANDI)
 			cur->next->flags |= ANDO;
-		if (cur->flags & (PIPEI | ORI | ANDI) && cur->next == NULL)
-		{
-			perror("syntax error");
-			return (0);
-		}
 		cur = cur->next;
+	}
+	if (cur->flags & (PIPEI | ORI | ANDI))
+	{
+		perror("syntax error");
+		return (0);
 	}
 	return (1);
 }

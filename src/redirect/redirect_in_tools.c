@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect_in_tools.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgagnon <mgagnon@student.42quebec.com      +#+  +:+       +#+        */
+/*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 14:52:21 by mgagnon           #+#    #+#             */
-/*   Updated: 2023/05/22 13:25:56 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/05/22 16:59:48 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,6 @@ int	process_here_doc(void)
 int	here_doc(int input_fd, const char *delim)
 {
 	char	*input;
-	int	pipefd[2];
-	pid_t	pid;
 
 	while (ft_strcmp(input, delim) != 0)
 	{
@@ -43,13 +41,14 @@ int	redirect_in(int input_fd, char *file)
 	int	stdin_cpy;
 	size_t	rd_bytes;
 
+	fd = 0;
 	stdin_cpy = dup(STDIN_FILENO);
 	if (stdin_cpy == -1)
 	{
 		perror("stdin dup");
 		return (0);
 	}
-	if (change_stdin(&fd) == 0)
+	if (change_stdin(fd) == 0)
 		return (0);
 	fd = open(file, O_RDONLY);
 	if (fd == -1)
