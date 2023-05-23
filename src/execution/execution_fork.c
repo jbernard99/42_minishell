@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 16:31:54 by jbernard          #+#    #+#             */
-/*   Updated: 2023/05/22 16:43:04 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/05/23 09:43:41 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,10 @@ int exec_fork(t_cmdlst *cmdlst)
 			pipe_it(cmdlst);
 		pid = fork();
 		if (pid < 0)
+		{
 			perror("ERROR");
+			return (0);
+		}
 		else if (pid == 0)
 			child_execute(cmdlst, old_stds);
 		else
