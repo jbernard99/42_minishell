@@ -6,7 +6,7 @@
 #    By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/16 04:45:18 by jbernard          #+#    #+#              #
-#    Updated: 2023/05/22 17:01:01 by mgagnon          ###   ########.fr        #
+#    Updated: 2023/05/23 10:29:53 by mgagnon          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,7 +56,7 @@ EXEC_FILES = 	execution.c				\
 
 RD_FILES =		pipe.c					\
 				redirect_parsing.c		\
-				# redirect_out_tools.c	\
+				redirect_out_tools.c	\
 				redirect_in_tools.c
 			
 BI_FILES = 		echo.c					\

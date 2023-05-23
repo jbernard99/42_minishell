@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 16:37:35 by jbernard          #+#    #+#             */
-/*   Updated: 2023/05/23 10:13:43 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/05/23 10:38:08 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,10 @@ void	execute_sh(t_cmdlst *cmdlst)
 	int		e;
 
 	if (!ft_strchr(cmdlst->token[0], '/'))
-		cmdlst->token[0] = get_exec_location(cmdlst->envlst, cmdlst->token[0]);
-	e = execve(cmdlst->token[0], cmdlst->token, get_initiated_from_envlst(cmdlst->envlst));
+		cmdlst->token[0] = get_exec_location(cmdlst->envlst, \
+				cmdlst->token[0]);
+	e = execve(cmdlst->token[0], cmdlst->token, \
+			get_initiated_from_envlst(cmdlst->envlst));
 	if (e == -1)
 	{
 		printf("bash: %s: command not found\n", &cmdlst->token[0][1]);
