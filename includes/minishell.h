@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:25:35 by jbernard          #+#    #+#             */
-/*   Updated: 2023/05/22 16:42:21 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/05/24 14:39:54 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,9 @@ typedef struct s_envlst {
 typedef struct s_cmdlst {
 	int				flags;
 	int				pipefd[2];
+	t_envlst		*envlst;
 	char			*cmd;
 	char			**token;
-	t_envlst		*envlst;
 	struct s_cmdlst	*next;
 }		t_cmdlst;
 
@@ -64,7 +64,7 @@ void		execution(t_cmdlst *cmdlst);
 // execution_fork.c //
 int			exec_fork(t_cmdlst *cmdlst);
 
-// built-ins //
+// built-ins //	
 void		ft_cd(char **args, t_envlst *envlst, int fd_out);
 void		ft_echo(char **args, t_envlst *envlst, int fd_out);
 void		ft_exit(char **args, t_envlst *envlst, int fd_out);
