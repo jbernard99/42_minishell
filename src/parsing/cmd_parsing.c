@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 13:33:11 by mgagnon           #+#    #+#             */
-/*   Updated: 2023/05/22 16:31:28 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/05/24 16:04:20 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,9 +115,9 @@ void	first_divide(char *input, t_cmdlst **cmdlst, t_envlst *envlst)
 	while (input[i])
 	{
 		origin = i;
-		while (!ft_strrchr("|&", input[i]))
+		while (!ft_strrchr("|", input[i]))
 			i++;
-		if (ft_strrchr("|&", input[i]) && input[i])
+		if (ft_strrchr("|", input[i]) && input[i])
 			cmdlst_addback(cmdlst, \
 					new_node(ft_strldup(&input[origin], \
 							(i - 1) - origin), envlst));

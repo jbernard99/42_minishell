@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 16:31:54 by jbernard          #+#    #+#             */
-/*   Updated: 2023/05/23 11:27:37 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/05/24 15:53:22 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,39 @@ void	parent_execute(t_cmdlst *cmdlst, int *old_stds)
 	}
 }
 
+void	(*is_singled_out(t_cmdlst *cmdlst))(char **args, t_envlst *envlst, int fd_out)
+{
+	static void	(*funcs[4])() = {ft_cd, ft_exit, \
+		ft_export, ft_unset};
+	static char	*funcs_name[4] = {"cd", "exit", \
+		"export", "unset"};
+	int			i;
+
+	i = 0;
+	if (ft_strcmp("export", cmdlst->token[0]) && \
+		ft_strtablen(cmdlst->token) == 1)
+		return (NULL);
+	while (i < 4)
+	{
+		if (ft_strcmp(cmdlst->token[0], funcs_name[i]) == 0)
+			return (funcs[i]);
+		i++;
+	}
+	return (NULL);
+}
+
+void	pre_exec_fork(t_cmdlst *cmdlst)
+{
+	void	(*func)(char **, t_envlst *, int);
+
+
+	func = is_singled_out(cmdlst);
+	if (func)
+		func(cmdlst->token, cmdlst->envlst, 1);
+	else
+		exec_fork(cmdlst);
+}
+
 int exec_fork(t_cmdlst *cmdlst)
 {
 	pid_t	pid;
@@ -49,18 +82,20 @@ int exec_fork(t_cmdlst *cmdlst)
 	
 	while (cmdlst != NULL)
 	{
-		if (cmdlst->flags & PIPEI)
-			pipe_it(cmdlst);
-		pid = fork();
-		if (pid < 0)
-		{
-			perror("fork error");
-			return (0);
-		}
-		else if (pid == 0)
-			child_execute(cmdlst, old_stds);
+		if (is_singled_out(cmdlst) != NULL)
+			pre_exec_fork(cmdlst);
 		else
-			parent_execute(cmdlst, old_stds);
+		{
+			if (cmdlst->flags & PIPEI)
+				pipe_it(cmdlst);
+			pid = fork();
+			if (pid < 0)
+				perror("ERROR");
+			else if (pid == 0)
+				child_execute(cmdlst, old_stds);
+			else
+				parent_execute(cmdlst, old_stds);
+		}
 		cmdlst = cmdlst->next;
 	}
 	return (1);

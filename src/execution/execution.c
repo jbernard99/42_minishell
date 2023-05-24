@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 16:37:35 by jbernard          #+#    #+#             */
-/*   Updated: 2023/05/23 10:38:08 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/05/24 15:56:55 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,12 @@
 
 void	(*get_built_in(char *name))(char **args, t_envlst *envlst, int fd_out)
 {
-	static void	(*funcs[7])() = {ft_cd, ft_echo, ft_env, ft_exit, \
-		ft_export, ft_pwd, ft_unset};
-	static char	*funcs_name[7] = {"cd", "echo", "env", "exit", \
-		"export", "pwd", "unset"};
+	static void	(*funcs[3])() = {ft_echo, ft_env, ft_pwd};
+	static char	*funcs_name[3] = {"echo", "env", "pwd"};
 	int			i;
 
 	i = 0;
-	while (i < 7)
+	while (i < 3)
 	{
 		if (ft_strcmp(name, funcs_name[i]) == 0)
 			return (funcs[i]);
@@ -40,7 +38,7 @@ int	exec_exists(char *exec)
 		return (0);
 }
 
-char	*get_exec_location(t_envlst *envlst, char *exec)
+char	*get_exec_location(char *exec, t_envlst *envlst)
 {
 	char	**path;
 	char 	*t_p;
@@ -67,8 +65,8 @@ void	execute_sh(t_cmdlst *cmdlst)
 	int		e;
 
 	if (!ft_strchr(cmdlst->token[0], '/'))
-		cmdlst->token[0] = get_exec_location(cmdlst->envlst, \
-				cmdlst->token[0]);
+		cmdlst->token[0] = get_exec_location(cmdlst->token[0], \
+				cmdlst->envlst);
 	e = execve(cmdlst->token[0], cmdlst->token, \
 			get_initiated_from_envlst(cmdlst->envlst));
 	if (e == -1)
@@ -80,8 +78,8 @@ void	execute_sh(t_cmdlst *cmdlst)
 
 void	execution(t_cmdlst *cmdlst)
 {
-	void	(*func)(char **, t_envlst *envlst, int);
-	
+	void	(*func)(char **, t_envlst *, int);
+
 	func = get_built_in(cmdlst->token[0]);
 	if (func)
 		if (cmdlst->flags & PIPEI)

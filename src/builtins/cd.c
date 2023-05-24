@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 13:40:17 by jbernard          #+#    #+#             */
-/*   Updated: 2023/05/16 14:03:03 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/05/24 14:44:28 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ char	*pwd_previous_directory(char *pwd)
 	return (pwd);
 }
 
-void	manage_pwd(t_envlst *envlst, char **args)
+void	manage_pwd(char **args, t_envlst *envlst)
 {
 	int	i;
 
@@ -47,9 +47,7 @@ void	manage_pwd(t_envlst *envlst, char **args)
 	while (args[i])
 	{
 		if (ft_strcmp(args[i], "..") == 0)
-		{
 			envlst->value = pwd_previous_directory(envlst->value);
-		}
 		else if (ft_strcmp(args[i], ".") != 0)
 		{
 			if (ft_strlen(envlst->value) > 1)
@@ -63,9 +61,8 @@ void	manage_pwd(t_envlst *envlst, char **args)
 void	ft_cd(char **args, t_envlst *envlst, int fd_out)
 {
 	(void)fd_out;
-	(void)envlst;
 	if (chdir(args[1]) == 0)
-		manage_pwd(envlst, ft_split(args[1], '/'));
+		manage_pwd(ft_split(args[1], '/'), envlst);
 	else
 		printf("minishell: cd: %s: Not a directory\n", args[1]);
 }
