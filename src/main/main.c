@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:31:19 by jbernard          #+#    #+#             */
-/*   Updated: 2023/05/23 11:36:41 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/05/24 11:32:26 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void	prompt_loop(t_envlst *envlst)
 {
 	t_cmdlst	*cmdlst;
 	char		*input;
+	int		yes_or_no;
 
 	while (1)
 	{
@@ -49,13 +50,10 @@ void	prompt_loop(t_envlst *envlst)
 		if (ft_strlen(input) != 0)
 		{
 			add_history(input);
-			if (make_lst(input, &cmdlst, envlst) != 0)
-			{
-				free(input);
+			yes_or_no = make_lst(input, &cmdlst, envlst);
+			free(input);
+			if (yes_or_no > 0)
 				exec_fork(cmdlst);
-			}
-			else
-				free(input);
 			cmdlst_clear(&cmdlst, &empty_lst);
 		}
 	}
