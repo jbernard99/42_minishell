@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:31:19 by jbernard          #+#    #+#             */
-/*   Updated: 2023/05/24 15:54:05 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/05/26 11:18:14 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ void	prompt_loop(t_envlst *envlst)
 			add_history(input);
 			yes_or_no = make_lst(input, &cmdlst, envlst);
 			free(input);
+			work_env_vars_calls(cmdlst);
 			if (yes_or_no > 0)
 				exec_fork(cmdlst);
 			cmdlst_clear(&cmdlst, &empty_lst);
