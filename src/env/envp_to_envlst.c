@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 11:44:16 by jbernard          #+#    #+#             */
-/*   Updated: 2023/05/16 14:08:41 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/05/26 11:32:07 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,16 @@ char	*get_value(char *env_line)
 t_envlst	*create_envlst_from_line(char *line)
 {
 	t_envlst	*envlst;
+	char		*value;
 
 	envlst = ft_calloc(1, sizeof(t_envlst));
 	if (!envlst)
 		return (NULL);
 	envlst->name = get_name(line);
-	envlst->value = get_value(line);
+	value = get_value(line);
+	if (*value == '\'' || *value == '\"')
+		value = rmv_quotes(value);
+	envlst->value = value;
 	envlst->next = NULL;
 	return (envlst);
 }
@@ -82,7 +86,9 @@ void	add_to_envlst(t_envlst *envlst, char *line)
 	}
 	else
 	{
-		line = get_value(line);
+		line = ft_strdup(get_value(line));
+		if (*line == '\'' || *line == '\"')
+			line = rmv_quotes(line);
 		if (line)
 			proxy->value = line;
 	}
