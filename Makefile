@@ -6,7 +6,7 @@
 #    By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/16 04:45:18 by jbernard          #+#    #+#              #
-#    Updated: 2023/05/22 16:39:14 by jbernard         ###   ########.fr        #
+#    Updated: 2023/05/25 10:56:13 by jbernard         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,7 +52,8 @@ ENV_FILES = 	envlst_to_envp.c		\
 				env_var_parse.c
 
 EXEC_FILES = 	execution.c				\
-				execution_fork.c
+				execution_fork.c		\
+				pre_execution.c
 
 RD_FILES =		pipe.c					\
 				redirect_parsing.c		\

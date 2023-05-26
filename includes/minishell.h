@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:25:35 by jbernard          #+#    #+#             */
-/*   Updated: 2023/05/24 14:39:54 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/05/25 10:55:54 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,9 @@ void		execution(t_cmdlst *cmdlst);
 
 // execution_fork.c //
 int			exec_fork(t_cmdlst *cmdlst);
+
+// pre_execution.c //
+void	work_env_vars_calls(t_cmdlst *cmdlst);
 
 // built-ins //	
 void		ft_cd(char **args, t_envlst *envlst, int fd_out);
