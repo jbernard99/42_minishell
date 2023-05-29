@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 11:44:16 by jbernard          #+#    #+#             */
-/*   Updated: 2023/05/16 14:08:41 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/05/26 12:19:52 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ char	*get_name(char *env_line)
 char	*get_value(char *env_line)
 {
 	size_t	i;
-
+	char 	*ret;
+	
 	i = 0;
 	if (!ft_strchr(env_line, '='))
 		return (NULL);
@@ -34,18 +35,24 @@ char	*get_value(char *env_line)
 	if (!env_line[i + 1])
 		return ("\"\"");
 	i++;
-	return (ft_strdup(&env_line[i]));
+	ret = ft_strdup(&env_line[i]);
+	if (ret[0] == '\"' || ret[0] == '\'')
+		ret = rmv_quotes(ret);
+	
+	return (ret);
 }
 
 t_envlst	*create_envlst_from_line(char *line)
 {
 	t_envlst	*envlst;
+	char		*value;
 
 	envlst = ft_calloc(1, sizeof(t_envlst));
 	if (!envlst)
 		return (NULL);
 	envlst->name = get_name(line);
-	envlst->value = get_value(line);
+	value = get_value(line);
+	envlst->value = value;
 	envlst->next = NULL;
 	return (envlst);
 }
@@ -82,8 +89,7 @@ void	add_to_envlst(t_envlst *envlst, char *line)
 	}
 	else
 	{
-		line = get_value(line);
-		if (line)
-			proxy->value = line;
+		line = ft_strdup(get_value(line));
+		proxy->value = line;
 	}
 }
