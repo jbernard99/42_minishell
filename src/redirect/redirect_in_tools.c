@@ -6,11 +6,16 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 14:52:21 by mgagnon           #+#    #+#             */
-/*   Updated: 2023/05/22 16:46:47 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/05/22 16:59:48 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+int	process_here_doc(void)
+{
+	return (1);
+}
 
 int	here_doc(int input_fd, const char *delim)
 {

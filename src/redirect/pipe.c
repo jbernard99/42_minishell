@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 14:37:01 by jbernard          #+#    #+#             */
-/*   Updated: 2023/05/24 12:40:43 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/05/24 15:54:48 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	reset_stdin(int old_fd)
 {
 	if (dup2(old_fd, STDIN_FILENO) == -1)
 	{
-		perror("reset STDIN");
+		perror("STDIN reset");
 		return (0);
 	}
 	return (1);

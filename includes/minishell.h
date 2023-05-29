@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:25:35 by jbernard          #+#    #+#             */
-/*   Updated: 2023/05/25 10:55:54 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/05/26 11:17:05 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void		ft_export(char **args, t_envlst *envlst, int fd_out);
 void		ft_unset(char **args, t_envlst *envlst, int fd_out);
 
 // tools.c //
-void		finish_flag_set(t_cmdlst **cmdlst);
+int			finish_flag_set(t_cmdlst **cmdlst);
 size_t		ft_strpbrk(const char *str, const char *delim, int *flags);
 char		*ft_strtok(char *str, const char *delim, int *flags);
 char		*ft_strldup(const char *str, size_t len);
@@ -115,7 +115,7 @@ char		**get_initiated_from_envlst(t_envlst *envlst);
 char		**get_all_from_envlst(t_envlst *envlst);
 
 // cmd_parsing.c //
-void		make_lst(char *input, t_cmdlst **cmdlst, t_envlst *envlst);
+int			make_lst(char *input, t_cmdlst **cmdlst, t_envlst *envlst);
 void		first_divide(char *input, t_cmdlst **cmdlst, t_envlst *envlst);
 void		check_quotes(char *input, size_t *i, int *flags);
 

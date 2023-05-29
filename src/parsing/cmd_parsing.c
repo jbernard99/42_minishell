@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 13:33:11 by mgagnon           #+#    #+#             */
-/*   Updated: 2023/05/24 14:25:54 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/05/24 16:04:20 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,9 +115,9 @@ void	first_divide(char *input, t_cmdlst **cmdlst, t_envlst *envlst)
 	while (input[i])
 	{
 		origin = i;
-		while (!ft_strrchr("|&", input[i]))
+		while (!ft_strrchr("|", input[i]))
 			i++;
-		if (ft_strrchr("|&", input[i]) && input[i])
+		if (ft_strrchr("|", input[i]) && input[i])
 			cmdlst_addback(cmdlst, \
 					new_node(ft_strldup(&input[origin], \
 							(i - 1) - origin), envlst));
@@ -129,17 +129,19 @@ void	first_divide(char *input, t_cmdlst **cmdlst, t_envlst *envlst)
 	}
 }
 
-void	make_lst(char *input, t_cmdlst **cmdlst, t_envlst *envlst)
+int	make_lst(char *input, t_cmdlst **cmdlst, t_envlst *envlst)
 {
 	t_cmdlst	*cur;
 
 	first_divide(input, cmdlst, envlst);
-	finish_flag_set(cmdlst);
+	if (finish_flag_set(cmdlst) == 0)
+		return (0);
 	cur = *cmdlst;
 	while (cur != NULL)
 	{
 		second_divide(&cur);
 		cur = cur->next;
 	}
+	return (1);
 	//ft_cmdlstiter(cmdlst, &scan_redirect);
 }
