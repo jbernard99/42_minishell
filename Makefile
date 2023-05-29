@@ -6,7 +6,7 @@
 #    By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/16 04:45:18 by jbernard          #+#    #+#              #
-#    Updated: 2023/05/19 14:58:42 by jbernard         ###   ########.fr        #
+#    Updated: 2023/05/29 09:05:59 by mgagnon          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,11 +51,14 @@ ENV_FILES = 	envlst_to_envp.c		\
 				envlst_tools.c			\
 				env_var_parse.c
 
-EXEC_FILES = 	execution.c
+EXEC_FILES = 	execution.c				\
+				execution_fork.c		\
+				pre_execution.c
 
-RD_FILES =	# redirect_parsing.c		\
-			# redirect_out_tools.c		\
-			# redirect_in_tools.c
+RD_FILES =		pipe.c					\
+				redirect_parsing.c		\
+				redirect_out_tools.c	\
+				redirect_in_tools.c
 			
 BI_FILES = 		echo.c					\
 				export.c				\
@@ -93,10 +96,10 @@ $(NAME): $(RL_DIR)/libreadline.a $(OBJ_FILES)
 	@ printf "$(GREEN) Almost done ......\r$(RESET)"
 	@ $(MAKE) -C $(LIBFT_DIR)
 	@ $(CC) $(CFLAGS) $(OBJ_FILES) $(LIB_FILES) -o $(NAME)
-	@ printf "$(GREEN) - ✅✅✅ -> Compilation of $(PURPLE)$(NAME)$(GREEN) complete!                       $(RESET)\n"
+	@ printf "$(GREEN) - ✅✅✅ -> Compilation of $(PURPLE)$(NAME)$(GREEN) complete!                      						 $(RESET)\n"
 
 $(OBJ_DIR)%.o: %.c | $(OBJ_DIR)
-	@ printf "$(GREEN)- ⚡⚡⚡ -> Compiling $(PURPLE)$(notdir $@)$(GREEN) using $(PURPLE)$(notdir $<)$(GREEN)...           \r$(RESET)"
+	@ printf "$(GREEN)- ⚡⚡⚡ -> Compiling $(PURPLE)$(notdir $@)$(GREEN) using $(PURPLE)$(notdir $<)$(GREEN)...                                                                        \r$(RESET)"
 	@ $(CC) $(CFLAGS) -I$(INC_DIR) -c $< -o $@
 
 obj:

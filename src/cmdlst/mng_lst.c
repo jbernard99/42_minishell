@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 11:17:41 by mgagnon           #+#    #+#             */
-/*   Updated: 2023/05/02 12:35:41 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/05/24 14:23:40 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	cmdlst_addback(t_cmdlst **cmdlst, t_cmdlst *new_node)
 	}
 }
 
-t_cmdlst	*new_node(char *cmd)
+t_cmdlst	*new_node(char *cmd, t_envlst *envlst)
 {
 	t_cmdlst	*new_node;
 
@@ -69,7 +69,9 @@ t_cmdlst	*new_node(char *cmd)
 	if (!new_node)
 		return (NULL);
 	new_node->cmd = cmd;
-	new_node->envlst = NULL;
+	new_node->pipefd[0] = 0;
+	new_node->pipefd[1] = 0;
+	new_node->envlst = envlst;
 	new_node->next = NULL;
 	return (new_node);
 }

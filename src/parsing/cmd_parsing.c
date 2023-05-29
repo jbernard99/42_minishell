@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 13:33:11 by mgagnon           #+#    #+#             */
-/*   Updated: 2023/05/19 15:11:53 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/05/24 16:04:20 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ void	second_divide(t_cmdlst **cmdlst)
 /* makes a first split to separate multiple cmd and looks */
 /* for PIPE, AND and OR operand */
 
-void	first_divide(char *input, t_cmdlst **cmdlst)
+void	first_divide(char *input, t_cmdlst **cmdlst, t_envlst *envlst)
 {
 	t_cmdlst	*cur;
 	size_t		i;
@@ -115,31 +115,33 @@ void	first_divide(char *input, t_cmdlst **cmdlst)
 	while (input[i])
 	{
 		origin = i;
-		while (!ft_strrchr("|&", input[i]))
+		while (!ft_strrchr("|", input[i]))
 			i++;
-		if (ft_strrchr("|&", input[i]) && input[i])
+		if (ft_strrchr("|", input[i]) && input[i])
 			cmdlst_addback(cmdlst, \
 					new_node(ft_strldup(&input[origin], \
-							(i - 1) - origin)));
+							(i - 1) - origin), envlst));
 		else
 			cmdlst_addback(cmdlst, new_node(ft_strldup(&input[origin], \
-							i - origin)));
+							i - origin), envlst));
 		cur = cmdlst_last(*cmdlst);
 		what_is_it(input, &i, &cur->flags);
 	}
 }
 
-void	make_lst(char *input, t_cmdlst **cmdlst)
+int	make_lst(char *input, t_cmdlst **cmdlst, t_envlst *envlst)
 {
 	t_cmdlst	*cur;
 
-	first_divide(input, cmdlst);
-	finish_flag_set(cmdlst);
+	first_divide(input, cmdlst, envlst);
+	if (finish_flag_set(cmdlst) == 0)
+		return (0);
 	cur = *cmdlst;
 	while (cur != NULL)
 	{
 		second_divide(&cur);
 		cur = cur->next;
 	}
-	ft_cmdlstiter(cmdlst, &scan_redirect);
+	return (1);
+	//ft_cmdlstiter(cmdlst, &scan_redirect);
 }

@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:31:19 by jbernard          #+#    #+#             */
-/*   Updated: 2023/05/16 16:03:59 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/05/26 11:18:14 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,17 @@ void	ctrlc_handle(int sig)
 	rl_redisplay();
 }
 
+// \x1B = start escape sequence 
+// 	printf escape sequence on line 42
+// 		[s = save cursor current position
+// 	printf escape sequence on line 46
+// 		[u = return cursor last position 
+// 		[A = bring cursor up a line
 void	prompt_loop(t_envlst *envlst)
 {
 	t_cmdlst	*cmdlst;
 	char		*input;
+	int		yes_or_no;
 
 	while (1)
 	{
@@ -43,10 +50,11 @@ void	prompt_loop(t_envlst *envlst)
 		if (ft_strlen(input) != 0)
 		{
 			add_history(input);
-			make_lst(input, &cmdlst);
+			yes_or_no = make_lst(input, &cmdlst, envlst);
 			free(input);
-			cmdlst->envlst = envlst;
-			execution(cmdlst);
+			work_env_vars_calls(cmdlst);
+			if (yes_or_no > 0)
+				exec_fork(cmdlst);
 			cmdlst_clear(&cmdlst, &empty_lst);
 		}
 	}
@@ -70,8 +78,7 @@ void	set_new_termios(struct termios old_termios)
 int	main(int argc, char **argv, char **envp)
 {
 	struct termios	old_termios;
-	t_envlst		*envlst;
-
+	t_envlst 		*envlst;
 
 	create_envlst_from_envp(&envlst, envp);
 	//char **n_envp = get_envp_from_envlst(envlst);

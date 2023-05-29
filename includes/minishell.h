@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:25:35 by jbernard          #+#    #+#             */
-/*   Updated: 2023/05/19 15:10:52 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/05/26 11:17:05 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,9 @@ typedef struct s_envlst {
 typedef struct s_cmdlst {
 	int				flags;
 	int				pipefd[2];
+	t_envlst		*envlst;
 	char			*cmd;
 	char			**token;
-	t_envlst		*envlst;
 	struct s_cmdlst	*next;
 }		t_cmdlst;
 
@@ -59,9 +59,15 @@ enum	e_flags{
 };
 
 // execution.c //
-int			execution(t_cmdlst *cmdlst);
+void		execution(t_cmdlst *cmdlst);
 
-// built-ins //
+// execution_fork.c //
+int			exec_fork(t_cmdlst *cmdlst);
+
+// pre_execution.c //
+void	work_env_vars_calls(t_cmdlst *cmdlst);
+
+// built-ins //	
 void		ft_cd(char **args, t_envlst *envlst, int fd_out);
 void		ft_echo(char **args, t_envlst *envlst, int fd_out);
 void		ft_exit(char **args, t_envlst *envlst, int fd_out);
@@ -71,7 +77,7 @@ void		ft_export(char **args, t_envlst *envlst, int fd_out);
 void		ft_unset(char **args, t_envlst *envlst, int fd_out);
 
 // tools.c //
-void		finish_flag_set(t_cmdlst **cmdlst);
+int			finish_flag_set(t_cmdlst **cmdlst);
 size_t		ft_strpbrk(const char *str, const char *delim, int *flags);
 char		*ft_strtok(char *str, const char *delim, int *flags);
 char		*ft_strldup(const char *str, size_t len);
@@ -81,7 +87,7 @@ void		cmdlst_delone(t_cmdlst *cmdlst, void (*del)(t_cmdlst *));
 void		cmdlst_clear(t_cmdlst **cmdlst, void (*del)(t_cmdlst *));
 t_cmdlst	*cmdlst_last(t_cmdlst *cmdlst);
 void		cmdlst_addback(t_cmdlst **cmdlst, t_cmdlst *new_node);
-t_cmdlst	*new_node(char *cmd);
+t_cmdlst	*new_node(char *cmd, t_envlst *envlst);
 
 // mng_lst2.c //
 void		print_flags(int flags); // TEMPORARY
@@ -96,7 +102,6 @@ size_t		count_initiated_envlst(t_envlst *envlst);
 t_envlst	*envlst_last(t_envlst *envlst);
 t_envlst	*is_name_in_envlst(t_envlst *envlst, char *name);
 void		envlst_iter(t_envlst **envlst, void (*f)(t_envlst *));
-void		put_envlst(t_envlst *envlst);
 
 // envp_to_envlst.c //
 char		*get_name(char *env_line);
@@ -110,9 +115,8 @@ char		**get_initiated_from_envlst(t_envlst *envlst);
 char		**get_all_from_envlst(t_envlst *envlst);
 
 // cmd_parsing.c //
-void		make_lst(char *input, t_cmdlst **cmdlst);
-void		first_divide(char *input, t_cmdlst **cmdlst);
-void		*ft_realloc(void *ptr, size_t size);
+int			make_lst(char *input, t_cmdlst **cmdlst, t_envlst *envlst);
+void		first_divide(char *input, t_cmdlst **cmdlst, t_envlst *envlst);
 void		check_quotes(char *input, size_t *i, int *flags);
 
 // env_var_parse.c //
@@ -126,5 +130,12 @@ char		*rmv_quotes(char *str);
 
 // redirect_parsing.c //
 void		scan_redirect(t_cmdlst *cmdlst);
+
+// pipe.c //
+void	pipe_it(t_cmdlst *cmdlst);
+int		change_stdin(int new_fd);
+int		reset_stdin(int old_fd);
+int		change_stdout(int new_fd);
+int		reset_stdout(int old_fd);
 
 #endif
