@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 12:09:57 by mgagnon           #+#    #+#             */
-/*   Updated: 2023/05/29 11:08:20 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/05/29 11:40:05 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 char	*get_var_name(char *str)
 {
 	char	*name;
-	int	i;
+	int		i;
 
 	i = 0;
 	while (str[i] && str[i] != ' ')
@@ -27,7 +27,7 @@ char	*get_var_name(char *str)
 
 char	*rplc_env_var(t_envlst *envlst, char *str)
 {
-	int	i;
+	int		i;
 	char	*old;
 	char	*var;
 	char	*replacement;

@@ -6,11 +6,37 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 06:43:50 by jbernard          #+#    #+#             */
-/*   Updated: 2023/05/23 11:36:06 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/05/29 11:48:17 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+/* if quotes or double quotes are used makes sure to skip */
+/* over every part between 2 quotes or two double quotes */
+
+void	check_quotes(char *input, size_t *i, int *flags)
+{
+	char	c;
+
+	if (input[*i] == '\'')
+	{
+		*flags ^= QUOTE;
+		c = '\'';
+	}
+	else if (input[*i] == '\"')
+	{
+		*flags ^= DQUOTE;
+		c = '\"';
+	}
+	(*i)++;
+	while (input[*i] && input[*i] != c)
+		(*i)++;
+	if (input[*i] == '\'')
+		*flags ^= QUOTE;
+	else if (input[*i] == '\"')
+		*flags ^= DQUOTE;
+}
 
 int	finish_flag_set(t_cmdlst **cmdlst)
 {
