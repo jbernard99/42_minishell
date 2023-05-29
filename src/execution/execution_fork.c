@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 16:31:54 by jbernard          #+#    #+#             */
-/*   Updated: 2023/05/26 11:16:51 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/05/29 13:03:37 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	(*is_singled_out(t_cmdlst *cmdlst))(char **args, t_envlst *envlst, int fd_o
 	int			i;
 
 	i = 0;
-	if (ft_strcmp("export", cmdlst->token[0]) && \
+	if (ft_strcmp("export", cmdlst->token[0]) == 0 && \
 		ft_strtablen(cmdlst->token) == 1)
 		return (NULL);
 	while (i < 4)

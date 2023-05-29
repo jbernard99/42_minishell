@@ -6,19 +6,11 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 13:45:05 by jbernard          #+#    #+#             */
-/*   Updated: 2023/05/24 14:35:19 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/05/29 12:24:30 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-void	free_envlst(t_envlst *envlst)
-{
-	free(envlst->name);
-	if (envlst->value)
-		free(envlst->value);
-	free(envlst);
-}
 
 void	envlst_unset(t_envlst *envlst, char *name)
 {

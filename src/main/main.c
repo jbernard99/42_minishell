@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:31:19 by jbernard          #+#    #+#             */
-/*   Updated: 2023/05/26 11:18:14 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/05/29 13:16:58 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,21 @@ void	ctrlc_handle(int sig)
 	rl_redisplay();
 }
 
+int		ft_readline(char **input, t_envlst *envlst)
+{
+	*input = readline("minishell> ");
+	if (!*input)
+	{
+		printf("\x1B[u\x1B[Aexit\n");
+		ft_end(NULL, envlst);
+	}
+	if (ft_strcmp(*input, "") == 0)
+		return (1);
+	if (ft_strlen(*input) > 0)
+		add_history(*input);
+	return (0);
+}
+
 // \x1B = start escape sequence 
 // 	printf escape sequence on line 42
 // 		[s = save cursor current position
@@ -35,21 +50,14 @@ void	prompt_loop(t_envlst *envlst)
 {
 	t_cmdlst	*cmdlst;
 	char		*input;
-	int		yes_or_no;
+	int			yes_or_no;
 
 	while (1)
 	{
 		cmdlst = NULL;
-		input = readline("minishell> \x1B[s");
-		if (input == NULL)
+		yes_or_no = ft_readline(&input, envlst);
+		if (!yes_or_no)
 		{
-			free(input);
-			printf("\x1B[u\x1B[Aexit\n");
-			exit(0);
-		}
-		if (ft_strlen(input) != 0)
-		{
-			add_history(input);
 			yes_or_no = make_lst(input, &cmdlst, envlst);
 			free(input);
 			work_env_vars_calls(cmdlst);
@@ -80,9 +88,9 @@ int	main(int argc, char **argv, char **envp)
 	struct termios	old_termios;
 	t_envlst 		*envlst;
 
+	if (argc > 1 || !*envp)
+		return (1);
 	create_envlst_from_envp(&envlst, envp);
-	//char **n_envp = get_envp_from_envlst(envlst);
-	//put_envp(n_envp);
 	tcgetattr(STDIN_FILENO, &old_termios);
 	set_new_termios(old_termios);
 	signal(SIGINT, ctrlc_handle);

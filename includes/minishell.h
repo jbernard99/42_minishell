@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:25:35 by jbernard          #+#    #+#             */
-/*   Updated: 2023/05/26 11:17:05 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/05/29 12:23:27 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ size_t		ft_strpbrk(const char *str, const char *delim, int *flags);
 char		*ft_strtok(char *str, const char *delim, int *flags);
 char		*ft_strldup(const char *str, size_t len);
 
+
 // mng_lst.c //
 void		cmdlst_delone(t_cmdlst *cmdlst, void (*del)(t_cmdlst *));
 void		cmdlst_clear(t_cmdlst **cmdlst, void (*del)(t_cmdlst *));
@@ -132,10 +133,14 @@ char		*rmv_quotes(char *str);
 void		scan_redirect(t_cmdlst *cmdlst);
 
 // pipe.c //
-void	pipe_it(t_cmdlst *cmdlst);
-int		change_stdin(int new_fd);
-int		reset_stdin(int old_fd);
-int		change_stdout(int new_fd);
-int		reset_stdout(int old_fd);
+void		pipe_it(t_cmdlst *cmdlst);
+int			change_stdin(int new_fd);
+int			reset_stdin(int old_fd);
+int			change_stdout(int new_fd);
+int			reset_stdout(int old_fd);
+
+// cleanup.c //
+void		free_envlst(t_envlst *envlst);
+void		ft_end(t_cmdlst	*cmdlst, t_envlst *envlst);
 
 #endif

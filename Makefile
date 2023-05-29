@@ -6,7 +6,7 @@
 #    By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/16 04:45:18 by jbernard          #+#    #+#              #
-#    Updated: 2023/05/29 11:09:47 by jbernard         ###   ########.fr        #
+#    Updated: 2023/05/29 13:01:40 by jbernard         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,7 +38,8 @@ RL_DIR = ./libraries/readline
 
 # Files
 MAIN_FILES = 	main.c					\
-				tools.c
+				tools.c					\
+				cleanup.c
 				
 PARSE_FILES = 	cmd_parsing.c			\
 				quotes.c
@@ -66,7 +67,7 @@ BI_FILES = 		echo.c					\
 				cd.c					\
 				pwd.c					\
 				unset.c					\
-				exit.c		
+				exit.c
 
 #SRC_FILES = $(wildcard $(MAIN_DIR)/*.c) $(wildcard $(BI_DIR)/*.c)
 
@@ -96,10 +97,10 @@ $(NAME): $(RL_DIR)/libreadline.a $(OBJ_FILES)
 	@ printf "$(GREEN) Almost done ......\r$(RESET)"
 	@ $(MAKE) -C $(LIBFT_DIR)
 	@ $(CC) $(CFLAGS) $(OBJ_FILES) $(LIB_FILES) -o $(NAME)
-	@ printf "$(GREEN) - ✅✅✅ -> Compilation of $(PURPLE)$(NAME)$(GREEN) complete!                      						$(RESET)\n"
+	@ printf "$(GREEN) - ✅✅✅ -> Compilation of $(PURPLE)$(NAME)$(GREEN) complete!      $(RESET)"
 
 $(OBJ_DIR)%.o: %.c | $(OBJ_DIR)
-	@ printf "$(GREEN)- ⚡⚡⚡ -> Compiling $(PURPLE)$(notdir $@)$(GREEN) using $(PURPLE)$(notdir $<)$(GREEN)...                                                                        \r$(RESET)"
+	@ printf "$(GREEN)- ⚡⚡⚡ -> Compiling $(PURPLE)$(notdir $@)$(GREEN) using $(PURPLE)$(notdir $<)$(GREEN)...     \r $(RESET)"
 	@ $(CC) $(CFLAGS) -I$(INC_DIR) -c $< -o $@
 
 obj:
