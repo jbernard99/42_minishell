@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 16:37:35 by jbernard          #+#    #+#             */
-/*   Updated: 2023/05/30 10:56:44 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/05/30 11:03:52 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	exec_exists(char *exec)
 char	*get_exec_location(char *exec, t_envlst *envlst)
 {
 	char	**path;
-	char 	*t_p;
+	char	*t_p;
 	int		i;
 
 	exec = ft_strjoin("/", exec);
@@ -82,10 +82,12 @@ void	execution(t_cmdlst *cmdlst)
 
 	func = get_built_in(cmdlst->token[0]);
 	if (func)
+	{
 		if (cmdlst->flags & PIPEI)
 			func(cmdlst->token, cmdlst->envlst, cmdlst->pipefd[1]);
 		else
 			func(cmdlst->token, cmdlst->envlst, 1);
+	}
 	else
 		execute_sh(cmdlst);
 	exit(0);

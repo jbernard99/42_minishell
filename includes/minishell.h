@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:25:35 by jbernard          #+#    #+#             */
-/*   Updated: 2023/05/29 12:23:27 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/05/30 11:03:30 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,16 +46,12 @@ typedef struct s_cmdlst {
 enum	e_flags{
 	PIPEI = 1 << 0,
 	PIPEO = 1 << 1,
-	ANDI = 1 << 2,
-	ANDO = 1 << 3,
-	ORI = 1 << 4,
-	ORO = 1 << 5,
-	QUOTE = 1 << 6,
-	DQUOTE = 1 << 7,
-	R_IN = 1 << 8,
-	R_OUT = 1 << 9,
-	APP_OUT = 1 << 10,
-	HR_DOC = 1 << 11
+	QUOTE = 1 << 2,
+	DQUOTE = 1 << 3,
+	R_IN = 1 << 4,
+	R_OUT = 1 << 5,
+	APP_OUT = 1 << 6,
+	HR_DOC = 1 << 7
 };
 
 // execution.c //

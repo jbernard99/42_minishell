@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 11:44:16 by jbernard          #+#    #+#             */
-/*   Updated: 2023/05/26 12:19:52 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/05/30 10:55:17 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ char	*get_name(char *env_line)
 char	*get_value(char *env_line)
 {
 	size_t	i;
-	char 	*ret;
-	
+	char	*ret;
+
 	i = 0;
 	if (!ft_strchr(env_line, '='))
 		return (NULL);
@@ -38,7 +38,6 @@ char	*get_value(char *env_line)
 	ret = ft_strdup(&env_line[i]);
 	if (ret[0] == '\"' || ret[0] == '\'')
 		ret = rmv_quotes(ret);
-	
 	return (ret);
 }
 

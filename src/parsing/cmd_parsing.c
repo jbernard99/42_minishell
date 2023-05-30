@@ -6,37 +6,11 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 13:33:11 by mgagnon           #+#    #+#             */
-/*   Updated: 2023/05/24 16:04:20 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/05/29 15:20:52 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-/* if quotes or double quotes are used makes sure to skip */
-/* over every part between 2 quotes or two double quotes */
-
-void	check_quotes(char *input, size_t *i, int *flags)
-{
-	char	c;
-
-	if (input[*i] == '\'')
-	{
-		*flags ^= QUOTE;
-		c = '\'';
-	}
-	else if (input[*i] == '\"')
-	{
-		*flags ^= DQUOTE;
-		c = '\"';
-	}
-	(*i)++;
-	while (input[*i] && input[*i] != c)
-		(*i)++;
-	if (input[*i] == '\'')
-		*flags ^= QUOTE;
-	else if (input[*i] == '\"')
-		*flags ^= DQUOTE;
-}
 
 /* identify what operand is being used and */
 /* if any quotes or double quotes are used */
@@ -67,6 +41,13 @@ void	what_is_it(char *input, size_t *i, int *flags)
 	}
 }
 
+void	quote_handle(char *cmd, size_t *end, int *flags)
+{
+	if (cmd[*end] == '\'' || cmd[*end] == '\"')
+		check_quotes(cmd, end, flags);
+	(*end)++;
+}
+
 /* problem still in second_divide : */
 /* 1- don't work with quotes doubles quotes */
 
@@ -89,11 +70,7 @@ void	second_divide(t_cmdlst **cmdlst)
 		origin = end;
 		while (cmd[end] && (cmd[end] != ' ' && ((*cmdlst)->flags & \
 						(QUOTE | DQUOTE)) == 0))
-		{
-			if (cmd[end] == '\'' || cmd[end] == '\"')
-				check_quotes(cmd, &end, &(*cmdlst)->flags);
-			end++;
-		}
+			quote_handle(cmd, &end, &(*cmdlst)->flags);
 		(*cmdlst)->token[i] = ft_strldup(&cmd[origin], end - origin);
 		i++;
 		while (cmd[end] == ' ')
@@ -142,6 +119,6 @@ int	make_lst(char *input, t_cmdlst **cmdlst, t_envlst *envlst)
 		second_divide(&cur);
 		cur = cur->next;
 	}
+	ft_cmdlstiter(cmdlst, &scan_redirect);
 	return (1);
-	//ft_cmdlstiter(cmdlst, &scan_redirect);
 }

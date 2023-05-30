@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 14:52:21 by mgagnon           #+#    #+#             */
-/*   Updated: 2023/05/22 16:59:48 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/05/30 10:54:55 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ int	here_doc(int input_fd, const char *delim)
 int	redirect_in(int input_fd, char *file)
 {
 	char	buffer[1024];
-	int	fd;
-	int	stdin_cpy;
+	int		fd;
+	int		stdin_cpy;
 	size_t	rd_bytes;
 
 	fd = 0;
@@ -56,7 +56,8 @@ int	redirect_in(int input_fd, char *file)
 		perror("open");
 		return (0);
 	}
-	while ((rd_bytes = read(input_fd, buffer, sizeof(buffer))) > 0)
+	rd_bytes = read(input_fd, buffer, sizeof(buffer));
+	while (rd_bytes > 0)
 		write(STDIN_FILENO, buffer, rd_bytes);
 	close(fd);
 	if (reset_stdin(stdin_cpy) == 0)

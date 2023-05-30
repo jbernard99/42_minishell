@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:31:19 by jbernard          #+#    #+#             */
-/*   Updated: 2023/05/30 11:00:20 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/05/30 11:04:03 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ void	set_new_termios(struct termios old_termios)
 int	main(int argc, char **argv, char **envp)
 {
 	struct termios	old_termios;
-	t_envlst 		*envlst;
+	t_envlst		*envlst;
 
 	if (argc > 1 || !*envp)
 		return (1);

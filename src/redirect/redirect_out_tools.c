@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 10:09:47 by mgagnon           #+#    #+#             */
-/*   Updated: 2023/05/22 17:00:22 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/05/30 10:58:25 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 int	append(int input_fd, char *file)
 {
 	char	buffer[1024];
-	int	fd;
-	int	stdout_cpy;
+	int		fd;
+	int		stdout_cpy;
 	size_t	rd_bytes;
 
 	fd = 0;
@@ -34,7 +34,8 @@ int	append(int input_fd, char *file)
 		perror("open");
 		return (0);
 	}
-	while ((rd_bytes = read(input_fd, buffer, sizeof(buffer))) > 0)
+	rd_bytes = read(input_fd, buffer, sizeof(buffer));
+	while (rd_bytes > 0)
 		write(STDOUT_FILENO, buffer, rd_bytes);
 	close(fd);
 	if (reset_stdout(stdout_cpy) == 0)
@@ -45,8 +46,8 @@ int	append(int input_fd, char *file)
 int	redirect_out(int input_fd, char *file)
 {
 	char	buffer[1024];
-	int	fd;
-	int	stdout_cpy;
+	int		fd;
+	int		stdout_cpy;
 	size_t	rd_bytes;
 
 	fd = 0;
@@ -64,7 +65,8 @@ int	redirect_out(int input_fd, char *file)
 		perror("open");
 		return (0);
 	}
-	while ((rd_bytes = read(input_fd, buffer, sizeof(buffer))) > 0)
+	rd_bytes = read(input_fd, buffer, sizeof(buffer));
+	while (rd_bytes > 0)
 		write(STDOUT_FILENO, buffer, rd_bytes);
 	close(fd);
 	if (reset_stdout(stdout_cpy) == 0)

@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 16:31:54 by jbernard          #+#    #+#             */
-/*   Updated: 2023/05/29 13:03:37 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/05/30 11:03:48 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	parent_execute(t_cmdlst *cmdlst, int *old_stds)
 	if (cmdlst->flags & PIPEI)
 	{
 		reset_stdin(old_stds[0]);
-		close(cmdlst->pipefd[1]);	
+		close(cmdlst->pipefd[1]);
 	}
 	if (cmdlst->flags & PIPEO)
 	{
@@ -42,7 +42,8 @@ void	parent_execute(t_cmdlst *cmdlst, int *old_stds)
 	}
 }
 
-void	(*is_singled_out(t_cmdlst *cmdlst))(char **args, t_envlst *envlst, int fd_out)
+void	(*is_singled_out(t_cmdlst *cmdlst))(char **args, \
+		t_envlst *envlst, int fd_out)
 {
 	static void	(*funcs[4])() = {ft_cd, ft_exit, \
 		ft_export, ft_unset};
@@ -67,7 +68,6 @@ void	pre_exec_fork(t_cmdlst *cmdlst)
 {
 	void	(*func)(char **, t_envlst *, int);
 
-
 	func = is_singled_out(cmdlst);
 	if (func)
 		func(cmdlst->token, cmdlst->envlst, 1);
@@ -75,11 +75,11 @@ void	pre_exec_fork(t_cmdlst *cmdlst)
 		exec_fork(cmdlst);
 }
 
-int exec_fork(t_cmdlst *cmdlst)
+int	exec_fork(t_cmdlst *cmdlst)
 {
 	pid_t	pid;
-	int 	old_stds[2];
-	
+	int		old_stds[2];
+
 	while (cmdlst != NULL)
 	{
 		if (is_singled_out(cmdlst) != NULL)
