@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 06:43:50 by jbernard          #+#    #+#             */
-/*   Updated: 2023/05/29 11:48:17 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/05/30 10:42:39 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,9 @@ int	finish_flag_set(t_cmdlst **cmdlst)
 	{
 		if (cur->flags & PIPEI)
 			cur->next->flags |= PIPEO;
-		else if (cur->flags & ORI)
-			cur->next->flags |= ORO;
-		else if (cur->flags & ANDI)
-			cur->next->flags |= ANDO;
 		cur = cur->next;
 	}
-	if (cur->flags & (PIPEI | ORI | ANDI))
+	if (cur->flags & PIPEI)
 	{
 		perror("syntax error");
 		return (0);

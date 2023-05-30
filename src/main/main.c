@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:31:19 by jbernard          #+#    #+#             */
-/*   Updated: 2023/05/29 11:42:05 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/05/29 14:42:03 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	prompt_loop(t_envlst *envlst)
 	while (1)
 	{
 		cmdlst = NULL;
-		input = readline("minishell> \x1B[s");
+		input = readline("minishell> ");
 		if (input == NULL)
 		{
 			free(input);
