@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 13:33:11 by mgagnon           #+#    #+#             */
-/*   Updated: 2023/05/29 15:20:52 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/05/30 11:22:00 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,25 +17,10 @@
 
 void	what_is_it(char *input, size_t *i, int *flags)
 {
-	if (input[*i] == '&')
+	if (input[*i] == '|')
 	{
 		(*i)++;
-		if (input[*i] == '&')
-		{
-			(*i)++;
-			*flags |= ANDI;
-		}
-		(*i)++;
-	}
-	else if (input[*i] == '|')
-	{
-		(*i)++;
-		if (input[*i] == '|')
-		{
-			(*i)++;
-			*flags |= ORI;
-		}
-		else
+		if (input[*i] == ' ')
 			*flags |= PIPEI;
 		(*i)++;
 	}
