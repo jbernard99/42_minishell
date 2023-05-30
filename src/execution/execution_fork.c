@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 16:31:54 by jbernard          #+#    #+#             */
-/*   Updated: 2023/05/30 11:03:48 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/05/30 12:21:44 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,9 @@ int	exec_fork(t_cmdlst *cmdlst)
 			pre_exec_fork(cmdlst);
 		else
 		{
-			if (cmdlst->flags & PIPEI)
+			if (cmdlst->flags & (R_IN | R_OUT | APP_OUT | HR_DOC))
+				work_redirection(cmdlst);
+			if (cmdlst->flags & PIPEI && (cmdlst->flags & (R_OUT | APP_OUT) == 0))
 				pipe_it(cmdlst);
 			pid = fork();
 			if (pid < 0)

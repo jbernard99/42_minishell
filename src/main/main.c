@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:31:19 by jbernard          #+#    #+#             */
-/*   Updated: 2023/05/30 11:04:03 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/05/30 11:05:37 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	ctrlc_handle(int sig)
 	rl_redisplay();
 }
 
-int		ft_readline(char **input, t_envlst *envlst)
+int	ft_readline(char **input, t_envlst *envlst)
 {
 	*input = readline("minishell> ");
 	if (!*input)
