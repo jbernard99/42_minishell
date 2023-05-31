@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 13:33:11 by mgagnon           #+#    #+#             */
-/*   Updated: 2023/05/31 11:04:07 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/05/31 11:04:52 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,25 +17,10 @@
 
 void	what_is_it(char *input, size_t *i, int *flags)
 {
-	if (input[*i] == '&')
+	if (input[*i] == '|')
 	{
 		(*i)++;
-		if (input[*i] == '&')
-		{
-			(*i)++;
-			*flags |= ANDI;
-		}
-		(*i)++;
-	}
-	else if (input[*i] == '|')
-	{
-		(*i)++;
-		if (input[*i] == '|')
-		{
-			(*i)++;
-			*flags |= ORI;
-		}
-		else
+		if (input[*i] == ' ')
 			*flags |= PIPEI;
 		(*i)++;
 	}
@@ -80,7 +65,7 @@ void	second_divide(t_cmdlst **cmdlst)
 }
 
 /* makes a first split to separate multiple cmd and looks */
-/* for PIPE, AND and OR operand */
+/* for PIPE */
 
 void	first_divide(char *input, t_cmdlst **cmdlst, t_envlst *envlst)
 {
