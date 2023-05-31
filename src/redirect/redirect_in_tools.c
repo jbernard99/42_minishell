@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 14:52:21 by mgagnon           #+#    #+#             */
-/*   Updated: 2023/05/30 10:54:55 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/05/30 12:14:45 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,24 +41,23 @@ int	redirect_in(int input_fd, char *file)
 	int		stdin_cpy;
 	size_t	rd_bytes;
 
-	fd = 0;
 	stdin_cpy = dup(STDIN_FILENO);
 	if (stdin_cpy == -1)
 	{
 		perror("stdin dup");
 		return (0);
 	}
+	fd = open(file, O_RDONLY);
 	if (change_stdin(fd) == 0)
 		return (0);
-	fd = open(file, O_RDONLY);
 	if (fd == -1)
 	{
 		perror("open");
 		return (0);
 	}
-	rd_bytes = read(input_fd, buffer, sizeof(buffer));
+	rd_bytes = read(fd, buffer, sizeof(buffer));
 	while (rd_bytes > 0)
-		write(STDIN_FILENO, buffer, rd_bytes);
+		write(input_fd, buffer, rd_bytes);
 	close(fd);
 	if (reset_stdin(stdin_cpy) == 0)
 		return (0);

@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 20:22:14 by mgagnon           #+#    #+#             */
-/*   Updated: 2023/05/15 15:21:51 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/05/30 11:22:28 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,22 +22,6 @@ void	print_flags(int flags)
 		printf("PIPEO: ON, ");
 	else
 		printf("PIPEO: OFF, ");
-	if (flags & ANDI)
-		printf("ANDI: ON, ");
-	else
-		printf("ANDI: OFF, ");
-	if (flags & ANDO)
-		printf("ANDO: ON, ");
-	else
-		printf("ANDO: OFF, ");
-	if (flags & ORI)
-		printf("ORI: ON, ");
-	else
-		printf("ORI: OFF, ");
-	if (flags & ORO)
-		printf("ORO: ON, ");
-	else
-		printf("ORO: OFF, ");
 	if (flags & APP_OUT)
 		printf("APP_OUT: ON, ");
 	else
