@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 14:59:42 by jbernard          #+#    #+#             */
-/*   Updated: 2023/05/31 10:46:12 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/05/31 11:00:22 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,6 @@ char	*get_file(t_cmdlst *cmdlst)
 	{
 		if (cmdlst->flags & R_IN && ft_strcmp("<", cmdlst->token[i]))
 		{
-			
 			return (cmdlst->token[i + 1]);
 		}
 		else if (cmdlst->flags & HR_DOC && ft_strcmp("<<", cmdlst->token[i]))

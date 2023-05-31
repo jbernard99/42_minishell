@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 16:31:54 by jbernard          #+#    #+#             */
-/*   Updated: 2023/05/31 10:57:12 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/05/31 11:03:48 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,8 @@ void	pre_exec_fork(t_cmdlst *cmdlst)
 {
 	void	(*func)(char **, t_envlst *, int);
 
+	if (cmdlst->next)
+		cmdlst->next->flags &= ~PIPEO
 	func = is_singled_out(cmdlst);
 	if (func)
 		func(cmdlst->token, cmdlst->envlst, 1);
