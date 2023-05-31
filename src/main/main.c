@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:31:19 by jbernard          #+#    #+#             */
-/*   Updated: 2023/05/31 12:05:26 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/05/31 12:48:40 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	ft_readline(char **input, t_envlst *envlst)
 	*input = readline("minishell> ");
 	if (!*input)
 	{
-		printf("\x1B[u\x1B[Aexit\n");
+		printf("\x1B[A\x1B[11Cexit\n");
 		ft_end(NULL, envlst);
 	}
 	if (ft_strcmp(*input, "") == 0)

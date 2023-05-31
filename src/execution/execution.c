@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 16:37:35 by jbernard          #+#    #+#             */
-/*   Updated: 2023/05/30 11:03:52 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/05/31 12:46:09 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,16 +40,16 @@ int	exec_exists(char *exec)
 
 char	*get_exec_location(char *exec, t_envlst *envlst)
 {
-	char	**path;
-	char	*t_p;
-	int		i;
+	char		**path;
+	t_envlst 	*t_p;
+	int			i;
 
 	exec = ft_strjoin("/", exec);
-	t_p = is_name_in_envlst(envlst, "PATH")->value;
+	t_p = is_name_in_envlst(envlst, "PATH");
 	if (t_p)
-		path = ft_split(t_p, ':');
+		path = ft_split(t_p->value, ':');
 	else
-		path = NULL;
+		return (exec);
 	i = 0;
 	while (path && path[i])
 	{
@@ -67,6 +67,11 @@ void	execute_sh(t_cmdlst *cmdlst)
 	if (!ft_strchr(cmdlst->token[0], '/'))
 		cmdlst->token[0] = get_exec_location(cmdlst->token[0], \
 				cmdlst->envlst);
+	if (!ft_strchr(cmdlst->token[0], '/'))
+	{
+		printf("bash: %s: command not found\n", cmdlst->token[0]);
+		exit(0);
+	}
 	e = execve(cmdlst->token[0], cmdlst->token, \
 			get_initiated_from_envlst(cmdlst->envlst));
 	if (e == -1)
