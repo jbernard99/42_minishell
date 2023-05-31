@@ -6,7 +6,7 @@
 /*   By: mgagnon <mgagnon@student.42quebec.com      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 14:36:53 by mgagnon           #+#    #+#             */
-/*   Updated: 2023/05/31 12:03:44 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/05/31 16:24:08 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,15 @@ int	scan_redirect(t_cmdlst *cmdlst)
 	while (cmdlst->token[i])
 	{
 		if (ft_strrchr("<>", cmdlst->token[i][0]))
+		{
 			set_redirect_flags(cmdlst->token[i], &cmdlst->flags);
-		if (cmdlst->flags & (APP_OUT | HR_DOC) && ft_strlen(cmdlst->token[i]) > 2)
-			return (0);
-		if (cmdlst->flags & (R_IN | R_OUT) && ft_strlen(cmdlst->token[i]) > 1)
-			return (0);
+			if ((cmdlst->flags & (APP_OUT | HR_DOC)) \
+					&& ft_strlen(cmdlst->token[i]) > 2)
+				return (0);
+			else if ((cmdlst->flags & (R_IN | R_OUT)) && \
+					ft_strlen(cmdlst->token[i]) > 1)
+				return (0);
+		}
 		i++;
 	}
 	return (1);

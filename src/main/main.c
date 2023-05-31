@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:31:19 by jbernard          #+#    #+#             */
-/*   Updated: 2023/05/31 12:48:40 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/05/31 15:11:48 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	prompt_loop(t_envlst *envlst)
 			yes_or_no = make_lst(input, &cmdlst, envlst);
 			free(input);
 			work_env_vars_calls(cmdlst);
-			if (yes_or_no > 0 && work_trailing_quotes(cmdlst))
+			if (yes_or_no > 0)// && work_trailing_quotes(cmdlst))
 				exec_fork(cmdlst);
 			else
 				perror("syntax error");
