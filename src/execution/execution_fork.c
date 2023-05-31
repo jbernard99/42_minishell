@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 16:31:54 by jbernard          #+#    #+#             */
-/*   Updated: 2023/05/31 11:06:04 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/05/31 12:35:30 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	child_execute(t_cmdlst *cmdlst, int *old_stds)
 		change_stdin(cmdlst->pipefd[0]);
 	}
 	execution(cmdlst);
+	exit(0);
 }
 
 void	parent_execute(t_cmdlst *cmdlst, int *old_stds)
