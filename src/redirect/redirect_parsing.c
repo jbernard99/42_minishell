@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect_parsing.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgagnon <mgagnon@student.42quebec.com      +#+  +:+       +#+        */
+/*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 14:36:53 by mgagnon           #+#    #+#             */
-/*   Updated: 2023/05/11 14:15:13 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/05/31 16:25:36 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,32 @@ void	set_redirect_flags(char *symbol, int *flags)
 		else
 			*flags |= R_IN;
 	}
+}
+
+int check_file(t_cmdlst *cmdlst, char *file)
+{
+	int status;
+	int fd;
+
+	if (cmdlst->flags & R_IN)
+	{
+		status = access(file, F_OK | R_OK);
+		if (status == -1)
+			return (0);
+	}
+	else if (cmdlst->flags & (R_OUT | APP_OUT))
+	{
+		status = access(file, F_OK);
+		if (status == -1)
+		{
+			fd = open(file, O_CREAT);
+			close(fd);
+		}
+		status = access(file, W_OK);
+		if (status == -1)
+			return (0);
+	}
+	return (1);
 }
 
 void	scan_redirect(t_cmdlst *cmdlst)
