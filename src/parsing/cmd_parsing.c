@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 13:33:11 by mgagnon           #+#    #+#             */
-/*   Updated: 2023/05/30 11:22:00 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/05/31 10:45:23 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	second_divide(t_cmdlst **cmdlst)
 }
 
 /* makes a first split to separate multiple cmd and looks */
-/* for PIPE, AND and OR operand */
+/* for PIPE */
 
 void	first_divide(char *input, t_cmdlst **cmdlst, t_envlst *envlst)
 {
