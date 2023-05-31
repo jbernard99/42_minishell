@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 13:33:11 by mgagnon           #+#    #+#             */
-/*   Updated: 2023/05/31 12:03:48 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/05/31 12:48:37 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,8 +102,9 @@ int	make_lst(char *input, t_cmdlst **cmdlst, t_envlst *envlst)
 	while (cur != NULL)
 	{
 		second_divide(&cur);
+		if (scan_redirect(cur) == 0)
+			return (0);
 		cur = cur->next;
 	}
-	ft_cmdlstiter(cmdlst, &scan_redirect);
 	return (1);
 }
