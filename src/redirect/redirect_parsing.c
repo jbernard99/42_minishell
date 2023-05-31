@@ -6,11 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 14:36:53 by mgagnon           #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2023/05/31 16:27:38 by jbernard         ###   ########.fr       */
-=======
-/*   Updated: 2023/05/31 16:24:08 by mgagnon          ###   ########.fr       */
->>>>>>> f819723cb02e09f0b3283356b9f359a270e2c849
+/*   Updated: 2023/05/31 16:29:27 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,32 +28,6 @@ void	set_redirect_flags(char *symbol, int *flags)
 		else
 			*flags |= R_IN;
 	}
-}
-
-int check_file(t_cmdlst *cmdlst, char *file)
-{
-	int status;
-	int fd;
-
-	if (cmdlst->flags & R_IN)
-	{
-		status = access(file, F_OK | R_OK);
-		if (status == -1)
-			return (0);
-	}
-	else if (cmdlst->flags & (R_OUT | APP_OUT))
-	{
-		status = access(file, F_OK);
-		if (status == -1)
-		{
-			fd = open(file, O_CREAT);
-			close(fd);
-		}
-		status = access(file, W_OK);
-		if (status == -1)
-			return (0);
-	}
-	return (1);
 }
 
 int check_file(t_cmdlst *cmdlst, char *file)
