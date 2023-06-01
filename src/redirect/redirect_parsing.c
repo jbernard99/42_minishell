@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 14:36:53 by mgagnon           #+#    #+#             */
-/*   Updated: 2023/05/31 16:29:27 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/06/01 11:40:09 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,9 @@ int	scan_redirect(t_cmdlst *cmdlst)
 			else if ((cmdlst->flags & (R_IN | R_OUT)) && \
 					ft_strlen(cmdlst->token[i]) > 1)
 				return (0);
+			if (check_file(cmdlst, cmdlst->token[i+1]) == 1)
+				work_redi
+			
 		}
 		i++;
 	}
