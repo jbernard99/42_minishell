@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 14:59:42 by jbernard          #+#    #+#             */
-/*   Updated: 2023/06/01 13:26:35 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/06/02 11:35:34 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,7 @@ char	*get_file(t_cmdlst *cmdlst)
 	while (cmdlst->token[i])
 	{
 		if (cmdlst->flags & R_IN && ft_strcmp("<", cmdlst->token[i]))
-		{
 			return (cmdlst->token[i + 1]);
-		}
 		else if (cmdlst->flags & HR_DOC && ft_strcmp("<<", cmdlst->token[i]))
 			return (cmdlst->token[i + 1]);
 		else if (cmdlst->flags & R_OUT && ft_strcmp(">", cmdlst->token[i]))
@@ -85,9 +83,7 @@ char	*get_file(t_cmdlst *cmdlst)
 void	work_redirection(t_cmdlst *cmdlst)
 {
 	int		fds[2];
-	char	*file;
-	(void)file;
-	(void)cmdlst;
+	
 	pipe(fds);
 	if (cmdlst->flags & R_IN)
 	{

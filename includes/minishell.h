@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:25:35 by jbernard          #+#    #+#             */
-/*   Updated: 2023/05/31 12:03:32 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/06/02 11:40:16 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ int			exec_fork(t_cmdlst *cmdlst);
 
 // pre_execution.c //
 void	work_env_vars_calls(t_cmdlst *cmdlst);
+void	work_redirection(t_cmdlst *cmdlst);
 
 // built-ins //	
 void		ft_cd(char **args, t_envlst *envlst, int fd_out);
@@ -135,6 +136,14 @@ int			change_stdin(int new_fd);
 int			reset_stdin(int old_fd);
 int			change_stdout(int new_fd);
 int			reset_stdout(int old_fd);
+
+// redirect_out_tools.c //
+int			append(int input_fd, char *file);
+int			redirect_out(int input_fd, char *file);
+
+// redirect_in_tools.c //
+int			redirect_in(int input_fd, char *file);
+int			here_doc(int input_fd, const char *delim);
 
 // cleanup.c //
 void		free_envlst(t_envlst *envlst);
