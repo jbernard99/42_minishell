@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 14:59:42 by jbernard          #+#    #+#             */
-/*   Updated: 2023/06/02 11:35:34 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/06/02 14:33:11 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ char	*get_file(t_cmdlst *cmdlst)
 			return (cmdlst->token[i + 1]);
 		else if (cmdlst->flags & APP_OUT && ft_strcmp(">>", cmdlst->token[i]))
 			return (cmdlst->token[i + 1]);
+		i++;
 	}
 	return (NULL);
 }
@@ -89,15 +90,24 @@ void	work_redirection(t_cmdlst *cmdlst)
 	{
 		redirect_in(fds[1], get_file(cmdlst));
 		remove_redirection_from_tokens(cmdlst->token);
+		cmdlst->flags &= ~R_IN;
 	}
 	else if (cmdlst->flags & R_OUT)
 	{
 		redirect_out(fds[0], get_file(cmdlst));
+		write(1, "in redirect out\n", 16);
 		remove_redirection_from_tokens(cmdlst->token);
+		cmdlst->flags &= ~R_OUT;
+		cmdlst->dont_pipe_it = 1;
 	}
 	else if (cmdlst->flags & APP_OUT)
 	{
 		append(fds[0], get_file(cmdlst));
 		remove_redirection_from_tokens(cmdlst->token);
+		cmdlst->flags &= ~APP_OUT;
+		cmdlst->dont_pipe_it = 1;
 	}
+	close(fds[0]);
+	close(fds[1]);
+	scan_redirect(cmdlst);
 }

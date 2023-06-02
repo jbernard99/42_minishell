@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 10:09:47 by mgagnon           #+#    #+#             */
-/*   Updated: 2023/06/02 11:39:26 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/06/02 12:20:14 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ int	redirect_out(int input_fd, char *file)
 	size_t	rd_bytes;
 
 	fd = 0;
+	rd_bytes = 1;
 	stdout_cpy = dup(STDOUT_FILENO);
 	if (stdout_cpy == -1)
 	{
@@ -65,9 +66,11 @@ int	redirect_out(int input_fd, char *file)
 		perror("open");
 		return (0);
 	}
-	rd_bytes = read(input_fd, buffer, sizeof(buffer));
 	while (rd_bytes > 0)
+	{
+		rd_bytes = read(input_fd, buffer, sizeof(buffer));
 		write(STDOUT_FILENO, buffer, rd_bytes);
+	}
 	close(fd);
 	if (reset_stdout(stdout_cpy) == 0)
 		return (0);

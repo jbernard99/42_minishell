@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:25:35 by jbernard          #+#    #+#             */
-/*   Updated: 2023/06/02 11:40:16 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/06/02 12:05:59 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ typedef struct s_envlst {
 typedef struct s_cmdlst {
 	int				flags;
 	int				pipefd[2];
+	int				dont_pipe_it;
 	t_envlst		*envlst;
 	char			*cmd;
 	char			**token;

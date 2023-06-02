@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 16:31:54 by jbernard          #+#    #+#             */
-/*   Updated: 2023/05/31 12:47:50 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/06/02 15:01:11 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ void	child_execute(t_cmdlst *cmdlst, int *old_stds)
 		old_stds[0] = dup(STDIN_FILENO);
 		change_stdin(cmdlst->pipefd[0]);
 	}
+	if (cmdlst->flags & (R_IN | R_OUT | APP_OUT | HR_DOC))
+		work_redirection(cmdlst);
 	execution(cmdlst);
 	exit(0);
 }
@@ -89,9 +91,7 @@ int	exec_fork(t_cmdlst *cmdlst)
 			pre_exec_fork(cmdlst);
 		else
 		{
-			//if (cmdlst->flags & (R_IN | R_OUT | APP_OUT | HR_DOC))
-			//	work_redirection(cmdlst);
-			if (cmdlst->flags & PIPEI && (cmdlst->flags & (R_OUT | APP_OUT)) == 0)
+			if (cmdlst->flags & PIPEI)
 				pipe_it(cmdlst);
 			pid = fork();
 			if (pid < 0)
