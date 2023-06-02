@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 14:59:42 by jbernard          #+#    #+#             */
-/*   Updated: 2023/06/02 14:33:11 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/06/02 16:59:37 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,22 @@ void	remove_redirection_from_tokens(char **token)
 	}
 }
 
+char	*ft_tabstrcmp(char **tab, char *str)
+{
+	int	i;
+	int	j;
+	int	k;
+
+	i = 0;
+	while (tab[i])
+	{
+		j = 0;
+		if (ft_strcmp(tab[i], str) == 0)
+			return tab[i];
+	}
+	return (0);
+}
+
 char	*get_file(t_cmdlst *cmdlst)
 {
 	int	i;
@@ -86,13 +102,12 @@ void	work_redirection(t_cmdlst *cmdlst)
 	int		fds[2];
 	
 	pipe(fds);
-	if (cmdlst->flags & R_IN)
+	if (cmdlst->flags & R_IN && ft_tabstrchr(cmdlst->token, ">"))
 	{
 		redirect_in(fds[1], get_file(cmdlst));
 		remove_redirection_from_tokens(cmdlst->token);
-		cmdlst->flags &= ~R_IN;
 	}
-	else if (cmdlst->flags & R_OUT)
+	else if (cmdlst->flags & R_OUT && ft_tabstrchr(cmdlst->token, "<"))
 	{
 		redirect_out(fds[0], get_file(cmdlst));
 		write(1, "in redirect out\n", 16);
