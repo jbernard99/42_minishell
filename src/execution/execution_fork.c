@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 16:31:54 by jbernard          #+#    #+#             */
-/*   Updated: 2023/06/02 22:47:48 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/06/03 11:40:49 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	child_execute(t_cmdlst *cmdlst)
 	if (cmdlst->flags & HR_DOC)
 	{
 		here_doc(cmdlst->pipefd[1], cmdlst->infile);
-		change_stdin(cmdlst->pipefd[1]);
+		change_stdin(cmdlst->pipefd[0]);
 	}
 	execution(cmdlst);
 	write(1, "NO\n", 3);
@@ -46,14 +46,18 @@ void	parent_execute(t_cmdlst *cmdlst, int *old_stds)
 {
 	(void)old_stds;
 	wait(NULL);
-	if (cmdlst->flags & PIPEI)
+	if (cmdlst->flags & PIPEI) 
 		close(cmdlst->pipefd[1]);
 	if (cmdlst->flags & (R_OUT | APP_OUT))
-	{
 		close(cmdlst->pipefd[0]);
-	}
 	if (cmdlst->flags & PIPEO || cmdlst->flags & R_IN)
 		close(cmdlst->pipefd[1]);
+	if (cmdlst->flags & HR_DOC)
+	{
+		reset_stdin(old_stds[0]);
+		close(cmdlst->pipefd[0]);
+		close(cmdlst->pipefd[1]);
+	}
 }
 
 void	(*is_singled_out(t_cmdlst *cmdlst))(char **args, \
@@ -105,7 +109,7 @@ int	exec_fork(t_cmdlst *cmdlst)
 			if (cmdlst->flags & PIPEI)
 				pipe_it(cmdlst);
 			if (cmdlst->flags & (R_IN | R_OUT | APP_OUT | HR_DOC))
-				work_redirection(cmdlst);
+				work_redirection(cmdlst, old_stds);
 			pid = fork();
 			if (pid < 0)
 				perror("ERROR");

@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 14:52:21 by mgagnon           #+#    #+#             */
-/*   Updated: 2023/06/02 22:46:18 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/06/03 11:15:13 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,17 @@ int	here_doc(int input_fd, const char *delim)
 {
 	char	*input;
 
+	input = readline(">> ");
 	while (ft_strcmp(input, delim) != 0)
 	{
-		input = readline("> ");
 		if (input == NULL)
 		{
 			free(input);
 			return (0);
 		}
 		write(input_fd, input, sizeof(input));
+		free(input);
+		input = readline(">> ");
 	}
 	return (1);
 }

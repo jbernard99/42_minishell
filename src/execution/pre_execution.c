@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 14:59:42 by jbernard          #+#    #+#             */
-/*   Updated: 2023/06/02 22:52:29 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/06/03 11:19:59 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ void	remove_redirection_from_tokens(t_cmdlst *cmdlst)
 	n_token = ft_calloc(i - 2, sizeof(char*));
 	i = 0;
 	j = 0;
-	write(1, "ok\n", 3);
 	while (cmdlst->token[i])
 	{
 		printf("cmdlst->token[%zu] = %s\n", i, cmdlst->token[i]);
@@ -85,19 +84,18 @@ char	*get_file(t_cmdlst *cmdlst)
 	return (NULL);
 }
 
-void	work_redirection(t_cmdlst *cmdlst)
+void	work_redirection(t_cmdlst *cmdlst, int *old_stds)
 {
 	int	fds[2];
 
-	cmdlst->outfile = get_file(cmdlst);
-	check_file(cmdlst, cmdlst->outfile);
+	old_stds[0] = dup(STDIN_FILENO);
+	old_stds[1] = dup(STDOUT_FILENO);
 	pipe(fds);
 	cmdlst->pipefd[0] = fds[0];
 	cmdlst->pipefd[1] = fds[1];
 	if (cmdlst->flags & R_IN && ft_tabstrcmp(cmdlst->token, "<"))
 	{
 		remove_redirection_from_tokens(cmdlst);
-		write(1, "OK\n", 3);
 		ft_cmdlstiter(&cmdlst, &print_cmdlst_node);
 	}
 	else if (cmdlst->flags & R_OUT && ft_tabstrcmp(cmdlst->token, ">"))
@@ -112,7 +110,9 @@ void	work_redirection(t_cmdlst *cmdlst)
 	}
 	else if (cmdlst->flags & HR_DOC && ft_tabstrcmp(cmdlst->token, "<<"))
 	{
+		old_stds[0] = dup(STDIN_FILENO);
 		remove_redirection_from_tokens(cmdlst);
+		printf("cmdlst->infile = %s\n", cmdlst->infile);
 		ft_cmdlstiter(&cmdlst, &print_cmdlst_node);
 	}
 }
