@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 14:36:53 by mgagnon           #+#    #+#             */
-/*   Updated: 2023/06/02 11:40:28 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/06/02 18:51:34 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int check_file(t_cmdlst *cmdlst, char *file)
 		status = access(file, F_OK);
 		if (status == -1)
 		{
-			fd = open(file, O_CREAT);
+			fd = open(file, O_CREAT, S_IRWXU);
 			close(fd);
 		}
 		status = access(file, W_OK);
@@ -72,8 +72,6 @@ int	scan_redirect(t_cmdlst *cmdlst)
 			else if ((cmdlst->flags & (R_IN | R_OUT)) && \
 					ft_strlen(cmdlst->token[i]) > 1)
 				return (0);
-			if (check_file(cmdlst, cmdlst->token[i+1]) == 1)
-				work_redirection(cmdlst);
 		}
 		i++;
 	}

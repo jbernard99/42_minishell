@@ -6,43 +6,49 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 16:31:54 by jbernard          #+#    #+#             */
-/*   Updated: 2023/06/02 15:01:11 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/06/02 20:34:25 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	child_execute(t_cmdlst *cmdlst, int *old_stds)
+void	child_execute(t_cmdlst *cmdlst)
 {
-	if (cmdlst->flags & PIPEI)
-	{
-		old_stds[1] = dup(STDOUT_FILENO);
+	if (cmdlst->flags & PIPEI && cmdlst->flags & ~(R_OUT | APP_OUT))
 		change_stdout(cmdlst->pipefd[1]);
-	}
 	if (cmdlst->flags & PIPEO)
-	{
-		old_stds[0] = dup(STDIN_FILENO);
 		change_stdin(cmdlst->pipefd[0]);
+	if (cmdlst->flags & R_IN)
+	{
+		cmdlst->pipefd[1] = redirect_in(cmdlst->infile);
 	}
-	if (cmdlst->flags & (R_IN | R_OUT | APP_OUT | HR_DOC))
-		work_redirection(cmdlst);
+	if (cmdlst->flags & R_OUT)
+	{
+		cmdlst->pipefd[0] = redirect_out(cmdlst->outfile);
+		change_stdout(cmdlst->pipefd[0]);
+	}
+	if (cmdlst->flags & APP_OUT)
+	{
+		cmdlst->pipefd[0] = append(cmdlst->outfile);
+		change_stdout(cmdlst->pipefd[0]);
+	}
 	execution(cmdlst);
+	write(1, "NO\n", 3);
 	exit(0);
 }
 
 void	parent_execute(t_cmdlst *cmdlst, int *old_stds)
 {
+	(void)old_stds;
 	wait(NULL);
 	if (cmdlst->flags & PIPEI)
-	{
-		reset_stdin(old_stds[0]);
 		close(cmdlst->pipefd[1]);
-	}
-	if (cmdlst->flags & PIPEO)
+	if (cmdlst->flags & (R_OUT | APP_OUT))
 	{
-		reset_stdout(old_stds[1]);
 		close(cmdlst->pipefd[0]);
 	}
+	if (cmdlst->flags & PIPEO || cmdlst->flags & R_IN)
+		close(cmdlst->pipefd[0]);
 }
 
 void	(*is_singled_out(t_cmdlst *cmdlst))(char **args, \
@@ -85,6 +91,8 @@ int	exec_fork(t_cmdlst *cmdlst)
 	pid_t	pid;
 	int		old_stds[2];
 
+	cmdlst->outfile = get_file(cmdlst);
+	check_file(cmdlst, cmdlst->outfile);
 	while (cmdlst != NULL)
 	{
 		if (is_singled_out(cmdlst) != NULL)
@@ -93,11 +101,13 @@ int	exec_fork(t_cmdlst *cmdlst)
 		{
 			if (cmdlst->flags & PIPEI)
 				pipe_it(cmdlst);
+			if (cmdlst->flags & (R_IN | R_OUT | APP_OUT | HR_DOC))
+				work_redirection(cmdlst);
 			pid = fork();
 			if (pid < 0)
 				perror("ERROR");
 			else if (pid == 0)
-				child_execute(cmdlst, old_stds);
+				child_execute(cmdlst);
 			else
 				parent_execute(cmdlst, old_stds);
 		}

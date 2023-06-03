@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:25:35 by jbernard          #+#    #+#             */
-/*   Updated: 2023/06/02 12:05:59 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/06/02 20:32:58 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ typedef struct s_cmdlst {
 	int				dont_pipe_it;
 	t_envlst		*envlst;
 	char			*cmd;
+	char			*outfile;
+	char			*infile;
 	char			**token;
 	struct s_cmdlst	*next;
 }		t_cmdlst;
@@ -64,6 +66,7 @@ int			exec_fork(t_cmdlst *cmdlst);
 // pre_execution.c //
 void	work_env_vars_calls(t_cmdlst *cmdlst);
 void	work_redirection(t_cmdlst *cmdlst);
+char	*get_file(t_cmdlst *cmdlst);
 
 // built-ins //	
 void		ft_cd(char **args, t_envlst *envlst, int fd_out);
@@ -130,6 +133,7 @@ int			work_trailing_quotes(t_cmdlst *cmdlst);
 
 // redirect_parsing.c //
 int			scan_redirect(t_cmdlst *cmdlst);
+int 		check_file(t_cmdlst *cmdlst, char *file);
 
 // pipe.c //
 void		pipe_it(t_cmdlst *cmdlst);
@@ -139,11 +143,11 @@ int			change_stdout(int new_fd);
 int			reset_stdout(int old_fd);
 
 // redirect_out_tools.c //
-int			append(int input_fd, char *file);
-int			redirect_out(int input_fd, char *file);
+int			append(char *file);
+int			redirect_out(char *file);
 
 // redirect_in_tools.c //
-int			redirect_in(int input_fd, char *file);
+int			redirect_in(char *file);
 int			here_doc(int input_fd, const char *delim);
 
 // cleanup.c //

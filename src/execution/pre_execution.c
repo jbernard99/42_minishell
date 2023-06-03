@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 14:59:42 by jbernard          #+#    #+#             */
-/*   Updated: 2023/06/02 16:59:37 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/06/02 20:37:28 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,46 +35,32 @@ void	work_env_vars_calls(t_cmdlst *cmdlst)
 		cmdlst = cmdlst->next;
 	}
 }
-void	remove_redirection_from_tokens(char **token)
+
+void	remove_redirection_from_tokens(t_cmdlst *cmdlst)
 {
 	char	**n_token;
 	size_t	i;
 	int		j;
-	int		next_is_file;	
 
-	next_is_file = 0;
-	i = ft_strtablen(token);
+	i = ft_strtablen(cmdlst->token);
 	n_token = ft_calloc(i - 2, sizeof(char*));
+	i = 0;
 	j = 0;
-	while (token[i])
+	write(1, "ok\n", 3);
+	while (cmdlst->token[i])
 	{
-		if (ft_strcmp(token[i], "<") == 0 || ft_strcmp(token[i], ">") == 0)
-			i++;
-		else if (ft_strcmp(token[i], "<<") == 0 || ft_strcmp(token[i], ">>") == 0)
-			i++;
+		if (ft_strcmp(cmdlst->token[i], ">>") == 0 || ft_strcmp(cmdlst->token[i], ">") == 0)
+			cmdlst->outfile = ft_strdup(cmdlst->token[++i]);
+		else if (ft_strcmp(cmdlst->token[i], "<<") == 0 || ft_strcmp(cmdlst->token[i], "<") == 0)
+			cmdlst->infile = ft_strdup(cmdlst->token[++i]);
 		else
 		{
-			n_token[j] = token[i];
+			n_token[j] = ft_strdup(cmdlst->token[i]);
 			j++;
 		}
 		i++;
 	}
-}
-
-char	*ft_tabstrcmp(char **tab, char *str)
-{
-	int	i;
-	int	j;
-	int	k;
-
-	i = 0;
-	while (tab[i])
-	{
-		j = 0;
-		if (ft_strcmp(tab[i], str) == 0)
-			return tab[i];
-	}
-	return (0);
+	cmdlst->token = n_token;
 }
 
 char	*get_file(t_cmdlst *cmdlst)
@@ -84,13 +70,13 @@ char	*get_file(t_cmdlst *cmdlst)
 	i = 0;
 	while (cmdlst->token[i])
 	{
-		if (cmdlst->flags & R_IN && ft_strcmp("<", cmdlst->token[i]))
+		if (cmdlst->flags & R_IN && ft_strcmp("<", cmdlst->token[i]) == 0)
 			return (cmdlst->token[i + 1]);
-		else if (cmdlst->flags & HR_DOC && ft_strcmp("<<", cmdlst->token[i]))
+		else if (cmdlst->flags & HR_DOC && ft_strcmp("<<", cmdlst->token[i]) == 0)
 			return (cmdlst->token[i + 1]);
-		else if (cmdlst->flags & R_OUT && ft_strcmp(">", cmdlst->token[i]))
+		else if (cmdlst->flags & R_OUT && ft_strcmp(">", cmdlst->token[i]) == 0)
 			return (cmdlst->token[i + 1]);
-		else if (cmdlst->flags & APP_OUT && ft_strcmp(">>", cmdlst->token[i]))
+		else if (cmdlst->flags & APP_OUT && ft_strcmp(">>", cmdlst->token[i]) == 0)
 			return (cmdlst->token[i + 1]);
 		i++;
 	}
@@ -99,30 +85,25 @@ char	*get_file(t_cmdlst *cmdlst)
 
 void	work_redirection(t_cmdlst *cmdlst)
 {
-	int		fds[2];
-	
+	int	fds[2];
+
 	pipe(fds);
-	if (cmdlst->flags & R_IN && ft_tabstrchr(cmdlst->token, ">"))
+	cmdlst->pipefd[0] = fds[0];
+	cmdlst->pipefd[1] = fds[1];
+	if (cmdlst->flags & R_IN && ft_tabstrcmp(cmdlst->token, "<"))
 	{
-		redirect_in(fds[1], get_file(cmdlst));
-		remove_redirection_from_tokens(cmdlst->token);
+		ft_cmdlstiter(&cmdlst, &print_cmdlst_node);
+		remove_redirection_from_tokens(cmdlst);
+		write(1, "ok\n", 3);
 	}
-	else if (cmdlst->flags & R_OUT && ft_tabstrchr(cmdlst->token, "<"))
+	else if (cmdlst->flags & R_OUT && ft_tabstrcmp(cmdlst->token, ">"))
 	{
-		redirect_out(fds[0], get_file(cmdlst));
-		write(1, "in redirect out\n", 16);
-		remove_redirection_from_tokens(cmdlst->token);
-		cmdlst->flags &= ~R_OUT;
-		cmdlst->dont_pipe_it = 1;
+		remove_redirection_from_tokens(cmdlst);
+		ft_cmdlstiter(&cmdlst, &print_cmdlst_node);
 	}
-	else if (cmdlst->flags & APP_OUT)
+	else if (cmdlst->flags & APP_OUT && ft_tabstrcmp(cmdlst->token, ">>"))
 	{
-		append(fds[0], get_file(cmdlst));
-		remove_redirection_from_tokens(cmdlst->token);
-		cmdlst->flags &= ~APP_OUT;
-		cmdlst->dont_pipe_it = 1;
+		remove_redirection_from_tokens(cmdlst);
+		ft_cmdlstiter(&cmdlst, &print_cmdlst_node);
 	}
-	close(fds[0]);
-	close(fds[1]);
-	scan_redirect(cmdlst);
 }

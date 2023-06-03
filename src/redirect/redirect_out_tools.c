@@ -6,73 +6,35 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 10:09:47 by mgagnon           #+#    #+#             */
-/*   Updated: 2023/06/02 12:20:14 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/06/02 20:24:37 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	append(int input_fd, char *file)
+int	append(char *file)
 {
-	char	buffer[1024];
 	int		fd;
-	int		stdout_cpy;
-	size_t	rd_bytes;
 
 	fd = 0;
-	stdout_cpy = dup(STDOUT_FILENO);
-	if (stdout_cpy == -1)
-	{
-		perror("stdout dup");
-		return (0);
-	}
-	if (change_stdout(fd) == 0)
-		return (0);
-	fd = open(file, O_WRONLY | O_CREAT | O_APPEND, 0644);
+	fd = open(file, O_WRONLY | O_APPEND, S_IRWXU);
 	if (fd == -1)
 	{
 		perror("open");
 		return (0);
 	}
-	rd_bytes = read(input_fd, buffer, sizeof(buffer));
-	while (rd_bytes > 0)
-		write(STDOUT_FILENO, buffer, rd_bytes);
-	close(fd);
-	if (reset_stdout(stdout_cpy) == 0)
-		return (0);
-	return (1);
+	return (fd);
 }
 
-int	redirect_out(int input_fd, char *file)
+int	redirect_out(char *file)
 {
-	char	buffer[1024];
 	int		fd;
-	int		stdout_cpy;
-	size_t	rd_bytes;
-
-	fd = 0;
-	rd_bytes = 1;
-	stdout_cpy = dup(STDOUT_FILENO);
-	if (stdout_cpy == -1)
-	{
-		perror("stdout dup");
-		return (0);
-	}
-	if (change_stdout(fd) == 0)
-		return (0);
-	fd = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	
+	fd = open(file, O_WRONLY | O_TRUNC, S_IRWXU);
 	if (fd == -1)
 	{
 		perror("open");
 		return (0);
 	}
-	while (rd_bytes > 0)
-	{
-		rd_bytes = read(input_fd, buffer, sizeof(buffer));
-		write(STDOUT_FILENO, buffer, rd_bytes);
-	}
-	close(fd);
-	if (reset_stdout(stdout_cpy) == 0)
-		return (0);
-	return (1);
+	return (fd);
 }
