@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 14:59:42 by jbernard          #+#    #+#             */
-/*   Updated: 2023/06/02 20:37:28 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/06/02 22:52:29 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ void	remove_redirection_from_tokens(t_cmdlst *cmdlst)
 	write(1, "ok\n", 3);
 	while (cmdlst->token[i])
 	{
+		printf("cmdlst->token[%zu] = %s\n", i, cmdlst->token[i]);
 		if (ft_strcmp(cmdlst->token[i], ">>") == 0 || ft_strcmp(cmdlst->token[i], ">") == 0)
 			cmdlst->outfile = ft_strdup(cmdlst->token[++i]);
 		else if (ft_strcmp(cmdlst->token[i], "<<") == 0 || ft_strcmp(cmdlst->token[i], "<") == 0)
@@ -60,6 +61,7 @@ void	remove_redirection_from_tokens(t_cmdlst *cmdlst)
 		}
 		i++;
 	}
+	n_token[j] = NULL;
 	cmdlst->token = n_token;
 }
 
@@ -87,14 +89,16 @@ void	work_redirection(t_cmdlst *cmdlst)
 {
 	int	fds[2];
 
+	cmdlst->outfile = get_file(cmdlst);
+	check_file(cmdlst, cmdlst->outfile);
 	pipe(fds);
 	cmdlst->pipefd[0] = fds[0];
 	cmdlst->pipefd[1] = fds[1];
 	if (cmdlst->flags & R_IN && ft_tabstrcmp(cmdlst->token, "<"))
 	{
-		ft_cmdlstiter(&cmdlst, &print_cmdlst_node);
 		remove_redirection_from_tokens(cmdlst);
-		write(1, "ok\n", 3);
+		write(1, "OK\n", 3);
+		ft_cmdlstiter(&cmdlst, &print_cmdlst_node);
 	}
 	else if (cmdlst->flags & R_OUT && ft_tabstrcmp(cmdlst->token, ">"))
 	{
@@ -102,6 +106,11 @@ void	work_redirection(t_cmdlst *cmdlst)
 		ft_cmdlstiter(&cmdlst, &print_cmdlst_node);
 	}
 	else if (cmdlst->flags & APP_OUT && ft_tabstrcmp(cmdlst->token, ">>"))
+	{
+		remove_redirection_from_tokens(cmdlst);
+		ft_cmdlstiter(&cmdlst, &print_cmdlst_node);
+	}
+	else if (cmdlst->flags & HR_DOC && ft_tabstrcmp(cmdlst->token, "<<"))
 	{
 		remove_redirection_from_tokens(cmdlst);
 		ft_cmdlstiter(&cmdlst, &print_cmdlst_node);

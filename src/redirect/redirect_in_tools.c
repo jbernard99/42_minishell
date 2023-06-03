@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 14:52:21 by mgagnon           #+#    #+#             */
-/*   Updated: 2023/06/02 20:28:54 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/06/02 22:46:18 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,12 @@ int	redirect_in(char *file)
 	int		fd;
 
 	fd = open(file, O_RDONLY);
-	if (change_stdin(fd) == 0)
-		return (0);
 	if (fd == -1)
 	{
 		perror("open");
 		return (0);
 	}
+	if (change_stdin(fd) == 0)
+		return (0);
 	return (fd);
 }

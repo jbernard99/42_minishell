@@ -1,8 +1,0 @@
-includes
-libraries
-Makefile
-minishell
-obj
-settings.mk
-src
-txt.txt

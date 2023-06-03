@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 16:31:54 by jbernard          #+#    #+#             */
-/*   Updated: 2023/06/02 20:34:25 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/06/02 22:47:48 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,11 @@ void	child_execute(t_cmdlst *cmdlst)
 		cmdlst->pipefd[0] = append(cmdlst->outfile);
 		change_stdout(cmdlst->pipefd[0]);
 	}
+	if (cmdlst->flags & HR_DOC)
+	{
+		here_doc(cmdlst->pipefd[1], cmdlst->infile);
+		change_stdin(cmdlst->pipefd[1]);
+	}
 	execution(cmdlst);
 	write(1, "NO\n", 3);
 	exit(0);
@@ -48,7 +53,7 @@ void	parent_execute(t_cmdlst *cmdlst, int *old_stds)
 		close(cmdlst->pipefd[0]);
 	}
 	if (cmdlst->flags & PIPEO || cmdlst->flags & R_IN)
-		close(cmdlst->pipefd[0]);
+		close(cmdlst->pipefd[1]);
 }
 
 void	(*is_singled_out(t_cmdlst *cmdlst))(char **args, \
@@ -91,8 +96,6 @@ int	exec_fork(t_cmdlst *cmdlst)
 	pid_t	pid;
 	int		old_stds[2];
 
-	cmdlst->outfile = get_file(cmdlst);
-	check_file(cmdlst, cmdlst->outfile);
 	while (cmdlst != NULL)
 	{
 		if (is_singled_out(cmdlst) != NULL)
