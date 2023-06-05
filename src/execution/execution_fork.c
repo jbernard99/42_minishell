@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 16:31:54 by jbernard          #+#    #+#             */
-/*   Updated: 2023/06/03 11:40:49 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/06/05 11:21:27 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ void	parent_execute(t_cmdlst *cmdlst, int *old_stds)
 		close(cmdlst->pipefd[1]);
 	if (cmdlst->flags & HR_DOC)
 	{
-		reset_stdin(old_stds[0]);
 		close(cmdlst->pipefd[0]);
 		close(cmdlst->pipefd[1]);
 	}
