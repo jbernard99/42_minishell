@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 10:09:47 by mgagnon           #+#    #+#             */
-/*   Updated: 2023/06/02 20:24:37 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/06/05 12:15:15 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	append(char *file)
 	int		fd;
 
 	fd = 0;
-	fd = open(file, O_WRONLY | O_APPEND, S_IRWXU);
+	fd = open(file, O_WRONLY | O_APPEND);
 	if (fd == -1)
 	{
 		perror("open");
@@ -30,7 +30,7 @@ int	redirect_out(char *file)
 {
 	int		fd;
 	
-	fd = open(file, O_WRONLY | O_TRUNC, S_IRWXU);
+	fd = open(file, O_WRONLY | O_TRUNC);
 	if (fd == -1)
 	{
 		perror("open");
