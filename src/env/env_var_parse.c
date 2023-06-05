@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 12:09:57 by mgagnon           #+#    #+#             */
-/*   Updated: 2023/05/29 11:40:05 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/06/05 14:01:43 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,18 +39,18 @@ char	*rplc_env_var(t_envlst *envlst, char *str)
 	var = get_var_name(&str[++i]);
 	if (is_name_in_envlst(envlst, var) != NULL)
 		replacement = m_get_value(&envlst, var);
-	free(var);
+	ft_sfree(var);
 	old = ft_strldup(str, --i);
 	var = ft_strfreejoinfree(old, replacement);
 	while (str[i] && str[i] != ' ')
 		i++;
 	if (!str[i])
 	{
-		free(str);
+		ft_sfree(str);
 		return (var);
 	}
 	replacement = ft_strfreejoin(var, &str[i]);
-	free(str);
+	ft_sfree(str);
 	return (replacement);
 }
 
