@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 16:31:54 by jbernard          #+#    #+#             */
-/*   Updated: 2023/06/05 12:08:29 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/06/05 16:26:36 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void	child_execute(t_cmdlst *cmdlst)
 	}
 	if (cmdlst->flags & HR_DOC)
 	{
+		redirect_in("tmp");
 		here_doc(cmdlst->pipefd[1], cmdlst->infile);
 		change_stdin(cmdlst->pipefd[0]);
 	}

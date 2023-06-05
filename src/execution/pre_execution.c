@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 14:59:42 by jbernard          #+#    #+#             */
-/*   Updated: 2023/06/05 14:12:45 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/06/05 15:20:07 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	remove_redirection_from_tokens(t_cmdlst *cmdlst)
 	int		j;
 
 	i = ft_strtablen(cmdlst->token);
-	n_token = ft_calloc(i - 2, sizeof(char*));
+	n_token = ft_calloc(i - 1, sizeof(char*));
 	i = 0;
 	j = 0;
 	while (cmdlst->token[i])

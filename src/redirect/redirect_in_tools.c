@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 14:52:21 by mgagnon           #+#    #+#             */
-/*   Updated: 2023/06/05 12:00:55 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/06/05 15:49:01 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ int	here_doc(int input_fd, const char *delim)
 		ft_sfree(input);
 		input = readline("> ");
 	}
+	close(input_fd);
 	ft_sfree(input);
 	return (1);
 }
