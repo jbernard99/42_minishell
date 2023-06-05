@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 16:37:35 by jbernard          #+#    #+#             */
-/*   Updated: 2023/05/31 12:46:09 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/06/05 15:35:07 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,22 +41,22 @@ int	exec_exists(char *exec)
 char	*get_exec_location(char *exec, t_envlst *envlst)
 {
 	char		**path;
-	t_envlst 	*t_p;
 	int			i;
 
 	exec = ft_strjoin("/", exec);
-	t_p = is_name_in_envlst(envlst, "PATH");
-	if (t_p)
-		path = ft_split(t_p->value, ':');
+	envlst = is_name_in_envlst(envlst, "PATH");
+	if (envlst)
+		path = ft_split(envlst->value, ':');
 	else
 		return (exec);
 	i = 0;
-	while (path && path[i])
+	while (path[i])
 	{
 		if (exec_exists(ft_strjoin(path[i], exec)))
 			return (ft_strjoin(path[i], exec));
 		i++;
 	}
+	printf("exec : %s\n", exec);
 	return (exec);
 }
 

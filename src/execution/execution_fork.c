@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 16:31:54 by jbernard          #+#    #+#             */
-/*   Updated: 2023/06/05 12:08:29 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/06/05 16:14:54 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,11 @@ void	child_execute(t_cmdlst *cmdlst)
 	if (cmdlst->flags & HR_DOC)
 	{
 		here_doc(cmdlst->pipefd[1], cmdlst->infile);
-		change_stdin(cmdlst->pipefd[0]);
+		if (change_stdin(cmdlst->pipefd[0]) != 1)
+			printf("Error\n");
+		//change_stdin(cmdlst);
+		printf("cmdlst->pipefd[0] = %d, cmdlst->pipefd[1] = %d\n", cmdlst->pipefd[0], cmdlst->pipefd[1]);
+		printf("STDIN = %d\n", STDIN_FILENO);
 	}
 	execution(cmdlst);
 	write(1, "NO\n", 3);
@@ -55,7 +59,6 @@ void	parent_execute(t_cmdlst *cmdlst, int *old_stds)
 	if (cmdlst->flags & HR_DOC)
 	{
 		close(cmdlst->pipefd[0]);
-		close(cmdlst->pipefd[1]);
 	}
 }
 
