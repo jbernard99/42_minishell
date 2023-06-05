@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 14:36:53 by mgagnon           #+#    #+#             */
-/*   Updated: 2023/06/02 18:51:34 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/06/05 12:15:50 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int check_file(t_cmdlst *cmdlst, char *file)
 		status = access(file, F_OK);
 		if (status == -1)
 		{
-			fd = open(file, O_CREAT, S_IRWXU);
+			fd = open(file, O_CREAT, S_IRUSR | S_IWUSR);
 			close(fd);
 		}
 		status = access(file, W_OK);
