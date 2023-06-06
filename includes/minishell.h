@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:25:35 by jbernard          #+#    #+#             */
-/*   Updated: 2023/06/05 12:08:59 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/06/06 14:43:48 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ typedef struct s_envlst {
 typedef struct s_cmdlst {
 	int				flags;
 	int				pipefd[2];
+	int				red_fd[2];
 	int				dont_pipe_it;
 	t_envlst		*envlst;
 	char			*cmd;
@@ -148,7 +149,7 @@ int			redirect_out(char *file);
 
 // redirect_in_tools.c //
 int			redirect_in(char *file);
-int			here_doc(int input_fd, const char *delim);
+int			here_doc(const char *delim);
 char		*ft_tabstrcmp(char **token, const char *str);
 
 // cleanup.c //

@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 14:59:42 by jbernard          #+#    #+#             */
-/*   Updated: 2023/06/05 15:20:07 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/06/06 14:56:48 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ void	remove_redirection_from_tokens(t_cmdlst *cmdlst)
 	j = 0;
 	while (cmdlst->token[i])
 	{
+		//printf("Token : %s\n", cmdlst->token[i]);
 		if (ft_strcmp(cmdlst->token[i], ">>") == 0 || ft_strcmp(cmdlst->token[i], ">") == 0)
 			cmdlst->outfile = ft_strdup(cmdlst->token[++i]);
 		else if (ft_strcmp(cmdlst->token[i], "<<") == 0 || ft_strcmp(cmdlst->token[i], "<") == 0)
@@ -55,12 +56,15 @@ void	remove_redirection_from_tokens(t_cmdlst *cmdlst)
 		else
 		{
 			n_token[j] = ft_strdup(cmdlst->token[i]);
+			//printf("token : %s  | n_token : %s\n", cmdlst->token[i], n_token[j]);
 			j++;
 		}
 		i++;
 	}
+	ft_freetabstr(cmdlst->token);
 	n_token[j] = NULL;
-	cmdlst->token = n_token;
+	cmdlst->token = ft_tabstrdup(n_token);
+	ft_freetabstr(n_token);
 }
 
 char	*get_file(t_cmdlst *cmdlst)
@@ -85,23 +89,28 @@ char	*get_file(t_cmdlst *cmdlst)
 
 void	work_redirection(t_cmdlst *cmdlst)
 {
-	int	fds[2];
-
-	pipe(fds);
-	cmdlst->pipefd[0] = fds[0];
-	cmdlst->pipefd[1] = fds[1];
+	pipe(cmdlst->pipefd);
 	if (check_file(cmdlst, get_file(cmdlst)))
 	{
 		if (cmdlst->flags & R_IN && ft_tabstrcmp(cmdlst->token, "<"))
+		{
 			remove_redirection_from_tokens(cmdlst);
+			ft_cmdlstiter(&cmdlst, &print_cmdlst_node);
+		}
 		else if (cmdlst->flags & R_OUT && ft_tabstrcmp(cmdlst->token, ">"))
+		{
 			remove_redirection_from_tokens(cmdlst);
+			ft_cmdlstiter(&cmdlst, &print_cmdlst_node);
+		}
 		else if (cmdlst->flags & APP_OUT && ft_tabstrcmp(cmdlst->token, ">>"))
+		{
 			remove_redirection_from_tokens(cmdlst);
+			ft_cmdlstiter(&cmdlst, &print_cmdlst_node);
+		}
 		else if (cmdlst->flags & HR_DOC && ft_tabstrcmp(cmdlst->token, "<<"))
 		{
 			remove_redirection_from_tokens(cmdlst);
-			printf("cmdlst->infile = %s\n", cmdlst->infile);
+			ft_cmdlstiter(&cmdlst, &print_cmdlst_node);
 		}
 	}
 }

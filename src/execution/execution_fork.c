@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 16:31:54 by jbernard          #+#    #+#             */
-/*   Updated: 2023/06/05 16:26:36 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/06/06 14:56:07 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,10 @@ void	child_execute(t_cmdlst *cmdlst)
 	}
 	if (cmdlst->flags & HR_DOC)
 	{
-		redirect_in("tmp");
-		here_doc(cmdlst->pipefd[1], cmdlst->infile);
-		change_stdin(cmdlst->pipefd[0]);
+		cmdlst->pipefd[1] = here_doc(cmdlst->infile);
+		change_stdin(cmdlst->pipefd[1]);
+		printf("cmdlst->pipefd[0] = %d, cmdlst->pipefd[1] = %d\n", cmdlst->pipefd[0], cmdlst->pipefd[1]);
+		printf("STDIN = %d\n", STDIN_FILENO);
 	}
 	execution(cmdlst);
 	write(1, "NO\n", 3);
@@ -46,7 +47,6 @@ void	child_execute(t_cmdlst *cmdlst)
 void	parent_execute(t_cmdlst *cmdlst, int *old_stds)
 {
 	(void)old_stds;
-	wait(NULL);
 	if (cmdlst->flags & PIPEI) 
 		close(cmdlst->pipefd[1]);
 	if (cmdlst->flags & (R_OUT | APP_OUT))
@@ -55,9 +55,9 @@ void	parent_execute(t_cmdlst *cmdlst, int *old_stds)
 		close(cmdlst->pipefd[1]);
 	if (cmdlst->flags & HR_DOC)
 	{
-		close(cmdlst->pipefd[0]);
 		close(cmdlst->pipefd[1]);
 	}
+	wait(NULL);
 }
 
 void	(*is_singled_out(t_cmdlst *cmdlst))(char **args, \
