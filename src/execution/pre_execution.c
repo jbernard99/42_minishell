@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 14:59:42 by jbernard          #+#    #+#             */
-/*   Updated: 2023/06/05 16:13:05 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/06/06 14:38:47 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,11 +89,7 @@ char	*get_file(t_cmdlst *cmdlst)
 
 void	work_redirection(t_cmdlst *cmdlst)
 {
-	int	fds[2];
-
-	pipe(fds);
-	cmdlst->pipefd[0] = fds[0];
-	cmdlst->pipefd[1] = fds[1];
+	pipe(cmdlst->pipefd);
 	if (check_file(cmdlst, get_file(cmdlst)))
 	{
 		if (cmdlst->flags & R_IN && ft_tabstrcmp(cmdlst->token, "<"))
@@ -115,6 +111,7 @@ void	work_redirection(t_cmdlst *cmdlst)
 		{
 			remove_redirection_from_tokens(cmdlst);
 			ft_cmdlstiter(&cmdlst, &print_cmdlst_node);
+			//here_doc(cmdlst->pipefd[1], cmdlst->infile);
 			//printf("cmdlst->infile = %s\n", cmdlst->infile);
 		}
 	}
