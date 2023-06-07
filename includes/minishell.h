@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:25:35 by jbernard          #+#    #+#             */
-/*   Updated: 2023/06/07 11:03:41 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/06/07 15:53:27 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ enum	e_flags{
 void		execution(t_cmdlst *cmdlst);
 
 // execution_fork.c //
-int			exec_fork(t_cmdlst *cmdlst);
+int			exec_fork(t_cmdlst *cmdlst, t_envlst *envlst);
 
 // pre_execution.c //
 void		work_env_vars_calls(t_cmdlst *cmdlst);
@@ -70,13 +70,13 @@ void		work_redirection(t_cmdlst *cmdlst);
 char		*get_file(t_cmdlst *cmdlst);
 
 // built-ins //	
-void		ft_cd(char **args, t_envlst *envlst, int fd_out);
-void		ft_echo(char **args, t_envlst *envlst, int fd_out);
-void		ft_exit(char **args, t_envlst *envlst, int fd_out);
-void		ft_env(char **args, t_envlst *envlst, int fd_out);
-void		ft_pwd(char **args, t_envlst *envlst, int fd_out);
-void		ft_export(char **args, t_envlst *envlst, int fd_out);
-void		ft_unset(char **args, t_envlst *envlst, int fd_out);
+int			ft_cd(char **args, t_envlst *envlst, int fd_out);
+int			ft_echo(char **args, t_envlst *envlst, int fd_out);
+int			ft_exit(char **args, t_envlst *envlst, int fd_out);
+int			ft_env(char **args, t_envlst *envlst, int fd_out);
+int			ft_pwd(char **args, t_envlst *envlst, int fd_out);
+int			ft_export(char **args, t_envlst *envlst, int fd_out);
+int			ft_unset(char **args, t_envlst *envlst, int fd_out);
 
 // tools.c //
 int			finish_flag_set(t_cmdlst **cmdlst);
@@ -154,5 +154,12 @@ char		*ft_tabstrcmp(char **token, const char *str);
 // cleanup.c //
 void		free_envlst(t_envlst *envlst);
 void		ft_end(t_cmdlst	*cmdlst, t_envlst *envlst);
+
+// signal.c //
+void	ctrl_c_heredoc(int sig);
+void	ok(int sig);
+void	ctrlc_handle(int sig);
+void	write_result(int e);
+void	read_result(t_envlst *envlst, int status);
 
 #endif

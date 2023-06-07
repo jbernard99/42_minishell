@@ -6,13 +6,13 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 13:45:05 by jbernard          #+#    #+#             */
-/*   Updated: 2023/05/31 12:46:24 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/06/07 15:57:02 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	envlst_unset(t_envlst *envlst, char *name)
+int	envlst_unset(t_envlst *envlst, char *name)
 {
 	t_envlst	*temp;
 
@@ -33,9 +33,10 @@ void	envlst_unset(t_envlst *envlst, char *name)
 			envlst = envlst->next;
 		}
 	}
+	return (errno);
 }
 
-void	ft_unset(char **args, t_envlst *envlst, int fd_out)
+int	ft_unset(char **args, t_envlst *envlst, int fd_out)
 {
 	int	i;
 
@@ -49,4 +50,5 @@ void	ft_unset(char **args, t_envlst *envlst, int fd_out)
 			printf("minishell: unset: \'%s\': not a valid identifier\n", args[i]);
 		i++;
 	}
+	return (errno);
 }

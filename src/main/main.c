@@ -6,28 +6,12 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:31:19 by jbernard          #+#    #+#             */
-/*   Updated: 2023/06/07 11:38:51 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/06/07 15:33:27 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-// Jump on a clean line
-// Tell readline we are on a new line
-// Replace readline buffer with empty
-// Rewrite prompt with empty str
-void	ctrlc_handle(int sig)
-{
-	(void)sig;
-	ft_putchar_fd('\n', 1);
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
-}
-
-// 	printf escape sequence on line 36
-// 		[A = bring cursor up a line
-//		[11C = bring cursor 11 space to the right
 int	ft_readline(char **input, t_envlst *envlst)
 {
 	*input = readline("minishell> ");
@@ -59,10 +43,11 @@ void	prompt_loop(t_envlst *envlst)
 			ft_sfree(input);
 			work_env_vars_calls(cmdlst);
 			if (yes_or_no > 0 && work_trailing_quotes(cmdlst))
-				exec_fork(cmdlst);
+				exec_fork(cmdlst, envlst);
 			else
 				perror("syntax error");
 			cmdlst_clear(&cmdlst, &empty_lst);
+			signal(SIGINT, ctrlc_handle);
 		}
 	}
 }
@@ -73,7 +58,7 @@ void	prompt_loop(t_envlst *envlst)
 void	set_new_termios(struct termios old_termios)
 {
 	struct termios	new_termios;
-
+	
 	new_termios = old_termios;
 	new_termios.c_cc[VQUIT] = _POSIX_VDISABLE;
 	new_termios.c_lflag &= ~ECHOCTL;

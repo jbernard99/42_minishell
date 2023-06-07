@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 13:43:19 by jbernard          #+#    #+#             */
-/*   Updated: 2023/05/29 11:38:29 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/06/07 15:49:21 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ char	**get_alpha_envp(t_envlst *envlst)
 }
 
 // NEED TO MAKE export x=""5"" -> x=5
-void	ft_export(char **args, t_envlst *envlst, int fd_out)
+int	ft_export(char **args, t_envlst *envlst, int fd_out)
 {
 	char		**alpha_envp;
 	int			argc;
@@ -81,8 +81,11 @@ void	ft_export(char **args, t_envlst *envlst, int fd_out)
 			if (ft_strchr(args[i], ' ') == 0)
 				add_to_envlst(envlst, args[i]);
 			else
+			{
 				printf("minishell: export: \'%s\': \
 						not a valid identifier\n", args[i]);
+						return (1);
+			}
 			i++;
 		}
 	}
@@ -92,4 +95,5 @@ void	ft_export(char **args, t_envlst *envlst, int fd_out)
 		put_export_envp(alpha_envp);
 		free(alpha_envp);
 	}
+	return (errno);
 }

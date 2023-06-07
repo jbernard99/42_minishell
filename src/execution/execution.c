@@ -6,15 +6,15 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 16:37:35 by jbernard          #+#    #+#             */
-/*   Updated: 2023/06/06 14:55:39 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/06/07 15:46:49 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	(*get_built_in(char *name))(char **args, t_envlst *envlst, int fd_out)
+int	(*get_built_in(char *name))(char **args, t_envlst *envlst, int fd_out)
 {
-	static void	(*funcs[4])() = {ft_echo, ft_env, ft_pwd, ft_export};
+	static int	(*funcs[4])() = {ft_echo, ft_env, ft_pwd, ft_export};
 	static char	*funcs_name[4] = {"echo", "env", "pwd", "export"};
 	int			i;
 
@@ -56,7 +56,7 @@ char	*get_exec_location(char *exec, t_envlst *envlst)
 			return (ft_strjoin(path[i], exec));
 		i++;
 	}
-	printf("exec : %s\n", exec);
+	//printf("exec : %s\n", exec);
 	return (exec);
 }
 
@@ -77,23 +77,28 @@ void	execute_sh(t_cmdlst *cmdlst)
 	if (e == -1)
 	{
 		printf("bash: %s: command not found\n", &cmdlst->token[0][1]);
+		write_result(errno);
 		exit(0);
 	}
 }
 
 void	execution(t_cmdlst *cmdlst)
 {
-	void	(*func)(char **, t_envlst *, int);
+	int	status;
+	int	(*func)(char **, t_envlst *, int);
 
+	status = 0;
 	func = get_built_in(cmdlst->token[0]);
 	if (func)
 	{
 		if (cmdlst->flags & PIPEI)
-			func(cmdlst->token, cmdlst->envlst, cmdlst->pipefd[1]);
+			status = func(cmdlst->token, cmdlst->envlst, cmdlst->pipefd[1]);
 		else
-			func(cmdlst->token, cmdlst->envlst, 1);
+			status = func(cmdlst->token, cmdlst->envlst, 1);
 	}
 	else
 		execute_sh(cmdlst);
 	exit(0);
+	if (status != 0)
+		exit(1);
 }

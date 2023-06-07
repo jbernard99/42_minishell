@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 16:31:54 by jbernard          #+#    #+#             */
-/*   Updated: 2023/06/07 12:00:35 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/06/07 15:57:48 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	child_execute(t_cmdlst *cmdlst)
 {
+	signal(SIGINT, ctrl_c_heredoc);
 	if (cmdlst->flags & HR_DOC)
 		cmdlst->red_fd[1] = here_doc(cmdlst->infile);
 	if (cmdlst->flags & PIPEI && cmdlst->flags & ~(R_OUT | APP_OUT))
@@ -32,18 +33,17 @@ void	child_execute(t_cmdlst *cmdlst)
 		cmdlst->red_fd[0] = append(cmdlst->outfile);
 		change_stdout(cmdlst->red_fd[0]);
 	}
-	printf("cmdlst->red_fd[0] = %d, cmdlst->red_fd[1] = %d\n", \
-			cmdlst->red_fd[0], cmdlst->red_fd[1]);
-	printf("STDIN = %d\n", STDIN_FILENO);
 	execution(cmdlst);
 	exit(0);
 }
 
-void	parent_execute(t_cmdlst *cmdlst, int *old_stds)
+void	parent_execute(t_cmdlst *cmdlst)
 {
-	(void)old_stds;
-	wait(NULL);
-	if (cmdlst->flags & PIPEI)
+	int		status;
+	
+	wait(&status);
+	read_result(cmdlst->envlst, status);
+	if (cmdlst->flags & PIPEI) 
 		close(cmdlst->pipefd[1]);
 	if (cmdlst->flags & PIPEO)
 		close(cmdlst->pipefd[0]);
@@ -54,10 +54,10 @@ void	parent_execute(t_cmdlst *cmdlst, int *old_stds)
 	}
 }
 
-void	(*is_singled_out(t_cmdlst *cmdlst))(char **args, \
+int	(*is_singled_out(t_cmdlst *cmdlst))(char **args, \
 		t_envlst *envlst, int fd_out)
 {
-	static void	(*funcs[4])() = {ft_cd, ft_exit, \
+	static int	(*funcs[4])() = {ft_cd, ft_exit, \
 		ft_export, ft_unset};
 	static char	*funcs_name[4] = {"cd", "exit", \
 		"export", "unset"};
@@ -76,28 +76,31 @@ void	(*is_singled_out(t_cmdlst *cmdlst))(char **args, \
 	return (NULL);
 }
 
-void	pre_exec_fork(t_cmdlst *cmdlst)
+void	pre_exec_fork(t_cmdlst *cmdlst, t_envlst *envlst)
 {
-	void	(*func)(char **, t_envlst *, int);
+	int	status;
+	int	(*func)(char **, t_envlst *, int);
 
+	status = 0;
 	if (cmdlst->next)
 		cmdlst->next->flags &= ~PIPEO;
 	func = is_singled_out(cmdlst);
 	if (func)
-		func(cmdlst->token, cmdlst->envlst, 1);
+		status = func(cmdlst->token, cmdlst->envlst, 1);
 	else
-		exec_fork(cmdlst);
+		exec_fork(cmdlst, envlst);
+	read_result(envlst, status);
 }
 
-int	exec_fork(t_cmdlst *cmdlst)
+int	exec_fork(t_cmdlst *cmdlst, t_envlst *envlst)
 {
 	pid_t	pid;
-	int		old_stds[2];
 
+	signal(SIGINT, ok);
 	while (cmdlst != NULL)
 	{
 		if (is_singled_out(cmdlst) != NULL)
-			pre_exec_fork(cmdlst);
+			pre_exec_fork(cmdlst, envlst);
 		else
 		{
 			if (cmdlst->flags & PIPEI)
@@ -108,9 +111,11 @@ int	exec_fork(t_cmdlst *cmdlst)
 			if (pid < 0)
 				perror("ERROR");
 			else if (pid == 0)
+			{
 				child_execute(cmdlst);
+			}
 			else
-				parent_execute(cmdlst, old_stds);
+				parent_execute(cmdlst);
 		}
 		cmdlst = cmdlst->next;
 	}
