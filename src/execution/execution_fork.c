@@ -6,11 +6,23 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 16:31:54 by jbernard          #+#    #+#             */
-/*   Updated: 2023/06/07 10:43:22 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/06/07 12:06:54 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+void	ctrl_c_heredoc(int sig)
+{
+	(void)sig;
+	ft_putchar_fd('\n', 1);
+	exit(0);
+}
+
+void	ok(int sig)
+{
+	(void)sig;
+}
 
 void	child_execute(t_cmdlst *cmdlst)
 {
@@ -93,6 +105,7 @@ int	exec_fork(t_cmdlst *cmdlst)
 	pid_t	pid;
 	int		old_stds[2];
 
+	signal(SIGINT, ok);
 	while (cmdlst != NULL)
 	{
 		if (is_singled_out(cmdlst) != NULL)
@@ -107,7 +120,10 @@ int	exec_fork(t_cmdlst *cmdlst)
 			if (pid < 0)
 				perror("ERROR");
 			else if (pid == 0)
+			{
+				signal(SIGINT, ctrl_c_heredoc);
 				child_execute(cmdlst);
+			}
 			else
 				parent_execute(cmdlst, old_stds);
 		}

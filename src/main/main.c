@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:31:19 by jbernard          #+#    #+#             */
-/*   Updated: 2023/06/06 15:06:27 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/06/07 12:07:28 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ void	prompt_loop(t_envlst *envlst)
 			else
 				perror("syntax error");
 			cmdlst_clear(&cmdlst, &empty_lst);
+			signal(SIGINT, ctrlc_handle);
 		}
 	}
 }
