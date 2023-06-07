@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:25:35 by jbernard          #+#    #+#             */
-/*   Updated: 2023/06/06 14:43:48 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/06/07 14:47:57 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@
 # include "../libraries/readline/includes/history.h"
 
 typedef struct s_envlst {
-	char				*name;
-	char				*value;
+	const char				*name;
+	const char				*value;
 	int					index;
 	struct s_envlst	*next;
 }	t_envlst;
@@ -103,15 +103,15 @@ int			lst_len(t_cmdlst *cmdlst);
 size_t		count_total_envlst(t_envlst *envlst);
 size_t		count_initiated_envlst(t_envlst *envlst);
 t_envlst	*envlst_last(t_envlst *envlst);
-t_envlst	*is_name_in_envlst(t_envlst *envlst, char *name);
+t_envlst	*is_name_in_envlst(t_envlst *envlst, const char *name);
 void		envlst_iter(t_envlst **envlst, void (*f)(t_envlst *));
 
 // envp_to_envlst.c //
-char		*get_name(char *env_line);
-char		*get_value(char *env_line);
-t_envlst	*create_envlst_from_line(char *line);
+char		*get_name(const char *env_line);
+char		*get_value(const char *env_line);
+t_envlst	*create_envlst_from_line(const char *line);
 void		create_envlst_from_envp(t_envlst **envlst, char **envp);
-void		add_to_envlst(t_envlst *envlst, char *line);
+void		add_to_envlst(t_envlst *envlst, const char *line);
 
 // envlst_to_envp.c //
 char		**get_initiated_from_envlst(t_envlst *envlst);
@@ -155,5 +155,12 @@ char		*ft_tabstrcmp(char **token, const char *str);
 // cleanup.c //
 void		free_envlst(t_envlst *envlst);
 void		ft_end(t_cmdlst	*cmdlst, t_envlst *envlst);
+
+// signal.c //
+void	ctrl_c_heredoc(int sig);
+void	ok(int sig);
+void	ctrlc_handle(int sig);
+void	write_result(int e);
+void	read_result(t_envlst *envlst, int status);
 
 #endif

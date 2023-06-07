@@ -6,24 +6,11 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:31:19 by jbernard          #+#    #+#             */
-/*   Updated: 2023/06/07 12:07:28 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/06/07 14:20:04 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-// Jump on a clean line
-// Tell readline we are on a new line
-// Replace readline buffer with empty
-// Rewrite prompt with empty str
-void	ctrlc_handle(int sig)
-{
-	(void)sig;
-	ft_putchar_fd('\n', 1);
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
-}
 
 int	ft_readline(char **input, t_envlst *envlst)
 {
@@ -61,6 +48,7 @@ void	prompt_loop(t_envlst *envlst)
 			yes_or_no = make_lst(input, &cmdlst, envlst);
 			ft_sfree(input);
 			work_env_vars_calls(cmdlst);
+			
 			if (yes_or_no > 0)// && work_trailing_quotes(cmdlst))
 				exec_fork(cmdlst);
 			else
@@ -77,7 +65,7 @@ void	prompt_loop(t_envlst *envlst)
 void	set_new_termios(struct termios old_termios)
 {
 	struct termios	new_termios;
-
+	
 	new_termios = old_termios;
 	new_termios.c_cc[VQUIT] = _POSIX_VDISABLE;
 	new_termios.c_lflag &= ~ECHOCTL;

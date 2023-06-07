@@ -6,13 +6,13 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 11:44:16 by jbernard          #+#    #+#             */
-/*   Updated: 2023/05/30 10:55:17 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/06/07 14:22:15 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-char	*get_name(char *env_line)
+char	*get_name(const char *env_line)
 {
 	size_t	i;
 
@@ -22,7 +22,7 @@ char	*get_name(char *env_line)
 	return (ft_strldup(env_line, i));
 }
 
-char	*get_value(char *env_line)
+char	*get_value(const char *env_line)
 {
 	size_t	i;
 	char	*ret;
@@ -41,7 +41,7 @@ char	*get_value(char *env_line)
 	return (ret);
 }
 
-t_envlst	*create_envlst_from_line(char *line)
+t_envlst	*create_envlst_from_line(const char *line)
 {
 	t_envlst	*envlst;
 	char		*value;
@@ -73,10 +73,11 @@ void	create_envlst_from_envp(t_envlst **envlst, char **envp)
 			proxy = proxy->next;
 			i++;
 		}
+		proxy->next = create_envlst_from_line("?=0");
 	}
 }
 
-void	add_to_envlst(t_envlst *envlst, char *line)
+void	add_to_envlst(t_envlst *envlst, const char *line)
 {
 	t_envlst	*proxy;
 

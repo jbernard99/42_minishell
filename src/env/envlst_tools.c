@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 10:58:07 by jbernard          #+#    #+#             */
-/*   Updated: 2023/05/16 14:06:47 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/06/07 13:59:53 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ t_envlst	*envlst_last(t_envlst *envlst)
 	return (envlst);
 }
 
-t_envlst	*is_name_in_envlst(t_envlst *envlst, char *name)
+t_envlst	*is_name_in_envlst(t_envlst *envlst, const char *name)
 {
 	while (envlst)
 	{
