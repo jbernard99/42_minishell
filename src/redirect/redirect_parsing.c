@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 14:36:53 by mgagnon           #+#    #+#             */
-/*   Updated: 2023/06/06 14:26:47 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/06/06 15:23:08 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int check_file(t_cmdlst *cmdlst, char *file)
 		if (status == -1)
 			return (0);
 	}
-	else if (cmdlst->flags & (R_OUT | APP_OUT | HR_DOC))
+	else if (cmdlst->flags & (R_OUT | APP_OUT))
 	{
 		status = access(file, F_OK);
 		if (status == -1)

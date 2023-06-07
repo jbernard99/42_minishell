@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 16:31:54 by jbernard          #+#    #+#             */
-/*   Updated: 2023/06/06 14:35:02 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/06/07 10:43:22 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,51 +14,43 @@
 
 void	child_execute(t_cmdlst *cmdlst)
 {
+	if (cmdlst->flags & HR_DOC)
+		cmdlst->red_fd[1] = here_doc(cmdlst->infile);
 	if (cmdlst->flags & PIPEI && cmdlst->flags & ~(R_OUT | APP_OUT))
 		change_stdout(cmdlst->pipefd[1]);
 	if (cmdlst->flags & PIPEO)
 		change_stdin(cmdlst->pipefd[0]);
 	if (cmdlst->flags & R_IN)
-	{
-		cmdlst->pipefd[1] = redirect_in(cmdlst->infile);
-	}
+		cmdlst->red_fd[1] = redirect_in(cmdlst->infile);
 	if (cmdlst->flags & R_OUT)
 	{
-		cmdlst->pipefd[0] = redirect_out(cmdlst->outfile);
-		change_stdout(cmdlst->pipefd[0]);
+		cmdlst->red_fd[0] = redirect_out(cmdlst->outfile);
+		change_stdout(cmdlst->red_fd[0]);
 	}
 	if (cmdlst->flags & APP_OUT)
 	{
-		cmdlst->pipefd[0] = append(cmdlst->outfile);
-		change_stdout(cmdlst->pipefd[0]);
+		cmdlst->red_fd[0] = append(cmdlst->outfile);
+		change_stdout(cmdlst->red_fd[0]);
 	}
-	if (cmdlst->flags & HR_DOC)
-	{
-		
-		cmdlst->pipefd[1] = here_doc(cmdlst->infile);
-		change_stdin(cmdlst->pipefd[1]);
-		printf("cmdlst->pipefd[0] = %d, cmdlst->pipefd[1] = %d\n", cmdlst->pipefd[0], cmdlst->pipefd[1]);
-		printf("STDIN = %d\n", STDIN_FILENO);
-	}
+	printf("cmdlst->red_fd[0] = %d, cmdlst->red_fd[1] = %d\n", cmdlst->red_fd[0], cmdlst->red_fd[1]);
+	printf("STDIN = %d\n", STDIN_FILENO);
 	execution(cmdlst);
-	write(1, "NO\n", 3);
 	exit(0);
 }
 
 void	parent_execute(t_cmdlst *cmdlst, int *old_stds)
 {
 	(void)old_stds;
+	wait(NULL);
 	if (cmdlst->flags & PIPEI) 
 		close(cmdlst->pipefd[1]);
-	if (cmdlst->flags & (R_OUT | APP_OUT))
+	if (cmdlst->flags & PIPEO)
 		close(cmdlst->pipefd[0]);
-	if (cmdlst->flags & PIPEO || cmdlst->flags & R_IN)
-		close(cmdlst->pipefd[1]);
-	if (cmdlst->flags & HR_DOC)
+	if (cmdlst->flags & (R_OUT | APP_OUT | R_IN | HR_DOC))
 	{
-		close(cmdlst->pipefd[1]);
+		close(cmdlst->red_fd[0]);
+		close(cmdlst->red_fd[1]);
 	}
-	wait(NULL);
 }
 
 void	(*is_singled_out(t_cmdlst *cmdlst))(char **args, \

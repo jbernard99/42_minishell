@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 14:52:21 by mgagnon           #+#    #+#             */
-/*   Updated: 2023/06/06 14:39:47 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/06/06 15:01:34 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ int	here_doc(const char *delim)
 	}
 	ft_sfree(input);
 	close(fd[1]);
+	change_stdin(fd[0]);
 	return (fd[0]);
 }
 
