@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 14:52:21 by mgagnon           #+#    #+#             */
-/*   Updated: 2023/06/06 14:57:28 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/06/07 11:00:16 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ char	*ft_tabstrcmp(char **token, const char *str)
 }
 
 int	here_doc(const char *delim)
-{  
+{
 	char	*input;
 	int		fd[2];
 
@@ -47,6 +47,7 @@ int	here_doc(const char *delim)
 	}
 	ft_sfree(input);
 	close(fd[1]);
+	change_stdin(fd[0]);
 	return (fd[0]);
 }
 

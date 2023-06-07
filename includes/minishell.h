@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:25:35 by jbernard          #+#    #+#             */
-/*   Updated: 2023/06/06 14:43:48 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/06/07 11:03:41 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@
 # include "../libraries/readline/includes/history.h"
 
 typedef struct s_envlst {
-	char				*name;
-	char				*value;
-	int					index;
+	char			*name;
+	char			*value;
+	int				index;
 	struct s_envlst	*next;
 }	t_envlst;
 
@@ -65,9 +65,9 @@ void		execution(t_cmdlst *cmdlst);
 int			exec_fork(t_cmdlst *cmdlst);
 
 // pre_execution.c //
-void	work_env_vars_calls(t_cmdlst *cmdlst);
-void	work_redirection(t_cmdlst *cmdlst);
-char	*get_file(t_cmdlst *cmdlst);
+void		work_env_vars_calls(t_cmdlst *cmdlst);
+void		work_redirection(t_cmdlst *cmdlst);
+char		*get_file(t_cmdlst *cmdlst);
 
 // built-ins //	
 void		ft_cd(char **args, t_envlst *envlst, int fd_out);
@@ -83,7 +83,6 @@ int			finish_flag_set(t_cmdlst **cmdlst);
 size_t		ft_strpbrk(const char *str, const char *delim, int *flags);
 char		*ft_strtok(char *str, const char *delim, int *flags);
 char		*ft_strldup(const char *str, size_t len);
-
 
 // mng_lst.c //
 void		cmdlst_delone(t_cmdlst *cmdlst, void (*del)(t_cmdlst *));
@@ -134,7 +133,7 @@ int			work_trailing_quotes(t_cmdlst *cmdlst);
 
 // redirect_parsing.c //
 int			scan_redirect(t_cmdlst *cmdlst);
-int 		check_file(t_cmdlst *cmdlst, char *file);
+int			check_file(t_cmdlst *cmdlst, char *file);
 
 // pipe.c //
 void		pipe_it(t_cmdlst *cmdlst);

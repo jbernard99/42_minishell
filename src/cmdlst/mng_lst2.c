@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 20:22:14 by mgagnon           #+#    #+#             */
-/*   Updated: 2023/06/02 11:39:15 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/06/07 10:57:01 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,6 @@ void	empty_lst(t_cmdlst *cmdlst)
 			i++;
 		}
 	}
-
 }
 
 int	lst_len(t_cmdlst *cmdlst)

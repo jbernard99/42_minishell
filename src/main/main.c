@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:31:19 by jbernard          #+#    #+#             */
-/*   Updated: 2023/06/05 13:58:33 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/06/07 11:38:51 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,9 @@ void	ctrlc_handle(int sig)
 	rl_redisplay();
 }
 
+// 	printf escape sequence on line 36
+// 		[A = bring cursor up a line
+//		[11C = bring cursor 11 space to the right
 int	ft_readline(char **input, t_envlst *envlst)
 {
 	*input = readline("minishell> ");
@@ -40,12 +43,6 @@ int	ft_readline(char **input, t_envlst *envlst)
 	return (0);
 }
 
-// \x1B = start escape sequence 
-// 	printf escape sequence on line 42
-// 		[s = save cursor current position
-// 	printf escape sequence on line 46
-// 		[u = return cursor last position 
-// 		[A = bring cursor up a line
 void	prompt_loop(t_envlst *envlst)
 {
 	t_cmdlst	*cmdlst;
@@ -61,7 +58,7 @@ void	prompt_loop(t_envlst *envlst)
 			yes_or_no = make_lst(input, &cmdlst, envlst);
 			ft_sfree(input);
 			work_env_vars_calls(cmdlst);
-			if (yes_or_no > 0)// && work_trailing_quotes(cmdlst))
+			if (yes_or_no > 0 && work_trailing_quotes(cmdlst))
 				exec_fork(cmdlst);
 			else
 				perror("syntax error");
