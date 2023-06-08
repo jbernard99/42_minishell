@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 16:37:35 by jbernard          #+#    #+#             */
-/*   Updated: 2023/06/07 15:46:49 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/06/07 16:32:50 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,8 +91,10 @@ void	execution(t_cmdlst *cmdlst)
 	func = get_built_in(cmdlst->token[0]);
 	if (func)
 	{
-		if (cmdlst->flags & PIPEI)
-			status = func(cmdlst->token, cmdlst->envlst, cmdlst->pipefd[1]);
+		if (cmdlst->flags & (R_OUT | APP_OUT))
+			status = func(cmdlst->token, cmdlst->envlst, cmdlst->red_fd[0]);
+		else if (cmdlst->flags & PIPEI)
+			status = func(cmdlst->token, cmdlst->envlst, cmdlst->pipefd[0]);
 		else
 			status = func(cmdlst->token, cmdlst->envlst, 1);
 	}
