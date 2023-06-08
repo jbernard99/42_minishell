@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:25:35 by jbernard          #+#    #+#             */
-/*   Updated: 2023/06/07 15:53:27 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/06/07 16:14:02 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,10 +156,10 @@ void		free_envlst(t_envlst *envlst);
 void		ft_end(t_cmdlst	*cmdlst, t_envlst *envlst);
 
 // signal.c //
-void	ctrl_c_heredoc(int sig);
-void	ok(int sig);
-void	ctrlc_handle(int sig);
-void	write_result(int e);
-void	read_result(t_envlst *envlst, int status);
+void		ctrl_c_heredoc(int sig);
+void		ok(int sig);
+void		ctrlc_handle(int sig);
+void		write_result(int e);
+void		read_result(t_envlst *envlst, int status);
 
 #endif
