@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 06:43:50 by jbernard          #+#    #+#             */
-/*   Updated: 2023/06/08 11:56:45 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/06/08 16:23:40 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,10 @@ void	check_quotes(char *input, size_t *i, int *flags)
 {
 	char	c;
 
-	if (input[*i] == '\'' && (*flags & DQUOTE) == 0)
-	{
-		*flags ^= QUOTE;
+	if (input[*i] == '\'')
 		c = '\'';
-	}
 	else if (input[*i] == '\"')
-	{
-		*flags ^= DQUOTE;
 		c = '\"';
-	}
 	(*i)++;
 	while (input[*i] && input[*i] != c)
 		(*i)++;
@@ -57,20 +51,24 @@ int	finish_flag_set(t_cmdlst **cmdlst)
 size_t	ft_strpbrk(const char *str, const char *delim, int *flags)
 {
 	size_t	token_nb;
-	int		i;
+	size_t		i;
 
 	token_nb = 1;
 	i = 0;
+	while (str[i] == ' ')
+		i++;
 	while (str[i] != '\0')
 	{
 		if (str[i] == '\'' || str[i] == '\"')
 		{
-			if (str[i] == '\'' && *flags & ~DQUOTE)
+			if (str[i] == '\'')
 				*flags ^= QUOTE;
-			else if (str[i] == '\"' && *flags & ~QUOTE)
+			else if (str[i] == '\"')
 				*flags ^= DQUOTE;
+			check_quotes((char *)str, &i, flags);
+			i++;
 		}
-		if (str[i] == *delim && (*flags & (QUOTE | DQUOTE)) == 0)
+		if (str[i] == *delim)
 			token_nb++;
 		i++;
 	}
