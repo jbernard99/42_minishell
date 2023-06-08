@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 16:37:35 by jbernard          #+#    #+#             */
-/*   Updated: 2023/06/07 16:32:50 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/06/08 10:05:42 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ char	*get_exec_location(char *exec, t_envlst *envlst)
 			return (ft_strjoin(path[i], exec));
 		i++;
 	}
-	//printf("exec : %s\n", exec);
 	return (exec);
 }
 

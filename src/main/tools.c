@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 06:43:50 by jbernard          #+#    #+#             */
-/*   Updated: 2023/05/31 11:44:00 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/06/08 11:56:45 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	check_quotes(char *input, size_t *i, int *flags)
 {
 	char	c;
 
-	if (input[*i] == '\'')
+	if (input[*i] == '\'' && (*flags & DQUOTE) == 0)
 	{
 		*flags ^= QUOTE;
 		c = '\'';
@@ -65,14 +65,14 @@ size_t	ft_strpbrk(const char *str, const char *delim, int *flags)
 	{
 		if (str[i] == '\'' || str[i] == '\"')
 		{
-			if (str[i] == '\'')
+			if (str[i] == '\'' && *flags & ~DQUOTE)
 				*flags ^= QUOTE;
-			else if (str[i] == '\"')
+			else if (str[i] == '\"' && *flags & ~QUOTE)
 				*flags ^= DQUOTE;
 		}
 		if (str[i] == *delim && (*flags & (QUOTE | DQUOTE)) == 0)
 			token_nb++;
-		(i)++;
+		i++;
 	}
 	return (token_nb);
 }
