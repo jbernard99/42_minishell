@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 12:08:53 by jbernard          #+#    #+#             */
-/*   Updated: 2023/06/08 10:12:05 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/06/09 13:06:02 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ void	free_envlst(t_envlst *envlst)
 
 	while (envlst)
 	{
+		printf("Freeing : %s, ", envlst->name);
+		printf("%s\n", envlst->value);
 		ft_sfree(envlst->name);
 		ft_sfree(envlst->value);
 		proxy = envlst->next;

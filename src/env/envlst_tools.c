@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 10:58:07 by jbernard          #+#    #+#             */
-/*   Updated: 2023/06/07 15:55:18 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/06/09 12:23:25 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ size_t	count_initiated_envlst(t_envlst *envlst)
 			envlst = envlst->next;
 		}
 	}
+	printf("envlst_size = %zu\n", i);
 	return (i);
 }
 

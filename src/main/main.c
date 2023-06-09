@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:31:19 by jbernard          #+#    #+#             */
-/*   Updated: 2023/06/08 11:44:27 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/06/09 13:00:56 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ int	main(int argc, char **argv, char **envp)
 	struct termios	old_termios;
 	t_envlst		*envlst;
 
+	envlst = NULL;
 	if (argc > 1 || !*envp)
 		return (1);
 	create_envlst_from_envp(&envlst, envp);
@@ -82,5 +83,6 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	prompt_loop(envlst);
 	tcsetattr(STDIN_FILENO, TCSANOW, &old_termios);
+	free_envlst(envlst);
 	return (0);
 }

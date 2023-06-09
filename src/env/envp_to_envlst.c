@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 11:44:16 by jbernard          #+#    #+#             */
-/*   Updated: 2023/06/07 15:54:18 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/06/09 12:56:09 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,14 +44,12 @@ char	*get_value(char *env_line)
 t_envlst	*create_envlst_from_line(char *line)
 {
 	t_envlst	*envlst;
-	char		*value;
 
 	envlst = ft_calloc(1, sizeof(t_envlst));
 	if (!envlst)
 		return (NULL);
 	envlst->name = get_name(line);
-	value = get_value(line);
-	envlst->value = value;
+	envlst->value = get_value(line);
 	envlst->next = NULL;
 	return (envlst);
 }

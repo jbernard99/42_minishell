@@ -6,7 +6,7 @@
 #    By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/16 04:45:18 by jbernard          #+#    #+#              #
-#    Updated: 2023/06/08 11:23:50 by mgagnon          ###   ########.fr        #
+#    Updated: 2023/06/09 12:28:12 by jbernard         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -102,7 +102,7 @@ $(NAME): $(RL_DIR)/libreadline.a $(OBJ_FILES)
 
 $(OBJ_DIR)%.o: %.c | $(OBJ_DIR)
 	@ printf "$(GREEN)- ⚡⚡⚡ -> Compiling $(PURPLE)$(notdir $@)$(GREEN) using $(PURPLE)$(notdir $<)$(GREEN)...                                                                             \r$(RESET)"
-	@ $(CC) $(CFLAGS) -I$(INC_DIR) -c $< -o $@
+	@ $(CC) $(CFLAGS) -g -I$(INC_DIR) -c $< -o $@
 
 obj:
 	@ mkdir -p $(OBJ_DIR)

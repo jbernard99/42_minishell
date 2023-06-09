@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 13:25:19 by jbernard          #+#    #+#             */
-/*   Updated: 2023/06/08 10:13:19 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/06/09 13:12:03 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,5 +51,6 @@ void	write_result(int e)
 void	read_result(t_envlst *envlst, int status)
 {
 	envlst = is_name_in_envlst(envlst, "?");
+	ft_sfree(envlst->value);
 	envlst->value = ft_itoa(status);
 }
