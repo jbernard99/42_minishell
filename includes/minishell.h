@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:25:35 by jbernard          #+#    #+#             */
-/*   Updated: 2023/06/07 16:14:02 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/06/10 22:10:04 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,7 +149,6 @@ int			redirect_out(char *file);
 // redirect_in_tools.c //
 int			redirect_in(char *file);
 int			here_doc(const char *delim);
-char		*ft_tabstrcmp(char **token, const char *str);
 
 // cleanup.c //
 void		free_envlst(t_envlst *envlst);
