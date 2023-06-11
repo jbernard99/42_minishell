@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 20:22:14 by mgagnon           #+#    #+#             */
-/*   Updated: 2023/06/07 10:57:01 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/06/10 23:16:27 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,7 @@ void	empty_lst(t_cmdlst *cmdlst)
 	int	i;
 
 	i = 0;
-	if (cmdlst->cmd)
-		ft_sfree(cmdlst->cmd);
+	ft_sfree(cmdlst->cmd);
 	if (cmdlst->token)
 	{
 		while (cmdlst->token[i])
@@ -87,6 +86,7 @@ void	empty_lst(t_cmdlst *cmdlst)
 			ft_sfree(cmdlst->token[i]);
 			i++;
 		}
+		ft_sfree(cmdlst->token);
 	}
 }
 
