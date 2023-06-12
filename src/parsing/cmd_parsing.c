@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 13:33:11 by mgagnon           #+#    #+#             */
-/*   Updated: 2023/06/07 10:59:28 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/06/12 11:33:56 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,13 @@ void	what_is_it(char *input, size_t *i, int *flags)
 void	quote_handle(char *cmd, size_t *end, int *flags)
 {
 	if (cmd[*end] == '\'' || cmd[*end] == '\"')
+	{
+		if (cmd[*end] == '\'')
+			*flags ^= QUOTE;
+		else if (cmd[*end] == '\"')
+			*flags ^= DQUOTE;
 		check_quotes(cmd, end, flags);
+	}
 	(*end)++;
 }
 
@@ -46,19 +52,18 @@ void	second_divide(t_cmdlst **cmdlst)
 	i = 0;
 	end = 0;
 	cmd = ft_strdup((*cmdlst)->cmd);
-	while (cmd[end] == ' ')
+	while (ft_is_whtspc(cmd[end]))
 		end++;
 	(*cmdlst)->token = ft_calloc((ft_strpbrk(cmd, " ", \
 					&(*cmdlst)->flags) + 1), sizeof(char *));
 	while (end < ft_strlen(cmd) && &(*cmdlst)->token[i])
 	{
 		origin = end;
-		while (cmd[end] && (cmd[end] != ' ' && ((*cmdlst)->flags & \
-						(QUOTE | DQUOTE)) == 0))
+		while (cmd[end] && !ft_is_whtspc(cmd[end]))
 			quote_handle(cmd, &end, &(*cmdlst)->flags);
 		(*cmdlst)->token[i] = ft_strldup(&cmd[origin], end - origin);
 		i++;
-		while (cmd[end] == ' ')
+		while (ft_is_whtspc(cmd[end]))
 			end++;
 	}
 	ft_sfree(cmd);

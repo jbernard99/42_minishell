@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 06:43:50 by jbernard          #+#    #+#             */
-/*   Updated: 2023/06/08 16:23:40 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/06/12 12:19:47 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	finish_flag_set(t_cmdlst **cmdlst)
 size_t	ft_strpbrk(const char *str, const char *delim, int *flags)
 {
 	size_t	token_nb;
-	size_t		i;
+	size_t	i;
 
 	token_nb = 1;
 	i = 0;
@@ -73,22 +73,6 @@ size_t	ft_strpbrk(const char *str, const char *delim, int *flags)
 		i++;
 	}
 	return (token_nb);
-}
-
-char	*ft_strtok(char *str, const char *delim, int *flags)
-{
-	static size_t	i = 0;
-	int				origin;
-	char			*token;
-
-	origin = i;
-	ft_strpbrk(str, delim, flags);
-	if (str[i] == *delim)
-		token = ft_strldup(&str[origin], (i - 1) - origin);
-	else
-		token = ft_strldup(&str[origin], i - origin);
-	*str = *str + i;
-	return (token);
 }
 
 char	*ft_strldup(const char *str, size_t len)

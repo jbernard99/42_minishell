@@ -6,7 +6,7 @@
 #    By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/16 04:45:18 by jbernard          #+#    #+#              #
-#    Updated: 2023/06/08 11:23:50 by mgagnon          ###   ########.fr        #
+#    Updated: 2023/06/12 11:32:07 by mgagnon          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,6 +40,7 @@ RL_DIR = ./libraries/readline
 MAIN_FILES = 	main.c					\
 				tools.c					\
 				cleanup.c				\
+				ft_is_whtspc.c				\
 				signal.c
 				
 PARSE_FILES = 	cmd_parsing.c			\

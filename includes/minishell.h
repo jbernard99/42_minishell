@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:25:35 by jbernard          #+#    #+#             */
-/*   Updated: 2023/06/07 16:14:02 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/06/12 11:07:38 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,5 +161,8 @@ void		ok(int sig);
 void		ctrlc_handle(int sig);
 void		write_result(int e);
 void		read_result(t_envlst *envlst, int status);
+
+// ft_is_whtspc.c //
+int			ft_is_whtspc(char ch);
 
 #endif

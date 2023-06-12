@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 12:09:57 by mgagnon           #+#    #+#             */
-/*   Updated: 2023/06/05 14:01:43 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/06/12 12:17:56 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*get_var_name(char *str)
 	int		i;
 
 	i = 0;
-	while (str[i] && str[i] != ' ')
+	while (ft_isalpha(str[i]) || str[i] == '_' || str[i] == '?')
 		i++;
 	name = ft_strldup(str, i);
 	return (name);
@@ -42,7 +42,7 @@ char	*rplc_env_var(t_envlst *envlst, char *str)
 	ft_sfree(var);
 	old = ft_strldup(str, --i);
 	var = ft_strfreejoinfree(old, replacement);
-	while (str[i] && str[i] != ' ')
+	while (str[i] == '$' || str[i] == '?' || ft_isalpha(str[i]))
 		i++;
 	if (!str[i])
 	{
