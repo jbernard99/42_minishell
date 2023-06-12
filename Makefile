@@ -6,7 +6,7 @@
 #    By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/16 04:45:18 by jbernard          #+#    #+#              #
-#    Updated: 2023/06/12 11:32:07 by mgagnon          ###   ########.fr        #
+#    Updated: 2023/06/12 13:45:49 by mgagnon          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -103,9 +103,9 @@ $(NAME): $(RL_DIR)/libreadline.a $(OBJ_FILES)
 
 $(OBJ_DIR)%.o: %.c | $(OBJ_DIR)
 	@ printf "$(GREEN)- ⚡⚡⚡ -> Compiling $(PURPLE)$(notdir $@)$(GREEN) using $(PURPLE)$(notdir $<)$(GREEN)...                                                                             \r$(RESET)"
-	@ $(CC) $(CFLAGS) -I$(INC_DIR) -c $< -o $@
+	@ $(CC) $(CFLAGS) -g -gdwarf-4 -I$(INC_DIR) -c $< -o $@
 
-obj:
+$(OBJ_DIR):
 	@ mkdir -p $(OBJ_DIR)
 
 # Download and install readline library

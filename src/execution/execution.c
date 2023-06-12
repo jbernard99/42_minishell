@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 16:37:35 by jbernard          #+#    #+#             */
-/*   Updated: 2023/06/08 10:05:42 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/06/09 12:53:43 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	execute_sh(t_cmdlst *cmdlst)
 	{
 		printf("bash: %s: command not found\n", &cmdlst->token[0][1]);
 		write_result(errno);
-		exit(0);
+		ft_end(cmdlst, cmdlst->envlst);
 	}
 }
 

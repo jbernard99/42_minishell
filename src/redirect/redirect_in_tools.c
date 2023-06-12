@@ -6,25 +6,11 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 14:52:21 by mgagnon           #+#    #+#             */
-/*   Updated: 2023/06/07 15:48:17 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/06/10 22:11:17 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-char	*ft_tabstrcmp(char **token, const char *str)
-{
-	int	i;
-
-	i = 0;
-	while (token[i])
-	{
-		if (ft_strcmp(token[i], str) == 0)
-			return (token[i]);
-		i++;
-	}
-	return (NULL);
-}
 
 int	here_doc(const char *delim)
 {
