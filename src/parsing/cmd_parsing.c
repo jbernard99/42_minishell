@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 13:33:11 by mgagnon           #+#    #+#             */
-/*   Updated: 2023/06/12 13:45:53 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/06/13 11:35:40 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	quote_handle(char *cmd, size_t *end, int *flags)
 /* problem still in second_divide : */
 /* 1- don't work with quotes doubles quotes */
 
-void	second_divide(t_cmdlst **cmdlst)
+int	second_divide(t_cmdlst **cmdlst)
 {
 	char	*cmd;
 	size_t	i;
@@ -52,8 +52,10 @@ void	second_divide(t_cmdlst **cmdlst)
 	i = 0;
 	end = 0;
 	cmd = ft_strdup((*cmdlst)->cmd);
-	while (ft_is_whtspc(cmd[end]))
+	while (cmd[end] && ft_is_whtspc(cmd[end]))
 		end++;
+	if (!cmd[end])
+		return (0);
 	(*cmdlst)->token = ft_calloc((ft_strpbrk(cmd, " ", \
 					&(*cmdlst)->flags) + 1), sizeof(char *));
 	while (end < ft_strlen(cmd) && &(*cmdlst)->token[i])
@@ -67,6 +69,7 @@ void	second_divide(t_cmdlst **cmdlst)
 			end++;
 	}
 	ft_sfree(cmd);
+	return (1);
 }
 
 /* makes a first split to separate multiple cmd and looks */
@@ -105,7 +108,8 @@ int	make_lst(char *input, t_cmdlst **cmdlst, t_envlst *envlst)
 	cur = *cmdlst;
 	while (cur != NULL)
 	{
-		second_divide(&cur);
+		if (second_divide(&cur) == 0)
+			return (-1);
 		if (scan_redirect(cur) == 0)
 			return (0);
 		cur = cur->next;
