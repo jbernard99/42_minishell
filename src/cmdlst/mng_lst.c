@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 11:17:41 by mgagnon           #+#    #+#             */
-/*   Updated: 2023/06/10 23:13:37 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/06/14 13:44:46 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,9 @@ void	cmdlst_delone(t_cmdlst *cmdlst, void (*del)(t_cmdlst *))
 {
 	if (!cmdlst)
 		return ;
-	//ft_freetabstr(cmdlst->token);
 	ft_sfree(cmdlst->outfile);
 	ft_sfree(cmdlst->infile);
 	del(cmdlst);
-	//printf("%s, %s, %s", cmdlst->cmd, cmdlst->infile, cmdlst->outfile);
-	//ft_sfree(cmdlst->cmd);
 	ft_sfree(cmdlst);
 }
 
@@ -74,6 +71,7 @@ t_cmdlst	*new_node(char *cmd, t_envlst *envlst)
 	if (!new_node)
 		return (NULL);
 	new_node->cmd = cmd;
+	ft_sfree(cmd);
 	new_node->pipefd[0] = 0;
 	new_node->pipefd[1] = 0;
 	new_node->envlst = envlst;
