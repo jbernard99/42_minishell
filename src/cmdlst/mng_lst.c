@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 11:17:41 by mgagnon           #+#    #+#             */
-/*   Updated: 2023/06/14 14:11:02 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/06/14 15:13:29 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ t_cmdlst	*new_node(char *cmd, t_envlst *envlst)
 	new_node = ft_calloc(1, sizeof(t_cmdlst));
 	if (!new_node)
 		return (NULL);
-	new_node->cmd = cmd;
+	new_node->cmd = ft_strdup(cmd);
 	ft_sfree(cmd);
 	cmd = NULL;
 	new_node->exit = 0;

@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 13:43:19 by jbernard          #+#    #+#             */
-/*   Updated: 2023/06/08 10:05:22 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/06/14 14:59:14 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ int	ft_export(char **args, t_envlst *envlst, int fd_out)
 	{
 		alpha_envp = get_alpha_envp(envlst);
 		put_export_envp(alpha_envp);
-		free(alpha_envp);
+		ft_sfree(alpha_envp);
 	}
 	return (errno);
 }

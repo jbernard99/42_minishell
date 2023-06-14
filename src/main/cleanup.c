@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 12:08:53 by jbernard          #+#    #+#             */
-/*   Updated: 2023/06/14 14:07:51 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/06/14 15:29:07 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,4 +26,11 @@ void	free_envlst(t_envlst *envlst)
 		ft_sfree(envlst);
 		envlst = proxy;
 	}
+}
+
+void	ft_end(t_cmdlst *cmdlst, t_envlst *envlst)
+{
+	free_envlst(envlst);
+	cmdlst_clear(&cmdlst, &empty_lst);
+	exit(0);
 }
