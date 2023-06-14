@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 13:33:11 by mgagnon           #+#    #+#             */
-/*   Updated: 2023/06/14 13:45:02 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/06/14 15:55:34 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,7 @@ int	second_divide(t_cmdlst **cmdlst)
 		while (ft_is_whtspc(cmd[end]))
 			end++;
 	}
-	ft_sfree(cmd);
-	return (1);
+	return (ft_sfree(cmd), 1);
 }
 
 /* makes a first split to separate multiple cmd and looks */

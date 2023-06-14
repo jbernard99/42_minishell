@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:25:35 by jbernard          #+#    #+#             */
-/*   Updated: 2023/06/12 13:44:19 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/06/14 14:10:13 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ typedef struct s_cmdlst {
 	int				pipefd[2];
 	int				red_fd[2];
 	int				dont_pipe_it;
+	int				exit;
 	t_envlst		*envlst;
 	char			*cmd;
 	char			*outfile;

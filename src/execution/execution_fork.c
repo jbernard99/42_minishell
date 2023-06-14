@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 16:31:54 by jbernard          #+#    #+#             */
-/*   Updated: 2023/06/14 13:47:20 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/06/14 15:55:19 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,8 @@ int	(*is_singled_out(t_cmdlst *cmdlst))(char **args, \
 	int			i;
 
 	i = 0;
+	if (ft_strcmp("exit", cmdlst->token[0]) == 0)
+			cmdlst->exit = 1;
 	if (ft_strcmp("export", cmdlst->token[0]) == 0 && \
 		ft_strtablen(cmdlst->token) == 1)
 		return (NULL);
