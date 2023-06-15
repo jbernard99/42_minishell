@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 16:37:35 by jbernard          #+#    #+#             */
-/*   Updated: 2023/06/09 12:53:43 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/06/15 12:08:35 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,8 @@ void	execution(t_cmdlst *cmdlst)
 	}
 	else
 		execute_sh(cmdlst);
-	exit(0);
+	
 	if (status != 0)
 		exit(1);
+	exit(0);
 }
