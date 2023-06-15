@@ -6,31 +6,27 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:31:19 by jbernard          #+#    #+#             */
-/*   Updated: 2023/05/29 14:42:03 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/06/14 15:36:00 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-// Jump on a clean line
-// Tell readline we are on a new line
-// Replace readline buffer with empty
-// Rewrite prompt with empty str
-void	ctrlc_handle(int sig)
+int	ft_readline(char **input, t_envlst *envlst)
 {
-	(void)sig;
-	ft_putchar_fd('\n', 1);
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
+	*input = readline("minishell> ");
+	if (!*input)
+	{
+		printf("\x1B[A\x1B[11Cexit\n");
+		ft_end(NULL, envlst);
+	}
+	if (ft_strcmp(*input, "") == 0)
+		return (1);
+	if (ft_strlen(*input) > 0)
+		add_history(*input);
+	return (0);
 }
 
-// \x1B = start escape sequence 
-// 	printf escape sequence on line 42
-// 		[s = save cursor current position
-// 	printf escape sequence on line 46
-// 		[u = return cursor last position 
-// 		[A = bring cursor up a line
 void	prompt_loop(t_envlst *envlst)
 {
 	t_cmdlst	*cmdlst;
@@ -40,22 +36,22 @@ void	prompt_loop(t_envlst *envlst)
 	while (1)
 	{
 		cmdlst = NULL;
-		input = readline("minishell> ");
-		if (input == NULL)
+		yes_or_no = ft_readline(&input, envlst);
+		if (!yes_or_no)
 		{
-			free(input);
-			printf("\x1B[u\x1B[Aexit\n");
-			exit(0);
-		}
-		if (ft_strlen(input) != 0)
-		{
-			add_history(input);
 			yes_or_no = make_lst(input, &cmdlst, envlst);
-			free(input);
-			work_env_vars_calls(cmdlst);
+			ft_sfree(input);
 			if (yes_or_no > 0)
-				exec_fork(cmdlst);
+			{
+				work_env_vars_calls(cmdlst);
+				exec_fork(cmdlst, envlst);
+			}
+			else if (yes_or_no == 0)
+				perror("syntax error");
+			if (cmdlst->exit != 0)
+				return (cmdlst_clear(&cmdlst, &empty_lst));
 			cmdlst_clear(&cmdlst, &empty_lst);
+			signal(SIGINT, ctrlc_handle);
 		}
 	}
 }
@@ -80,6 +76,9 @@ int	main(int argc, char **argv, char **envp)
 	struct termios	old_termios;
 	t_envlst		*envlst;
 
+	envlst = NULL;
+	if (argc > 1 || !*envp)
+		return (1);
 	create_envlst_from_envp(&envlst, envp);
 	tcgetattr(STDIN_FILENO, &old_termios);
 	set_new_termios(old_termios);
@@ -88,5 +87,6 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	prompt_loop(envlst);
 	tcsetattr(STDIN_FILENO, TCSANOW, &old_termios);
+	free_envlst(envlst);
 	return (0);
 }

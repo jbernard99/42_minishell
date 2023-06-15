@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 11:57:20 by mgagnon           #+#    #+#             */
-/*   Updated: 2023/05/26 12:03:55 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/06/05 13:56:23 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,17 @@ int	trailing_quotes(char **arr)
 	return (0);
 }
 
+int	work_trailing_quotes(t_cmdlst *cmdlst)
+{
+	while (cmdlst)
+	{
+		if (trailing_quotes(cmdlst->token) == 1)
+			return (0);
+		cmdlst = cmdlst->next;
+	}
+	return (1);
+}
+
 char	*rmv_quotes(char *str)
 {
 	char	*proxy;
@@ -41,7 +52,7 @@ char	*rmv_quotes(char *str)
 	if (str[0] == '\'' || str[0] == '\"')
 	{
 		proxy = ft_strldup(&str[1], ft_strlen(str) - 2);
-		free(str);
+		ft_sfree(str);
 		return (proxy);
 	}
 	return (str);

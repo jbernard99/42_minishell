@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 06:43:50 by jbernard          #+#    #+#             */
-/*   Updated: 2023/05/30 10:42:39 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/06/12 13:45:08 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,9 @@ void	check_quotes(char *input, size_t *i, int *flags)
 	char	c;
 
 	if (input[*i] == '\'')
-	{
-		*flags ^= QUOTE;
 		c = '\'';
-	}
 	else if (input[*i] == '\"')
-	{
-		*flags ^= DQUOTE;
 		c = '\"';
-	}
 	(*i)++;
 	while (input[*i] && input[*i] != c)
 		(*i)++;
@@ -50,20 +44,19 @@ int	finish_flag_set(t_cmdlst **cmdlst)
 		cur = cur->next;
 	}
 	if (cur->flags & PIPEI)
-	{
-		perror("syntax error");
 		return (0);
-	}
 	return (1);
 }
 
 size_t	ft_strpbrk(const char *str, const char *delim, int *flags)
 {
 	size_t	token_nb;
-	int		i;
+	size_t	i;
 
 	token_nb = 1;
 	i = 0;
+	while (str[i] == ' ')
+		i++;
 	while (str[i] != '\0')
 	{
 		if (str[i] == '\'' || str[i] == '\"')
@@ -72,28 +65,14 @@ size_t	ft_strpbrk(const char *str, const char *delim, int *flags)
 				*flags ^= QUOTE;
 			else if (str[i] == '\"')
 				*flags ^= DQUOTE;
+			check_quotes((char *)str, &i, flags);
+			i++;
 		}
-		if (str[i] == *delim && (*flags & (QUOTE | DQUOTE)) == 0)
+		if (str[i] == *delim)
 			token_nb++;
-		(i)++;
+		i++;
 	}
 	return (token_nb);
-}
-
-char	*ft_strtok(char *str, const char *delim, int *flags)
-{
-	static size_t	i = 0;
-	int				origin;
-	char			*token;
-
-	origin = i;
-	ft_strpbrk(str, delim, flags);
-	if (str[i] == *delim)
-		token = ft_strldup(&str[origin], (i - 1) - origin);
-	else
-		token = ft_strldup(&str[origin], i - origin);
-	*str = *str + i;
-	return (token);
 }
 
 char	*ft_strldup(const char *str, size_t len)

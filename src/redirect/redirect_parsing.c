@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect_parsing.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgagnon <mgagnon@student.42quebec.com      +#+  +:+       +#+        */
+/*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 14:36:53 by mgagnon           #+#    #+#             */
-/*   Updated: 2023/05/11 14:15:13 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/06/07 11:01:03 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,33 @@ void	set_redirect_flags(char *symbol, int *flags)
 	}
 }
 
-void	scan_redirect(t_cmdlst *cmdlst)
+int	check_file(t_cmdlst *cmdlst, char *file)
+{
+	int	status;
+	int	fd;
+
+	if (cmdlst->flags & R_IN)
+	{
+		status = access(file, F_OK | R_OK);
+		if (status == -1)
+			return (0);
+	}
+	else if (cmdlst->flags & (R_OUT | APP_OUT))
+	{
+		status = access(file, F_OK);
+		if (status == -1)
+		{
+			fd = open(file, O_CREAT, S_IRUSR | S_IWUSR);
+			close(fd);
+		}
+		status = access(file, W_OK);
+		if (status == -1)
+			return (0);
+	}
+	return (1);
+}
+
+int	scan_redirect(t_cmdlst *cmdlst)
 {
 	int		i;
 
@@ -38,7 +64,16 @@ void	scan_redirect(t_cmdlst *cmdlst)
 	while (cmdlst->token[i])
 	{
 		if (ft_strrchr("<>", cmdlst->token[i][0]))
+		{
 			set_redirect_flags(cmdlst->token[i], &cmdlst->flags);
+			if ((cmdlst->flags & (APP_OUT | HR_DOC)) \
+					&& ft_strlen(cmdlst->token[i]) > 2)
+				return (0);
+			else if ((cmdlst->flags & (R_IN | R_OUT)) && \
+					ft_strlen(cmdlst->token[i]) > 1)
+				return (0);
+		}
 		i++;
 	}
+	return (1);
 }

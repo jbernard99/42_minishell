@@ -6,20 +6,20 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 16:37:35 by jbernard          #+#    #+#             */
-/*   Updated: 2023/05/29 11:33:58 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/06/15 14:10:20 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	(*get_built_in(char *name))(char **args, t_envlst *envlst, int fd_out)
+int	(*get_built_in(char *name))(char **args, t_envlst *envlst, int fd_out)
 {
-	static void	(*funcs[3])() = {ft_echo, ft_env, ft_pwd};
-	static char	*funcs_name[3] = {"echo", "env", "pwd"};
+	static int	(*funcs[4])() = {ft_echo, ft_env, ft_pwd, ft_export};
+	static char	*funcs_name[4] = {"echo", "env", "pwd", "export"};
 	int			i;
 
 	i = 0;
-	while (i < 3)
+	while (i < 4)
 	{
 		if (ft_strcmp(name, funcs_name[i]) == 0)
 			return (funcs[i]);
@@ -40,18 +40,17 @@ int	exec_exists(char *exec)
 
 char	*get_exec_location(char *exec, t_envlst *envlst)
 {
-	char	**path;
-	char	*t_p;
-	int		i;
+	char		**path;
+	int			i;
 
 	exec = ft_strjoin("/", exec);
-	t_p = is_name_in_envlst(envlst, "PATH")->value;
-	if (t_p)
-		path = ft_split(t_p, ':');
+	envlst = is_name_in_envlst(envlst, "PATH");
+	if (envlst)
+		path = ft_split(envlst->value, ':');
 	else
-		path = NULL;
+		return (exec);
 	i = 0;
-	while (path && path[i])
+	while (path[i])
 	{
 		if (exec_exists(ft_strjoin(path[i], exec)))
 			return (ft_strjoin(path[i], exec));
@@ -67,28 +66,39 @@ void	execute_sh(t_cmdlst *cmdlst)
 	if (!ft_strchr(cmdlst->token[0], '/'))
 		cmdlst->token[0] = get_exec_location(cmdlst->token[0], \
 				cmdlst->envlst);
+	if (!ft_strchr(cmdlst->token[0], '/'))
+	{
+		printf("bash: %s: command not found\n", cmdlst->token[0]);
+		exit(0);
+	}
 	e = execve(cmdlst->token[0], cmdlst->token, \
 			get_initiated_from_envlst(cmdlst->envlst));
 	if (e == -1)
 	{
 		printf("bash: %s: command not found\n", &cmdlst->token[0][1]);
-		exit(0);
+		ft_end(cmdlst, cmdlst->envlst);
 	}
 }
 
 void	execution(t_cmdlst *cmdlst)
 {
-	void	(*func)(char **, t_envlst *, int);
+	int	status;
+	int	(*func)(char **, t_envlst *, int);
 
+	status = 0;
 	func = get_built_in(cmdlst->token[0]);
 	if (func)
 	{
-		if (cmdlst->flags & PIPEI)
-			func(cmdlst->token, cmdlst->envlst, cmdlst->pipefd[1]);
+		if (cmdlst->flags & (R_OUT | APP_OUT))
+			status = func(cmdlst->token, cmdlst->envlst, cmdlst->red_fd[0]);
+		else if (cmdlst->flags & PIPEI)
+			status = func(cmdlst->token, cmdlst->envlst, cmdlst->pipefd[0]);
 		else
-			func(cmdlst->token, cmdlst->envlst, 1);
+			status = func(cmdlst->token, cmdlst->envlst, 1);
 	}
 	else
 		execute_sh(cmdlst);
+	if (status != 0)
+		exit(1);
 	exit(0);
 }

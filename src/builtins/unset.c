@@ -6,21 +6,13 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 13:45:05 by jbernard          #+#    #+#             */
-/*   Updated: 2023/05/24 14:35:19 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/06/15 12:20:40 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	free_envlst(t_envlst *envlst)
-{
-	free(envlst->name);
-	if (envlst->value)
-		free(envlst->value);
-	free(envlst);
-}
-
-void	envlst_unset(t_envlst *envlst, char *name)
+int	envlst_unset(t_envlst *envlst, char *name)
 {
 	t_envlst	*temp;
 
@@ -35,15 +27,18 @@ void	envlst_unset(t_envlst *envlst, char *name)
 					envlst->next = temp->next;
 				else
 					envlst->next = NULL;
-				free_envlst(temp);
+				ft_sfree(temp->name);
+				ft_sfree(temp->value);
+				ft_sfree(temp);
 				break ;
 			}
 			envlst = envlst->next;
 		}
 	}
+	return (errno);
 }
 
-void	ft_unset(char **args, t_envlst *envlst, int fd_out)
+int	ft_unset(char **args, t_envlst *envlst, int fd_out)
 {
 	int	i;
 
@@ -57,4 +52,5 @@ void	ft_unset(char **args, t_envlst *envlst, int fd_out)
 			printf("minishell: unset: \'%s\': not a valid identifier\n", args[i]);
 		i++;
 	}
+	return (errno);
 }

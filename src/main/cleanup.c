@@ -1,21 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit.c                                             :+:      :+:    :+:   */
+/*   cleanup.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/24 13:42:38 by jbernard          #+#    #+#             */
-/*   Updated: 2023/06/14 15:54:34 by jbernard         ###   ########.fr       */
+/*   Created: 2023/05/29 12:08:53 by jbernard          #+#    #+#             */
+/*   Updated: 2023/06/15 09:35:23 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-/* NOTHING DONE YET */
-int	ft_exit(char **args, t_envlst *envlst, int fd_out)
+
+void	free_envlst(t_envlst *envlst)
 {
-	(void)args;
-	(void)envlst;
-	ft_putstr_fd("exit\n", fd_out);
-	return (0);
+	t_envlst	*proxy;
+
+	while (envlst)
+	{
+		ft_sfree(envlst->name);
+		ft_sfree(envlst->value);
+		proxy = envlst->next;
+		ft_sfree(envlst);
+		envlst = proxy;
+	}
+}
+
+void	ft_end(t_cmdlst *cmdlst, t_envlst *envlst)
+{
+	free_envlst(envlst);
+	cmdlst_clear(&cmdlst, &empty_lst);
+	exit(0);
 }

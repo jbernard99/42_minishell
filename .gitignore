@@ -4,3 +4,4 @@ obj
 libraries/readline/libreadline.a
 .DS_Store
 a.out
+*.dSYM

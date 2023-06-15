@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 13:42:15 by jbernard          #+#    #+#             */
-/*   Updated: 2023/05/24 14:31:57 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/06/07 15:15:44 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ Exemples:
 
 #include "../../includes/minishell.h"
 
-void	ft_env(char **args, t_envlst *envlst, int fd_out)
+int	ft_env(char **args, t_envlst *envlst, int fd_out)
 {
 	int		i;
 	char	**env;
@@ -36,4 +36,5 @@ void	ft_env(char **args, t_envlst *envlst, int fd_out)
 			printf("%s\n", env[i]);
 		i++;
 	}
+	return (errno);
 }

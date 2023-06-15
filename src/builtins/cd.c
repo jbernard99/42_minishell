@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 13:40:17 by jbernard          #+#    #+#             */
-/*   Updated: 2023/05/24 14:44:28 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/06/15 14:07:42 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,11 +58,18 @@ void	manage_pwd(char **args, t_envlst *envlst)
 	}
 }
 
-void	ft_cd(char **args, t_envlst *envlst, int fd_out)
+int	ft_cd(char **args, t_envlst *envlst, int fd_out)
 {
+	char	**split;
+
 	(void)fd_out;
 	if (chdir(args[1]) == 0)
-		manage_pwd(ft_split(args[1], '/'), envlst);
+	{
+		split = ft_split(args[1], '/');
+		manage_pwd(split, envlst);
+		ft_freetabstr(split);
+	}
 	else
 		printf("minishell: cd: %s: Not a directory\n", args[1]);
+	return (errno);
 }

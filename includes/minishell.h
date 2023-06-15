@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:25:35 by jbernard          #+#    #+#             */
-/*   Updated: 2023/05/30 10:45:41 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/06/14 14:10:13 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,17 +28,22 @@
 # include "../libraries/readline/includes/history.h"
 
 typedef struct s_envlst {
-	char				*name;
-	char				*value;
-	int					index;
+	char			*name;
+	char			*value;
+	int				index;
 	struct s_envlst	*next;
 }	t_envlst;
 
 typedef struct s_cmdlst {
 	int				flags;
 	int				pipefd[2];
+	int				red_fd[2];
+	int				dont_pipe_it;
+	int				exit;
 	t_envlst		*envlst;
 	char			*cmd;
+	char			*outfile;
+	char			*infile;
 	char			**token;
 	struct s_cmdlst	*next;
 }		t_cmdlst;
@@ -58,19 +63,21 @@ enum	e_flags{
 void		execution(t_cmdlst *cmdlst);
 
 // execution_fork.c //
-int			exec_fork(t_cmdlst *cmdlst);
+int			exec_fork(t_cmdlst *cmdlst, t_envlst *envlst);
 
 // pre_execution.c //
-void	work_env_vars_calls(t_cmdlst *cmdlst);
+void		work_env_vars_calls(t_cmdlst *cmdlst);
+void		work_redirection(t_cmdlst *cmdlst);
+char		*get_file(t_cmdlst *cmdlst);
 
 // built-ins //	
-void		ft_cd(char **args, t_envlst *envlst, int fd_out);
-void		ft_echo(char **args, t_envlst *envlst, int fd_out);
-void		ft_exit(char **args, t_envlst *envlst, int fd_out);
-void		ft_env(char **args, t_envlst *envlst, int fd_out);
-void		ft_pwd(char **args, t_envlst *envlst, int fd_out);
-void		ft_export(char **args, t_envlst *envlst, int fd_out);
-void		ft_unset(char **args, t_envlst *envlst, int fd_out);
+int			ft_cd(char **args, t_envlst *envlst, int fd_out);
+int			ft_echo(char **args, t_envlst *envlst, int fd_out);
+int			ft_exit(char **args, t_envlst *envlst, int fd_out);
+int			ft_env(char **args, t_envlst *envlst, int fd_out);
+int			ft_pwd(char **args, t_envlst *envlst, int fd_out);
+int			ft_export(char **args, t_envlst *envlst, int fd_out);
+int			ft_unset(char **args, t_envlst *envlst, int fd_out);
 
 // tools.c //
 int			finish_flag_set(t_cmdlst **cmdlst);
@@ -123,15 +130,39 @@ char		*m_get_value(t_envlst **envp, char *name);
 
 // quotes.c //
 char		*rmv_quotes(char *str);
+int			work_trailing_quotes(t_cmdlst *cmdlst);
 
 // redirect_parsing.c //
-void		scan_redirect(t_cmdlst *cmdlst);
+int			scan_redirect(t_cmdlst *cmdlst);
+int			check_file(t_cmdlst *cmdlst, char *file);
 
 // pipe.c //
-void	pipe_it(t_cmdlst *cmdlst);
-int		change_stdin(int new_fd);
-int		reset_stdin(int old_fd);
-int		change_stdout(int new_fd);
-int		reset_stdout(int old_fd);
+void		pipe_it(t_cmdlst *cmdlst);
+int			change_stdin(int new_fd);
+int			reset_stdin(int old_fd);
+int			change_stdout(int new_fd);
+int			reset_stdout(int old_fd);
+
+// redirect_out_tools.c //
+int			append(char *file);
+int			redirect_out(char *file);
+
+// redirect_in_tools.c //
+int			redirect_in(char *file);
+int			here_doc(const char *delim);
+
+// cleanup.c //
+void		free_envlst(t_envlst *envlst);
+void		ft_end(t_cmdlst	*cmdlst, t_envlst *envlst);
+
+// signal.c //
+void		ctrl_c_heredoc(int sig);
+void		ok(int sig);
+void		ctrlc_handle(int sig);
+void		write_result(int e);
+void		read_result(t_envlst *envlst, int status);
+
+// ft_is_whtspc.c //
+int			ft_is_whtspc(char ch);
 
 #endif

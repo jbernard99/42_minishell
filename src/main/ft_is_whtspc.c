@@ -1,21 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit.c                                             :+:      :+:    :+:   */
+/*   ft_is_whspc.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: mgagnon <mgagnon@student.42quebec.com      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/24 13:42:38 by jbernard          #+#    #+#             */
-/*   Updated: 2023/06/14 15:54:34 by jbernard         ###   ########.fr       */
+/*   Created: 2023/06/12 11:01:53 by mgagnon           #+#    #+#             */
+/*   Updated: 2023/06/12 11:05:46 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-/* NOTHING DONE YET */
-int	ft_exit(char **args, t_envlst *envlst, int fd_out)
+
+int	ft_is_whtspc(char ch)
 {
-	(void)args;
-	(void)envlst;
-	ft_putstr_fd("exit\n", fd_out);
+	if (ch == ' ' || ch == '\t' || ch == '\r' || ch == '\v' || \
+			ch == '\f' || ch == '\n')
+		return (1);
 	return (0);
 }

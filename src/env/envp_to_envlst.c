@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 11:44:16 by jbernard          #+#    #+#             */
-/*   Updated: 2023/05/30 10:55:17 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/06/14 16:03:46 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,14 +44,12 @@ char	*get_value(char *env_line)
 t_envlst	*create_envlst_from_line(char *line)
 {
 	t_envlst	*envlst;
-	char		*value;
 
 	envlst = ft_calloc(1, sizeof(t_envlst));
 	if (!envlst)
 		return (NULL);
 	envlst->name = get_name(line);
-	value = get_value(line);
-	envlst->value = value;
+	envlst->value = get_value(line);
 	envlst->next = NULL;
 	return (envlst);
 }
@@ -73,14 +71,18 @@ void	create_envlst_from_envp(t_envlst **envlst, char **envp)
 			proxy = proxy->next;
 			i++;
 		}
+		proxy->next = create_envlst_from_line("?=0");
 	}
 }
 
 void	add_to_envlst(t_envlst *envlst, char *line)
 {
 	t_envlst	*proxy;
+	char		*name;
 
-	proxy = is_name_in_envlst(envlst, get_name(line));
+	name = get_name(line);
+	proxy = is_name_in_envlst(envlst, name);
+	ft_sfree(name);
 	if (!proxy)
 	{
 		envlst = envlst_last(envlst);
