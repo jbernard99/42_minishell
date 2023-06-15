@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 13:45:05 by jbernard          #+#    #+#             */
-/*   Updated: 2023/06/07 15:57:02 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/06/15 12:20:40 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,9 @@ int	envlst_unset(t_envlst *envlst, char *name)
 					envlst->next = temp->next;
 				else
 					envlst->next = NULL;
-				free_envlst(temp);
+				ft_sfree(temp->name);
+				ft_sfree(temp->value);
+				ft_sfree(temp);
 				break ;
 			}
 			envlst = envlst->next;
