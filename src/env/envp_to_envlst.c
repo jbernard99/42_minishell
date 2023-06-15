@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 11:44:16 by jbernard          #+#    #+#             */
-/*   Updated: 2023/06/09 12:56:09 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/06/14 16:03:46 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,11 @@ void	create_envlst_from_envp(t_envlst **envlst, char **envp)
 void	add_to_envlst(t_envlst *envlst, char *line)
 {
 	t_envlst	*proxy;
+	char		*name;
 
-	proxy = is_name_in_envlst(envlst, get_name(line));
+	name = get_name(line);
+	proxy = is_name_in_envlst(envlst, name);
+	ft_sfree(name);
 	if (!proxy)
 	{
 		envlst = envlst_last(envlst);
