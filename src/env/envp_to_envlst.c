@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 11:44:16 by jbernard          #+#    #+#             */
-/*   Updated: 2023/06/14 16:03:46 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/06/16 12:34:14 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,10 @@ char	*get_value(char *env_line)
 	while (env_line[i] != '=')
 		i++;
 	if (!env_line[i + 1])
-		return ("\"\"");
+	{
+		ret = ft_strdup("\"\"");
+		return (ret);
+	}
 	i++;
 	ret = ft_strdup(&env_line[i]);
 	if (ret[0] == '\"' || ret[0] == '\'')
@@ -79,6 +82,7 @@ void	add_to_envlst(t_envlst *envlst, char *line)
 {
 	t_envlst	*proxy;
 	char		*name;
+	char		*val;
 
 	name = get_name(line);
 	proxy = is_name_in_envlst(envlst, name);
@@ -90,7 +94,13 @@ void	add_to_envlst(t_envlst *envlst, char *line)
 	}
 	else
 	{
-		line = ft_strdup(get_value(line));
-		proxy->value = line;
+		val = get_value(line);
+		printf("%s\n", val);
+		if (val != NULL)
+		{
+			ft_sfree(proxy->value);
+			proxy->value = ft_strdup(val);
+			ft_sfree(val);
+		}
 	}
 }

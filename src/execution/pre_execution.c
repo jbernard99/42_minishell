@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 14:59:42 by jbernard          #+#    #+#             */
-/*   Updated: 2023/06/08 10:11:37 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/06/15 14:54:24 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,25 +90,21 @@ void	work_work_redirection(t_cmdlst *cmdlst)
 	if (cmdlst->flags & R_IN && ft_tabstrcmp(cmdlst->token, "<"))
 	{
 		remove_redirection_from_tokens(cmdlst);
-		ft_cmdlstiter(&cmdlst, &print_cmdlst_node);
 		close(cmdlst->red_fd[1]);
 	}
 	else if (cmdlst->flags & R_OUT && ft_tabstrcmp(cmdlst->token, ">"))
 	{
 		remove_redirection_from_tokens(cmdlst);
-		ft_cmdlstiter(&cmdlst, &print_cmdlst_node);
 		close(cmdlst->red_fd[0]);
 	}
 	else if (cmdlst->flags & APP_OUT && ft_tabstrcmp(cmdlst->token, ">>"))
 	{
 		remove_redirection_from_tokens(cmdlst);
-		ft_cmdlstiter(&cmdlst, &print_cmdlst_node);
 		close(cmdlst->red_fd[0]);
 	}
 	else if (cmdlst->flags & HR_DOC && ft_tabstrcmp(cmdlst->token, "<<"))
 	{
 		remove_redirection_from_tokens(cmdlst);
-		ft_cmdlstiter(&cmdlst, &print_cmdlst_node);
 		close(cmdlst->red_fd[1]);
 	}
 }

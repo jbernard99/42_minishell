@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 13:42:15 by jbernard          #+#    #+#             */
-/*   Updated: 2023/06/07 15:15:44 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/06/16 10:48:31 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ Exemples:
 int	ft_env(char **args, t_envlst *envlst, int fd_out)
 {
 	int		i;
+	char	*val;
 	char	**env;
 
 	(void)args;
@@ -32,9 +33,12 @@ int	ft_env(char **args, t_envlst *envlst, int fd_out)
 	env = get_initiated_from_envlst(envlst);
 	while (env[i])
 	{
-		if (get_value(env[i]))
+		val = get_value(env[i]);
+		if (val != NULL)
 			printf("%s\n", env[i]);
+		ft_sfree(val);
 		i++;
 	}
+	ft_freetabstr(env);
 	return (errno);
 }

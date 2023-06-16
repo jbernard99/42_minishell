@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 11:11:12 by jbernard          #+#    #+#             */
-/*   Updated: 2023/06/09 12:37:34 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/06/16 11:26:30 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*get_formatted_env_var(t_envlst *envlst)
 	if (envlst->value != NULL)
 	{
 		line = ft_strjoin(envlst->name, "=");
-		if (ft_strcmp(envlst->value, "\"\"") != 0)
+		if (envlst->value && ft_strcmp(envlst->value, "\"\"") != 0)
 			line = ft_strfreejoin(line, envlst->value);
 	}
 	else
@@ -38,10 +38,14 @@ char	**get_initiated_from_envlst(t_envlst *envlst)
 	while (envlst)
 	{
 		line = get_formatted_env_var(envlst);
-		if (line != NULL || line[0] != '?')
+		if (line != NULL)
 		{
-			envp[i] = line;
-			i++;
+			if (line[0] != '?')
+			{
+				envp[i] = ft_strdup(line);
+				i++;
+			}
+			ft_sfree(line);
 		}
 		envlst = envlst->next;
 	}

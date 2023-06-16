@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 13:43:19 by jbernard          #+#    #+#             */
-/*   Updated: 2023/06/15 10:36:28 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/06/16 11:41:00 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,10 @@ char	**get_alpha_envp(t_envlst *envlst)
 			if (ft_strcmp(envp[i], envp[j]) > 0)
 			{
 				temp = ft_strdup(envp[i]);
+				ft_sfree(envp[i]);
 				envp[i] = ft_strdup(envp[j]);
-				envp[j] = ft_strdup(temp);
+				ft_sfree(envp[j]);
+				envp[j] = temp;
 			}
 			j++;
 		}
@@ -88,36 +90,44 @@ int	scan_new_var(char *arg, t_envlst *envlst)
 	return (0);
 }
 
+int	work_export(char **args, t_envlst *envlst)
+{
+	int	i;
+	int argc;
+	
+	i = 0;
+	while (args[++i])
+	{
+			argc = scan_new_var(args[i], envlst);
+			if (argc != 0)
+			{
+				printf("minishell: export: not a valid identifier\n");
+				return (0);
+			}
+	}
+	return (1);
+}
+
 // NEED TO MAKE export x=""5"" -> x=5
 int	ft_export(char **args, t_envlst *envlst, int fd_out)
 {
 	char		**alpha_envp;
 	int			argc;
-	int			i;
 
 	(void)fd_out;
 	argc = ft_strtablen(args);
-	i = 1;
 	if (argc > 1)
 	{
-		while (args[i])
-		{
-			argc = scan_new_var(args[i], envlst);
-			if (argc == 0)
-				return (1);
-			else
-			{
-				printf("minishell: export: not a valid identifier\n");
-				return (0);
-			}
-			i++;
-		}
+		if (work_export(args, envlst) == 1)
+			return (1);
+		else
+			return (0);
 	}
 	else
 	{
 		alpha_envp = get_alpha_envp(envlst);
 		put_export_envp(alpha_envp);
-		ft_sfree(alpha_envp);
+		ft_freetabstr(alpha_envp);
 	}
 	return (errno);
 }

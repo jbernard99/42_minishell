@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:25:35 by jbernard          #+#    #+#             */
-/*   Updated: 2023/06/14 14:10:13 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/06/16 13:27:33 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int			ft_unset(char **args, t_envlst *envlst, int fd_out);
 
 // tools.c //
 int			finish_flag_set(t_cmdlst **cmdlst);
-size_t		ft_strpbrk(const char *str, const char *delim, int *flags);
+size_t		ft_strpbrk(char *str, const char *delim, int *flags);
 char		*ft_strtok(char *str, const char *delim, int *flags);
 char		*ft_strldup(const char *str, size_t len);
 

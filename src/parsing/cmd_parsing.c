@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 13:33:11 by mgagnon           #+#    #+#             */
-/*   Updated: 2023/06/14 15:56:48 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/06/16 13:04:56 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,9 @@ void	quote_handle(char *cmd, size_t *end, int *flags)
 	if (cmd[*end] == '\'' || cmd[*end] == '\"')
 	{
 		if (cmd[*end] == '\'')
-			*flags ^= QUOTE;
+			*flags |= QUOTE;
 		else if (cmd[*end] == '\"')
-			*flags ^= DQUOTE;
+			*flags |= DQUOTE;
 		check_quotes(cmd, end, flags);
 	}
 	(*end)++;
@@ -109,6 +109,8 @@ int	make_lst(char *input, t_cmdlst **cmdlst, t_envlst *envlst)
 	{
 		if (second_divide(&cur) == 0)
 			return (-1);
+		else if ((*cmdlst)->flags & (QUOTE | DQUOTE))
+			return (0);
 		if (scan_redirect(cur) == 0)
 			return (0);
 		cur = cur->next;

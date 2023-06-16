@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 06:43:50 by jbernard          #+#    #+#             */
-/*   Updated: 2023/06/12 13:45:08 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/06/16 13:35:25 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ void	check_quotes(char *input, size_t *i, int *flags)
 	while (input[*i] && input[*i] != c)
 		(*i)++;
 	if (input[*i] == '\'')
-		*flags ^= QUOTE;
+		*flags &= ~QUOTE;
 	else if (input[*i] == '\"')
-		*flags ^= DQUOTE;
+		*flags &= ~DQUOTE;
 }
 
 int	finish_flag_set(t_cmdlst **cmdlst)
@@ -48,7 +48,7 @@ int	finish_flag_set(t_cmdlst **cmdlst)
 	return (1);
 }
 
-size_t	ft_strpbrk(const char *str, const char *delim, int *flags)
+size_t	ft_strpbrk(char *str, const char *delim, int *flags)
 {
 	size_t	token_nb;
 	size_t	i;
@@ -65,12 +65,15 @@ size_t	ft_strpbrk(const char *str, const char *delim, int *flags)
 				*flags ^= QUOTE;
 			else if (str[i] == '\"')
 				*flags ^= DQUOTE;
-			check_quotes((char *)str, &i, flags);
+			check_quotes(str, &i, flags);
 			i++;
 		}
-		if (str[i] == *delim)
-			token_nb++;
-		i++;
+		else
+		{
+			if (str[i] == *delim)
+				token_nb++;
+			i++;
+		}
 	}
 	return (token_nb);
 }
