@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 13:33:11 by mgagnon           #+#    #+#             */
-/*   Updated: 2023/06/16 13:04:56 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/06/16 14:42:00 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ void	what_is_it(char *input, size_t *i, int *flags)
 	if (input[*i] == '|')
 	{
 		(*i)++;
+		if (!input[*i])
+			return ;
 		if (input[*i] == ' ')
 			*flags |= PIPEI;
 		(*i)++;
@@ -84,9 +86,9 @@ void	first_divide(char *input, t_cmdlst **cmdlst, t_envlst *envlst)
 	while (input[i])
 	{
 		origin = i;
-		while (!ft_strrchr("|", input[i]) && input[i])
+		while (input[i] && !ft_strrchr("|", input[i]))
 			i++;
-		if (ft_strrchr("|", input[i]) && input[i])
+		if (input[i] && ft_strrchr("|", input[i]))
 			cmdlst_addback(cmdlst, new_node(ft_strldup(&input[origin], \
 							(i - 1) - origin), envlst));
 		else

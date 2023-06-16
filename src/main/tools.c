@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 06:43:50 by jbernard          #+#    #+#             */
-/*   Updated: 2023/06/16 13:35:25 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/06/16 14:35:27 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,9 +70,8 @@ size_t	ft_strpbrk(char *str, const char *delim, int *flags)
 		}
 		else
 		{
-			if (str[i] == *delim)
+			if (str[i++] == *delim)
 				token_nb++;
-			i++;
 		}
 	}
 	return (token_nb);

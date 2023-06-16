@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:31:19 by jbernard          #+#    #+#             */
-/*   Updated: 2023/06/16 13:23:40 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/06/16 14:31:47 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	prompt_loop(t_envlst *envlst)
 			if (yes_or_no > 0)
 			{
 				work_env_vars_calls(cmdlst);
-				exec_fork(cmdlst, envlst);
+				yes_or_no = exec_fork(cmdlst, envlst);
 			}
 			else if (yes_or_no == 0)
 				perror("syntax error");

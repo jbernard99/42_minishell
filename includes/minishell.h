@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:25:35 by jbernard          #+#    #+#             */
-/*   Updated: 2023/06/16 13:27:33 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/06/16 14:09:30 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int			exec_fork(t_cmdlst *cmdlst, t_envlst *envlst);
 
 // pre_execution.c //
 void		work_env_vars_calls(t_cmdlst *cmdlst);
-void		work_redirection(t_cmdlst *cmdlst);
+int		work_redirection(t_cmdlst *cmdlst);
 char		*get_file(t_cmdlst *cmdlst);
 
 // built-ins //	

@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 14:36:53 by mgagnon           #+#    #+#             */
-/*   Updated: 2023/06/07 11:01:03 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/06/16 14:35:06 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,26 @@ void	set_redirect_flags(char *symbol, int *flags)
 	}
 }
 
+int	check_filename(char *file)
+{
+	int	i;
+
+	i = 0;
+	while (file[i])
+	{
+		if (ft_isalnum(file[i]) == 0 && file[i] != '.' && file[i] != '_')
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
 int	check_file(t_cmdlst *cmdlst, char *file)
 {
 	int	status;
 	int	fd;
-
+	if (check_filename(file) == 1)
+		return (0);
 	if (cmdlst->flags & R_IN)
 	{
 		status = access(file, F_OK | R_OK);
