@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 16:37:35 by jbernard          #+#    #+#             */
-/*   Updated: 2023/06/19 13:43:35 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/06/19 16:25:06 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ int	exec_exists(char *exec)
 char	*get_exec_location(char *exec, t_envlst *envlst)
 {
 	char		**path;
+	char		*n_exec;
 	int			i;
 
 	exec = ft_strjoinfree("/", exec);
@@ -52,9 +53,14 @@ char	*get_exec_location(char *exec, t_envlst *envlst)
 	i = 0;
 	while (path[i])
 	{
-		exec = ft_strjoinfree(path[i], exec);
-		if (exec_exists(exec))
-			return (exec);
+		n_exec = ft_strjoin(path[i], exec);
+		if (exec_exists(n_exec))
+		{
+			ft_sfree(exec);
+			ft_freetabstr(path);
+			return (n_exec);
+		}
+		ft_sfree(n_exec);
 		i++;
 	}
 	ft_freetabstr(path);
@@ -69,18 +75,13 @@ void	execute_sh(t_cmdlst *cmdlst)
 	if (!ft_strchr(cmdlst->token[0], '/'))
 		cmdlst->token[0] = get_exec_location(cmdlst->token[0], \
 				cmdlst->envlst);
-	if (!ft_strchr(cmdlst->token[0], '/'))
-	{
-		printf("bash: %s: command not found\n", cmdlst->token[0]);
-		exit(0);
-	}
 	envp = get_initiated_from_envlst(cmdlst->envlst);
 	e = execve(cmdlst->token[0], cmdlst->token, envp);
 	ft_freetabstr(envp);
 	if (e == -1)
 	{
 		printf("bash: %s: command not found\n", &cmdlst->token[0][1]);
-		ft_end(cmdlst, cmdlst->envlst);
+		ft_end(cmdlst, cmdlst->envlst, 127);
 	}
 }
 

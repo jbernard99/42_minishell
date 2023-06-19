@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:31:19 by jbernard          #+#    #+#             */
-/*   Updated: 2023/06/16 14:31:47 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/06/19 16:21:40 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	ft_readline(char **input, t_envlst *envlst)
 	if (!*input)
 	{
 		printf("\x1B[A\x1B[11Cexit\n");
-		ft_end(NULL, envlst);
+		ft_end(NULL, envlst, 0);
 	}
 	if (ft_strcmp(*input, "") == 0)
 		return (1);
@@ -75,6 +75,7 @@ int	main(int argc, char **argv, char **envp)
 {
 	struct termios	old_termios;
 	t_envlst		*envlst;
+	int				e;
 
 	envlst = NULL;
 	if (argc > 1 || !*envp)
@@ -86,7 +87,9 @@ int	main(int argc, char **argv, char **envp)
 	(void)argc;
 	(void)argv;
 	prompt_loop(envlst);
+	e = ft_atoi(is_name_in_envlst(envlst, "?")->value);
 	tcsetattr(STDIN_FILENO, TCSANOW, &old_termios);
 	free_envlst(envlst);
+	exit(e);
 	return (0);
 }

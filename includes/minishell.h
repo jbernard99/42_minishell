@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:25:35 by jbernard          #+#    #+#             */
-/*   Updated: 2023/06/19 10:59:34 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/06/19 16:18:04 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,7 +158,7 @@ int			here_doc(const char *delim);
 
 // cleanup.c //
 void		free_envlst(t_envlst *envlst);
-void		ft_end(t_cmdlst	*cmdlst, t_envlst *envlst);
+void		ft_end(t_cmdlst	*cmdlst, t_envlst *envlst, int status);
 
 // signal.c //
 void		ctrl_c_heredoc(int sig);
