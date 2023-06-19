@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:25:35 by jbernard          #+#    #+#             */
-/*   Updated: 2023/06/16 14:09:30 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/06/19 10:59:34 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,15 +59,20 @@ enum	e_flags{
 	HR_DOC = 1 << 7
 };
 
+// exec_patch.c //
+void		exec_patch(t_cmdlst *cmdlst);
+
 // execution.c //
 void		execution(t_cmdlst *cmdlst);
 
 // execution_fork.c //
 int			exec_fork(t_cmdlst *cmdlst, t_envlst *envlst);
+void		child_execute(t_cmdlst *cmdlst);
+void		parent_execute(t_cmdlst *cmdlst);
 
 // pre_execution.c //
 void		work_env_vars_calls(t_cmdlst *cmdlst);
-int		work_redirection(t_cmdlst *cmdlst);
+int			work_redirection(t_cmdlst *cmdlst);
 char		*get_file(t_cmdlst *cmdlst);
 
 // built-ins //	

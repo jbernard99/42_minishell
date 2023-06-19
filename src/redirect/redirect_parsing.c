@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 14:36:53 by mgagnon           #+#    #+#             */
-/*   Updated: 2023/06/16 14:35:06 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/06/19 10:45:03 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ int	check_file(t_cmdlst *cmdlst, char *file)
 {
 	int	status;
 	int	fd;
+
 	if (check_filename(file) == 1)
 		return (0);
 	if (cmdlst->flags & R_IN)

@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 16:31:54 by jbernard          #+#    #+#             */
-/*   Updated: 2023/06/16 14:12:27 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/06/19 10:50:41 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,8 +98,6 @@ void	pre_exec_fork(t_cmdlst *cmdlst, t_envlst *envlst)
 
 int	exec_fork(t_cmdlst *cmdlst, t_envlst *envlst)
 {
-	pid_t	pid;
-
 	signal(SIGINT, ok);
 	while (cmdlst != NULL)
 	{
@@ -113,15 +111,7 @@ int	exec_fork(t_cmdlst *cmdlst, t_envlst *envlst)
 		if (is_singled_out(cmdlst) != NULL)
 			pre_exec_fork(cmdlst, envlst);
 		else
-		{	
-			pid = fork();
-			if (pid < 0)
-				perror("ERROR");
-			else if (pid == 0)
-				child_execute(cmdlst);
-			else
-				parent_execute(cmdlst);
-		}
+			exec_patch(cmdlst);
 		cmdlst = cmdlst->next;
 	}
 	return (1);

@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 14:59:42 by jbernard          #+#    #+#             */
-/*   Updated: 2023/06/16 14:14:19 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/06/19 10:44:43 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ void	work_work_redirection(t_cmdlst *cmdlst)
 int	work_redirection(t_cmdlst *cmdlst)
 {
 	char	*file;
-	
+
 	file = get_file(cmdlst);
 	pipe(cmdlst->red_fd);
 	if (check_file(cmdlst, file) == 1)

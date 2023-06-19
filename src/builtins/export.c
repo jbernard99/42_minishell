@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 13:43:19 by jbernard          #+#    #+#             */
-/*   Updated: 2023/06/16 11:41:00 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/06/19 10:44:24 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,17 +93,17 @@ int	scan_new_var(char *arg, t_envlst *envlst)
 int	work_export(char **args, t_envlst *envlst)
 {
 	int	i;
-	int argc;
-	
+	int	argc;
+
 	i = 0;
 	while (args[++i])
 	{
-			argc = scan_new_var(args[i], envlst);
-			if (argc != 0)
-			{
-				printf("minishell: export: not a valid identifier\n");
-				return (0);
-			}
+		argc = scan_new_var(args[i], envlst);
+		if (argc != 0)
+		{
+			printf("minishell: export: not a valid identifier\n");
+			return (0);
+		}
 	}
 	return (1);
 }
