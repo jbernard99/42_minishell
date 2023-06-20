@@ -6,12 +6,11 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 12:09:57 by mgagnon           #+#    #+#             */
-/*   Updated: 2023/06/19 16:54:21 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/06/20 14:54:13 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-#include <stdlib.h>
 
 char	*get_var_name(char *str)
 {
@@ -25,6 +24,16 @@ char	*get_var_name(char *str)
 	return (name);
 }
 
+void	skip_dollar(char *str, int *i)
+{
+	while (str[*i] != '$')
+	{
+		(*i)++;
+		if (str[(*i)] == '$' && (!str[(*i) + 1] || ft_is_whtspc(str[(*i) + 1])))
+			(*i)++;
+	}
+}
+
 char	*rplc_env_var(t_envlst *envlst, char *str)
 {
 	int		i;
@@ -34,8 +43,7 @@ char	*rplc_env_var(t_envlst *envlst, char *str)
 
 	i = 0;
 	replacement = NULL;
-	while (str[i] != '$')
-		i++;
+	skip_dollar(str, &i);
 	var = get_var_name(&str[++i]);
 	if (is_name_in_envlst(envlst, var) != NULL)
 		replacement = m_get_value(&envlst, var);
@@ -62,7 +70,8 @@ int	is_there_env_var(char *str)
 	while (str[i])
 	{
 		if (str[i] == '$')
-			return (1);
+			if (str[i + 1] && !ft_is_whtspc(str[i + 1]))
+				return (1);
 		i++;
 	}
 	return (0);
