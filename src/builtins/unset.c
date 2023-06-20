@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 13:45:05 by jbernard          #+#    #+#             */
-/*   Updated: 2023/06/15 12:20:40 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/06/20 14:23:17 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,5 +52,5 @@ int	ft_unset(char **args, t_envlst *envlst, int fd_out)
 			printf("minishell: unset: \'%s\': not a valid identifier\n", args[i]);
 		i++;
 	}
-	return (errno);
+	return (0);
 }

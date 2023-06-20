@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 13:40:17 by jbernard          #+#    #+#             */
-/*   Updated: 2023/06/15 14:07:42 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/06/20 14:24:29 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,5 +71,5 @@ int	ft_cd(char **args, t_envlst *envlst, int fd_out)
 	}
 	else
 		printf("minishell: cd: %s: Not a directory\n", args[1]);
-	return (errno);
+	return (0);
 }

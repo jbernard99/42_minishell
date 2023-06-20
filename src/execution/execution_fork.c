@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 16:31:54 by jbernard          #+#    #+#             */
-/*   Updated: 2023/06/19 16:26:17 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/06/20 14:06:01 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,14 @@ void	parent_execute(t_cmdlst *cmdlst)
 	int	status;
 
 	wait(&status);
-	read_result(cmdlst->envlst, status % 255);
+	read_result(cmdlst->envlst, status % 256);
 	if (cmdlst->flags & PIPEI)
 		close(cmdlst->pipefd[1]);
 	if (cmdlst->flags & PIPEO)
 		close(cmdlst->pipefd[0]);
 	if (cmdlst->flags & (R_OUT | APP_OUT | R_IN | HR_DOC))
 	{
+		printf("Closing...\n");
 		close(cmdlst->red_fd[0]);
 		close(cmdlst->red_fd[1]);
 	}

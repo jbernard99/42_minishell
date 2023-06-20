@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 13:43:19 by jbernard          #+#    #+#             */
-/*   Updated: 2023/06/19 10:44:24 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/06/20 14:22:51 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,11 +82,7 @@ int	scan_new_var(char *arg, t_envlst *envlst)
 		add_to_envlst(envlst, arg);
 	}
 	else
-	{
-		printf("minishell: export: \'%s\': not a valid identifier\n"\
-				, arg);
 		return (1);
-	}
 	return (0);
 }
 
@@ -102,10 +98,10 @@ int	work_export(char **args, t_envlst *envlst)
 		if (argc != 0)
 		{
 			printf("minishell: export: not a valid identifier\n");
-			return (0);
+			return (1);
 		}
 	}
-	return (1);
+	return (0);
 }
 
 // NEED TO MAKE export x=""5"" -> x=5
@@ -129,5 +125,5 @@ int	ft_export(char **args, t_envlst *envlst, int fd_out)
 		put_export_envp(alpha_envp);
 		ft_freetabstr(alpha_envp);
 	}
-	return (errno);
+	return (0);
 }
