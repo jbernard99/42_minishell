@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 13:40:48 by jbernard          #+#    #+#             */
-/*   Updated: 2023/06/19 13:15:24 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/06/20 13:30:18 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,5 +52,5 @@ int	ft_echo(char **args, t_envlst *envlst, int fd_out)
 	}
 	if (nl)
 		ft_putchar_fd('\n', fd_out);
-	return (errno);
+	return (0);
 }
