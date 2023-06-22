@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:25:35 by jbernard          #+#    #+#             */
-/*   Updated: 2023/06/22 12:06:00 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/06/22 13:33:27 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@ enum	e_flags{
 
 // exec_patch.c //
 void		exec_patch(t_cmdlst *cmdlst);
+void		waiting(t_cmdlst *cmdlst);
+int			exec_launch(t_cmdlst *cmdlst, struct termios o_t, struct termios n_t);
 
 // execution.c //
 void		execution(t_cmdlst *cmdlst);

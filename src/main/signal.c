@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 13:25:19 by jbernard          #+#    #+#             */
-/*   Updated: 2023/06/22 12:48:59 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/06/22 13:48:14 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	ctrl_c_heredoc(int sig)
 
 void	ok(int sig)
 {
+	ft_putchar_fd('\n', 1);
 	(void)sig;
 }
 

@@ -6,19 +6,19 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:31:19 by jbernard          #+#    #+#             */
-/*   Updated: 2023/06/22 12:43:58 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/06/22 13:49:11 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	ft_readline(char **input, t_envlst *envlst)
+int	ft_readline(char **input)
 {
 	*input = readline("minishell> ");
 	if (!*input)
 	{
 		printf("\x1B[A\x1B[11Cexit\n");
-		ft_end(NULL, envlst, 0);
+		return (2);
 	}
 	if (ft_strcmp(*input, "") == 0)
 		return (1);
@@ -27,7 +27,7 @@ int	ft_readline(char **input, t_envlst *envlst)
 	return (0);
 }
 
-void	prompt_loop(t_envlst *envlst, struct termios o_term, struct termios n_term)
+void	prompt_loop(t_envlst *envlst, struct termios o_t, struct termios n_t)
 {
 	t_cmdlst	*cmdlst;
 	char		*input;
@@ -36,25 +36,21 @@ void	prompt_loop(t_envlst *envlst, struct termios o_term, struct termios n_term)
 	while (1)
 	{
 		cmdlst = NULL;
-		yes_or_no = ft_readline(&input, envlst);
+		yes_or_no = ft_readline(&input);
 		if (!yes_or_no)
 		{
 			yes_or_no = make_lst(input, &cmdlst, envlst);
 			ft_sfree(input);
 			if (yes_or_no > 0)
-			{
-				tcsetattr(STDIN_FILENO, TCSANOW, &o_term);
-				work_env_vars_calls(cmdlst);
-				yes_or_no = exec_fork(cmdlst, envlst);
-				tcsetattr(STDIN_FILENO, TCSANOW, &n_term);
-			}
+				yes_or_no = exec_launch(cmdlst, o_t, n_t);
 			else if (yes_or_no == 0)
 				perror("syntax error");
 			if (cmdlst->exit != 0)
 				return (cmdlst_clear(&cmdlst, &empty_lst));
 			cmdlst_clear(&cmdlst, &empty_lst);
-			signal(SIGINT, ctrlc_handle);
 		}
+		else if (yes_or_no == 2)
+			return ;
 	}
 }
 
@@ -88,12 +84,12 @@ int	main(int argc, char **argv, char **envp)
 	tcgetattr(STDIN_FILENO, &o_term);
 	n_term = set_new_termios(o_term);
 	signal(SIGINT, ctrlc_handle);
-	signal(SIGQUIT, ok);
 	(void)argc;
 	(void)argv;
 	prompt_loop(envlst, o_term, n_term);
 	e = ft_atoi(is_name_in_envlst(envlst, "?")->value);
 	free_envlst(envlst);
+	tcsetattr(STDIN_FILENO, TCSANOW, &o_term);
 	exit(e);
 	return (0);
 }
