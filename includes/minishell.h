@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:25:35 by jbernard          #+#    #+#             */
-/*   Updated: 2023/06/22 11:06:59 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/06/22 12:06:00 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,7 +166,7 @@ void		ft_end(t_cmdlst	*cmdlst, t_envlst *envlst, int status);
 void		ctrl_c_heredoc(int sig);
 void		ok(int sig);
 void		ctrlc_handle(int sig);
-void		write_result(int e);
+void		ctrl_bckslsh(int sig);
 void		read_result(t_envlst *envlst, int status);
 
 // ft_is_whtspc.c //

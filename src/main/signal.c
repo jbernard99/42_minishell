@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 13:25:19 by jbernard          #+#    #+#             */
-/*   Updated: 2023/06/22 11:35:36 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/06/22 12:48:59 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,20 +37,15 @@ void	ctrlc_handle(int sig)
 	rl_redisplay();
 }
 
-void	write_result(int e)
-{
-	int		fd;
-	char	*w;
-
-	w = ft_itoa(e);
-	fd = open("e", (O_WRONLY | O_CREAT | O_TRUNC), S_IRUSR | S_IWUSR);
-	write(fd, w, ft_strlen(w));
-	close(fd);
-}
-
 void	read_result(t_envlst *envlst, int status)
 {
 	envlst = is_name_in_envlst(envlst, "?");
 	ft_sfree(envlst->value);
 	envlst->value = ft_itoa(status);
+}
+
+void	ctrl_bckslsh(int sig)
+{
+	(void)sig;
+	printf("Quit : 3\n");
 }

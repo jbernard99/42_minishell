@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 16:31:54 by jbernard          #+#    #+#             */
-/*   Updated: 2023/06/22 11:35:06 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/06/22 12:47:22 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ int	exec_fork(t_cmdlst *cmdlst, t_envlst *envlst)
 	t_cmdlst	*head;
 
 	signal(SIGINT, ok);
+	signal(SIGQUIT, ctrl_bckslsh);
 	head = cmdlst;
 	while (cmdlst != NULL)
 	{
@@ -111,7 +112,6 @@ int	exec_fork(t_cmdlst *cmdlst, t_envlst *envlst)
 	cmdlst = head;
 	while (cmdlst != NULL)
 	{
-		status = 0;
 		waitpid(cmdlst->pid, &status, 0);
 		cmdlst = cmdlst->next;
 	}

@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:31:19 by jbernard          #+#    #+#             */
-/*   Updated: 2023/06/19 16:21:40 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/06/22 12:43:58 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	ft_readline(char **input, t_envlst *envlst)
 	return (0);
 }
 
-void	prompt_loop(t_envlst *envlst)
+void	prompt_loop(t_envlst *envlst, struct termios o_term, struct termios n_term)
 {
 	t_cmdlst	*cmdlst;
 	char		*input;
@@ -43,8 +43,10 @@ void	prompt_loop(t_envlst *envlst)
 			ft_sfree(input);
 			if (yes_or_no > 0)
 			{
+				tcsetattr(STDIN_FILENO, TCSANOW, &o_term);
 				work_env_vars_calls(cmdlst);
 				yes_or_no = exec_fork(cmdlst, envlst);
+				tcsetattr(STDIN_FILENO, TCSANOW, &n_term);
 			}
 			else if (yes_or_no == 0)
 				perror("syntax error");
@@ -59,7 +61,7 @@ void	prompt_loop(t_envlst *envlst)
 // Disable printing of ^\ when doing ctrl-\ --
 // Disable printing of ^c when doing ctrl-c
 // Set new settings to current terminal
-void	set_new_termios(struct termios old_termios)
+struct termios	set_new_termios(struct termios old_termios)
 {
 	struct termios	new_termios;
 
@@ -67,13 +69,15 @@ void	set_new_termios(struct termios old_termios)
 	new_termios.c_cc[VQUIT] = _POSIX_VDISABLE;
 	new_termios.c_lflag &= ~ECHOCTL;
 	tcsetattr(STDIN_FILENO, TCSANOW, &new_termios);
+	return (new_termios);
 }
 
 // first tcgetattr() Get parent terminal settings
 //  second one Go back to old terminal settings.
 int	main(int argc, char **argv, char **envp)
 {
-	struct termios	old_termios;
+	struct termios	n_term;
+	struct termios	o_term;
 	t_envlst		*envlst;
 	int				e;
 
@@ -81,14 +85,14 @@ int	main(int argc, char **argv, char **envp)
 	if (argc > 1 || !*envp)
 		return (1);
 	create_envlst_from_envp(&envlst, envp);
-	tcgetattr(STDIN_FILENO, &old_termios);
-	set_new_termios(old_termios);
+	tcgetattr(STDIN_FILENO, &o_term);
+	n_term = set_new_termios(o_term);
 	signal(SIGINT, ctrlc_handle);
+	signal(SIGQUIT, ok);
 	(void)argc;
 	(void)argv;
-	prompt_loop(envlst);
+	prompt_loop(envlst, o_term, n_term);
 	e = ft_atoi(is_name_in_envlst(envlst, "?")->value);
-	tcsetattr(STDIN_FILENO, TCSANOW, &old_termios);
 	free_envlst(envlst);
 	exit(e);
 	return (0);
