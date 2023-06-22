@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 11:44:16 by jbernard          #+#    #+#             */
-/*   Updated: 2023/06/16 12:34:14 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/06/22 14:39:29 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,6 @@ void	add_to_envlst(t_envlst *envlst, char *line)
 	else
 	{
 		val = get_value(line);
-		printf("%s\n", val);
 		if (val != NULL)
 		{
 			ft_sfree(proxy->value);

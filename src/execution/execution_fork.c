@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 16:31:54 by jbernard          #+#    #+#             */
-/*   Updated: 2023/06/22 13:49:10 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/06/22 15:13:40 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	(*is_singled_out(t_cmdlst *cmdlst))(char **args, \
 	return (NULL);
 }
 
-void	pre_exec_fork(t_cmdlst *cmdlst, t_envlst *envlst)
+int	pre_exec_fork(t_cmdlst *cmdlst, t_envlst *envlst)
 {
 	int	status;
 	int	(*func)(char **, t_envlst *, int);
@@ -78,18 +78,18 @@ void	pre_exec_fork(t_cmdlst *cmdlst, t_envlst *envlst)
 		cmdlst->next->flags &= ~PIPEO;
 	func = is_singled_out(cmdlst);
 	if (func)
-	{
 		status = func(cmdlst->token, cmdlst->envlst, 1);
-	}
 	else
 		exec_fork(cmdlst, envlst);
-	read_result(envlst, status);
+	return (status);
 }
 
 int	exec_fork(t_cmdlst *cmdlst, t_envlst *envlst)
 {
 	t_cmdlst	*head;
-
+	int 		status;
+	
+	status = -1;
 	signal(SIGINT, ok);
 	signal(SIGQUIT, ctrl_bckslsh);
 	head = cmdlst;
@@ -103,11 +103,11 @@ int	exec_fork(t_cmdlst *cmdlst, t_envlst *envlst)
 				return (0);
 		}		
 		if (is_singled_out(cmdlst) != NULL)
-			pre_exec_fork(cmdlst, envlst);
+			status = pre_exec_fork(cmdlst, envlst);
 		else
 			exec_patch(cmdlst);
 		cmdlst = cmdlst->next;
 	}
-	waiting(head);
+	waiting(head, status);
 	return (1);
 }
