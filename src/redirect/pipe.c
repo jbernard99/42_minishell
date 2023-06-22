@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 14:37:01 by jbernard          #+#    #+#             */
-/*   Updated: 2023/06/05 16:14:58 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/06/21 10:36:58 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	pipe_it(t_cmdlst *cmdlst)
 
 	pipe(fd);
 	cmdlst->pipefd[1] = fd[1];
+	cmdlst->next->pp = fd[1];
 	cmdlst->next->pipefd[0] = fd[0];
 }
 

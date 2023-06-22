@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 10:09:47 by mgagnon           #+#    #+#             */
-/*   Updated: 2023/06/07 11:01:26 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/06/21 10:22:26 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int	append(char *file)
 		perror("open");
 		return (0);
 	}
+	change_stdout(fd);
 	return (fd);
 }
 

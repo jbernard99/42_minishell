@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 16:31:54 by jbernard          #+#    #+#             */
-/*   Updated: 2023/06/20 14:06:01 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/06/21 11:41:50 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,39 +17,28 @@ void	child_execute(t_cmdlst *cmdlst)
 	signal(SIGINT, ctrl_c_heredoc);
 	if (cmdlst->flags & HR_DOC)
 		cmdlst->red_fd[1] = here_doc(cmdlst->infile);
-	if (cmdlst->flags & PIPEI && cmdlst->flags & ~(R_OUT | APP_OUT))
+	if (cmdlst->flags & PIPEI)
 		change_stdout(cmdlst->pipefd[1]);
 	if (cmdlst->flags & PIPEO)
 		change_stdin(cmdlst->pipefd[0]);
 	if (cmdlst->flags & R_IN)
 		cmdlst->red_fd[1] = redirect_in(cmdlst->infile);
 	if (cmdlst->flags & R_OUT)
-	{
 		cmdlst->red_fd[0] = redirect_out(cmdlst->outfile);
-		change_stdout(cmdlst->red_fd[0]);
-	}
 	if (cmdlst->flags & APP_OUT)
-	{
 		cmdlst->red_fd[0] = append(cmdlst->outfile);
-		change_stdout(cmdlst->red_fd[0]);
-	}
 	execution(cmdlst);
 	exit(0);
 }
 
 void	parent_execute(t_cmdlst *cmdlst)
 {
-	int	status;
-
-	wait(&status);
-	read_result(cmdlst->envlst, status % 256);
 	if (cmdlst->flags & PIPEI)
 		close(cmdlst->pipefd[1]);
 	if (cmdlst->flags & PIPEO)
 		close(cmdlst->pipefd[0]);
 	if (cmdlst->flags & (R_OUT | APP_OUT | R_IN | HR_DOC))
 	{
-		printf("Closing...\n");
 		close(cmdlst->red_fd[0]);
 		close(cmdlst->red_fd[1]);
 	}
@@ -99,6 +88,8 @@ void	pre_exec_fork(t_cmdlst *cmdlst, t_envlst *envlst)
 
 int	exec_fork(t_cmdlst *cmdlst, t_envlst *envlst)
 {
+	int	status;
+
 	signal(SIGINT, ok);
 	while (cmdlst != NULL)
 	{
@@ -115,5 +106,7 @@ int	exec_fork(t_cmdlst *cmdlst, t_envlst *envlst)
 			exec_patch(cmdlst);
 		cmdlst = cmdlst->next;
 	}
+	wait(&status);
+	//read_result(cmdlst->envlst, status % 256);
 	return (1);
 }
