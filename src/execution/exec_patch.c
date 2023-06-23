@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 10:47:45 by mgagnon           #+#    #+#             */
-/*   Updated: 2023/06/23 10:58:34 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/06/23 14:32:16 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	waiting(t_cmdlst *cmdlst, int status)
 	t_cmdlst	*head;
 	int			other_status;
 
+	other_status = 0;
 	head = cmdlst;
 	while (cmdlst != NULL)
 	{
@@ -38,7 +39,7 @@ void	waiting(t_cmdlst *cmdlst, int status)
 		cmdlst = cmdlst->next;
 	}
 	signal(SIGINT, ctrlc_handle);
-	if (!status)
+	if (status == -1)
 		read_result(head->envlst, (other_status % 255));
 	else
 		read_result(head->envlst, (status % 255));
