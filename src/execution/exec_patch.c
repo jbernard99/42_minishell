@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 10:47:45 by mgagnon           #+#    #+#             */
-/*   Updated: 2023/06/22 15:14:42 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/06/23 10:58:34 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,16 +29,19 @@ void	exec_patch(t_cmdlst *cmdlst)
 void	waiting(t_cmdlst *cmdlst, int status)
 {
 	t_cmdlst	*head;
+	int			other_status;
 
 	head = cmdlst;
 	while (cmdlst != NULL)
 	{
-		waitpid(cmdlst->pid, &status, 0);
-		//printf("*%d*\n", status % 255);
+		waitpid(cmdlst->pid, &other_status, 0);
 		cmdlst = cmdlst->next;
 	}
 	signal(SIGINT, ctrlc_handle);
-	read_result(head->envlst, (status % 255));
+	if (!status)
+		read_result(head->envlst, (other_status % 255));
+	else
+		read_result(head->envlst, (status % 255));
 }
 
 int	exec_launch(t_cmdlst *cmdlst, struct termios o_t, struct termios n_t)
