@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 12:09:57 by mgagnon           #+#    #+#             */
-/*   Updated: 2023/06/20 14:54:13 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/06/23 11:37:47 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,15 @@ char	*get_var_name(char *str)
 
 void	skip_dollar(char *str, int *i)
 {
-	while (str[*i] != '$')
+	if (str[*i] == '$' && (!str[*i + 1] || ft_is_whtspc(str[*i + 1])))
+		(*i)++;
+	while (str[*i] && str[*i] != '$')
 	{
 		(*i)++;
-		if (str[(*i)] == '$' && (!str[(*i) + 1] || ft_is_whtspc(str[(*i) + 1])))
+		if (str[*i] == '$' && (!str[*i + 1] || ft_is_whtspc(str[*i + 1])))
 			(*i)++;
 	}
+	return ;
 }
 
 char	*rplc_env_var(t_envlst *envlst, char *str)
