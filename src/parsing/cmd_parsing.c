@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 13:33:11 by mgagnon           #+#    #+#             */
-/*   Updated: 2023/06/19 13:35:51 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/06/27 11:41:16 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int	second_divide(t_cmdlst **cmdlst)
 /* makes a first split to separate multiple cmd and looks */
 /* for PIPE */
 
-void	first_divide(char *input, t_cmdlst **cmdlst, t_envlst *envlst)
+int	first_divide(char *input, t_cmdlst **cmdlst, t_envlst *envlst)
 {
 	t_cmdlst	*cur;
 	size_t		i;
@@ -85,9 +85,13 @@ void	first_divide(char *input, t_cmdlst **cmdlst, t_envlst *envlst)
 	i = 0;
 	while (input[i])
 	{
+		while (ft_is_whtspc(input[i]))
+			i++;
 		origin = i;
 		while (input[i] && !ft_strrchr("|", input[i]))
 			i++;
+		if (i == origin)
+			return (0);
 		if (input[i] && ft_strrchr("|", input[i]))
 			cmdlst_addback(cmdlst, new_node(ft_strldup(&input[origin], \
 							(i - 1) - origin), envlst));
@@ -97,13 +101,15 @@ void	first_divide(char *input, t_cmdlst **cmdlst, t_envlst *envlst)
 		cur = cmdlst_last(*cmdlst);
 		what_is_it(input, &i, &cur->flags);
 	}
+	return (1);
 }
 
 int	make_lst(char *input, t_cmdlst **cmdlst, t_envlst *envlst)
 {
 	t_cmdlst	*cur;
 
-	first_divide(input, cmdlst, envlst);
+	if (!first_divide(input, cmdlst, envlst))
+		return (0);
 	if (finish_flag_set(cmdlst) == 0)
 		return (0);
 	cur = *cmdlst;

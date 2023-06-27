@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 13:43:19 by jbernard          #+#    #+#             */
-/*   Updated: 2023/06/20 14:22:51 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/06/27 11:09:51 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int	scan_new_var(char *arg, t_envlst *envlst)
 
 	i = 0;
 	if (ft_strchr(arg, ' ') == 0 && arg[0] != '=')
-	{	
+	{
 		while (arg[i] && arg[i] != '=')
 		{
 			if (ft_isalpha(arg[i]) == 0 && arg[i] != '_')

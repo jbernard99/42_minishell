@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:25:35 by jbernard          #+#    #+#             */
-/*   Updated: 2023/06/23 11:01:02 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/06/27 11:41:46 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include <fcntl.h>
 # include <sys/wait.h>
 # include <sys/stat.h>
+# include <limits.h>
 # include "../libraries/42_libft/include/libft.h"
 # include "../libraries/readline/includes/readline.h"
 # include "../libraries/readline/includes/history.h"
@@ -64,7 +65,8 @@ enum	e_flags{
 // exec_patch.c //
 void		exec_patch(t_cmdlst *cmdlst);
 void		waiting(t_cmdlst *cmdlst, int status);
-int			exec_launch(t_cmdlst *cmdlst, struct termios o_t, struct termios n_t);
+int			exec_launch(t_cmdlst *cmdlst, \
+		struct termios o_t, struct termios n_t);
 
 // execution.c //
 void		execution(t_cmdlst *cmdlst);
@@ -128,7 +130,7 @@ char		**get_all_from_envlst(t_envlst *envlst);
 
 // cmd_parsing.c //
 int			make_lst(char *input, t_cmdlst **cmdlst, t_envlst *envlst);
-void		first_divide(char *input, t_cmdlst **cmdlst, t_envlst *envlst);
+int			first_divide(char *input, t_cmdlst **cmdlst, t_envlst *envlst);
 void		check_quotes(char *input, size_t *i, int *flags);
 
 // env_var_parse.c //

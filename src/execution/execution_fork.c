@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 16:31:54 by jbernard          #+#    #+#             */
-/*   Updated: 2023/06/22 15:13:40 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/06/27 11:10:34 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	(*is_singled_out(t_cmdlst *cmdlst))(char **args, \
 
 	i = 0;
 	if (ft_strcmp("exit", cmdlst->token[0]) == 0)
-			cmdlst->exit = 1;
+		cmdlst->exit = 1;
 	if (ft_strcmp("export", cmdlst->token[0]) == 0 && \
 		ft_strtablen(cmdlst->token) == 1)
 		return (NULL);
@@ -87,8 +87,8 @@ int	pre_exec_fork(t_cmdlst *cmdlst, t_envlst *envlst)
 int	exec_fork(t_cmdlst *cmdlst, t_envlst *envlst)
 {
 	t_cmdlst	*head;
-	int 		status;
-	
+	int			status;
+
 	status = -1;
 	signal(SIGINT, ok);
 	signal(SIGQUIT, ctrl_bckslsh);
@@ -101,7 +101,7 @@ int	exec_fork(t_cmdlst *cmdlst, t_envlst *envlst)
 		{
 			if (work_redirection(cmdlst) == 0)
 				return (0);
-		}		
+		}
 		if (is_singled_out(cmdlst) != NULL)
 			status = pre_exec_fork(cmdlst, envlst);
 		else
