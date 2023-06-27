@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:31:19 by jbernard          #+#    #+#             */
-/*   Updated: 2023/06/22 13:49:11 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/06/27 12:01:59 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	prompt_loop(t_envlst *envlst, struct termios o_t, struct termios n_t)
 				yes_or_no = exec_launch(cmdlst, o_t, n_t);
 			else if (yes_or_no == 0)
 				perror("syntax error");
-			if (cmdlst->exit != 0)
+			if (cmdlst != NULL && cmdlst->exit != 0)
 				return (cmdlst_clear(&cmdlst, &empty_lst));
 			cmdlst_clear(&cmdlst, &empty_lst);
 		}

@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 11:17:41 by mgagnon           #+#    #+#             */
-/*   Updated: 2023/06/27 11:57:52 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/06/27 12:06:19 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ void	cmdlst_delone(t_cmdlst *cmdlst, void (*del)(t_cmdlst *))
 void	cmdlst_clear(t_cmdlst **cmdlst, void (*del)(t_cmdlst *))
 {
 	t_cmdlst	*proxy;
-	
-	if (*cmdlst != NULL && cmdlst != NULL)
+
+	if (*cmdlst != NULL)
 	{
 		while (*cmdlst)
 		{
