@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:25:35 by jbernard          #+#    #+#             */
-/*   Updated: 2023/06/27 11:41:46 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/07/02 11:23:43 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,7 @@ char		**get_all_from_envlst(t_envlst *envlst);
 
 // cmd_parsing.c //
 int			make_lst(char *input, t_cmdlst **cmdlst, t_envlst *envlst);
-int			first_divide(char *input, t_cmdlst **cmdlst, t_envlst *envlst);
+int			first_divide(char **arr, t_cmdlst **cmdlst, t_envlst *envlst);
 void		check_quotes(char *input, size_t *i, int *flags);
 
 // env_var_parse.c //

@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 13:33:11 by mgagnon           #+#    #+#             */
-/*   Updated: 2023/06/27 11:41:16 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/07/02 11:47:37 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,39 +76,32 @@ int	second_divide(t_cmdlst **cmdlst)
 /* makes a first split to separate multiple cmd and looks */
 /* for PIPE */
 
-int	first_divide(char *input, t_cmdlst **cmdlst, t_envlst *envlst)
+int	first_divide(char **arr, t_cmdlst **cmdlst, t_envlst *envlst)
 {
 	t_cmdlst	*cur;
 	size_t		i;
-	size_t		origin;
 
 	i = 0;
-	while (input[i])
+	while (arr[i])
 	{
-		while (ft_is_whtspc(input[i]))
-			i++;
-		origin = i;
-		while (input[i] && !ft_strrchr("|", input[i]))
-			i++;
-		if (i == origin)
-			return (0);
-		if (input[i] && ft_strrchr("|", input[i]))
-			cmdlst_addback(cmdlst, new_node(ft_strldup(&input[origin], \
-							(i - 1) - origin), envlst));
-		else
-			cmdlst_addback(cmdlst, new_node(ft_strldup(&input[origin], \
-							i - origin), envlst));
+		cmdlst_addback(cmdlst, new_node(arr[i], envlst)); 
 		cur = cmdlst_last(*cmdlst);
-		what_is_it(input, &i, &cur->flags);
+		i++;
+		if (arr[i])
+			cur->flags |= PIPEI;
 	}
+	if (i == 0)
+		return (0);
 	return (1);
 }
 
 int	make_lst(char *input, t_cmdlst **cmdlst, t_envlst *envlst)
 {
 	t_cmdlst	*cur;
+	char		**arr;
 
-	if (!first_divide(input, cmdlst, envlst))
+	arr = ft_split(input, '|');
+	if (!first_divide(arr, cmdlst, envlst))
 		return (0);
 	if (finish_flag_set(cmdlst) == 0)
 		return (0);
