@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 14:59:42 by jbernard          #+#    #+#             */
-/*   Updated: 2023/07/03 11:45:31 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/07/03 11:51:00 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ char	*get_file(t_cmdlst *cmdlst)
 	int	i;
 
 	i = 0;
-	while (cmdlst->token[i])
+	while (cmdlst->token[i] && cmdlst->token[i + 1])
 	{
 		if (cmdlst->flags & R_IN && ft_strcmp("<", cmdlst->token[i]) == 0)
 			return (cmdlst->token[i + 1]);
