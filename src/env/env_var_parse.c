@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 12:09:57 by mgagnon           #+#    #+#             */
-/*   Updated: 2023/06/23 11:37:47 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/07/03 11:42:04 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,12 @@ char	*get_var_name(char *str)
 
 void	skip_dollar(char *str, int *i)
 {
-	if (str[*i] == '$' && (!str[*i + 1] || ft_is_whtspc(str[*i + 1])))
+	if (str[*i] == '$' && (!str[*i + 1] || ft_is_whtspc(str[*i + 1]) || str[*i + 1] == '\''))
 		(*i)++;
 	while (str[*i] && str[*i] != '$')
 	{
 		(*i)++;
-		if (str[*i] == '$' && (!str[*i + 1] || ft_is_whtspc(str[*i + 1])))
+		if (str[*i] == '$' && (!str[*i + 1] || ft_is_whtspc(str[*i + 1]) || str[*i + 1] == '\''))
 			(*i)++;
 	}
 	return ;
@@ -73,7 +73,7 @@ int	is_there_env_var(char *str)
 	while (str[i])
 	{
 		if (str[i] == '$')
-			if (str[i + 1] && !ft_is_whtspc(str[i + 1]))
+			if (str[i + 1] && (!ft_is_whtspc(str[i + 1]) || str[i + 1] != '\''))
 				return (1);
 		i++;
 	}

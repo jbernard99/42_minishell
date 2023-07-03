@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 14:59:42 by jbernard          #+#    #+#             */
-/*   Updated: 2023/06/19 10:44:43 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/07/03 11:45:31 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	work_env_vars_calls(t_cmdlst *cmdlst)
 			if (cmdlst->token[i][0] != '\'')
 			{
 				cmdlst->token[i] = rmv_quotes(cmdlst->token[i]);
+				write(1, "1\n", 2);
 				while (is_there_env_var(cmdlst->token[i]) != 0)
 					cmdlst->token[i] = rplc_env_var(cmdlst->envlst, \
 						cmdlst->token[i]);

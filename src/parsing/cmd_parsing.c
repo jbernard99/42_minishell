@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 13:33:11 by mgagnon           #+#    #+#             */
-/*   Updated: 2023/07/03 11:06:04 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/07/03 11:34:55 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ int	first_divide(char *input, t_cmdlst **cmdlst, t_envlst *envlst)
 	t_cmdlst	*cur;
 	size_t		i;
 	size_t		origin;
-	char		*tmp;
 
 	i = 0;
 	while (input[i])
@@ -90,11 +89,8 @@ int	first_divide(char *input, t_cmdlst **cmdlst, t_envlst *envlst)
 		if (i == origin)
 			return (0);
 		else
-		{
-			tmp = ft_strldup(&input[origin], i - origin);
-			cmdlst_addback(cmdlst, new_node(tmp, envlst));
-			free(tmp);
-		}
+			cmdlst_addback(cmdlst, new_node(ft_strldup(&input[origin], \
+							i - origin), envlst));
 		cur = cmdlst_last(*cmdlst);
 		what_is_it(input, &i, &cur->flags);
 	}
