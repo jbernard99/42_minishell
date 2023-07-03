@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 13:33:11 by mgagnon           #+#    #+#             */
-/*   Updated: 2023/06/27 11:41:16 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/07/03 11:06:04 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,7 @@ void	what_is_it(char *input, size_t *i, int *flags)
 	if (input[*i] == '|')
 	{
 		(*i)++;
-		if (!input[*i])
-			return ;
-		if (input[*i] == ' ')
-			*flags |= PIPEI;
-		(*i)++;
+		*flags |= PIPEI;
 	}
 }
 
@@ -81,6 +77,7 @@ int	first_divide(char *input, t_cmdlst **cmdlst, t_envlst *envlst)
 	t_cmdlst	*cur;
 	size_t		i;
 	size_t		origin;
+	char		*tmp;
 
 	i = 0;
 	while (input[i])
@@ -92,12 +89,12 @@ int	first_divide(char *input, t_cmdlst **cmdlst, t_envlst *envlst)
 			i++;
 		if (i == origin)
 			return (0);
-		if (input[i] && ft_strrchr("|", input[i]))
-			cmdlst_addback(cmdlst, new_node(ft_strldup(&input[origin], \
-							(i - 1) - origin), envlst));
 		else
-			cmdlst_addback(cmdlst, new_node(ft_strldup(&input[origin], \
-							i - origin), envlst));
+		{
+			tmp = ft_strldup(&input[origin], i - origin);
+			cmdlst_addback(cmdlst, new_node(tmp, envlst));
+			free(tmp);
+		}
 		cur = cmdlst_last(*cmdlst);
 		what_is_it(input, &i, &cur->flags);
 	}
