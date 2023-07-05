@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 14:59:42 by jbernard          #+#    #+#             */
-/*   Updated: 2023/07/03 13:10:27 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/07/05 11:14:29 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	remove_redirection_from_tokens(t_cmdlst *cmdlst)
 		else
 			n_token[j++] = ft_strdup(cmdlst->token[i]);
 		i++;
-	}gs
+	}
 	ft_freetabstr(cmdlst->token);
 	n_token[j] = NULL;
 	cmdlst->token = ft_tabstrdup(n_token);
