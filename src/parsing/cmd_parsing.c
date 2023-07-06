@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 13:33:11 by mgagnon           #+#    #+#             */
-/*   Updated: 2023/07/05 11:50:38 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/07/06 12:26:33 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,9 @@ int	first_divide(char *input, t_cmdlst **cmdlst, t_envlst *envlst)
 	t_cmdlst	*cur;
 	size_t		i;
 	size_t		origin;
+	int		flags;
 
+	flags = 0;
 	i = 0;
 	while (input[i])
 	{
@@ -85,7 +87,12 @@ int	first_divide(char *input, t_cmdlst **cmdlst, t_envlst *envlst)
 			i++;
 		origin = i;
 		while (input[i] && !ft_strrchr("|", input[i]))
-			i++;
+		{
+			if (input[i] == '\'' || input[i] == '\"')
+				quote_handle(input, &i, &flags);
+			else
+				i++;
+		}
 		if (i == origin)
 			return (0);
 		else
