@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 13:40:48 by jbernard          #+#    #+#             */
-/*   Updated: 2023/06/20 13:30:18 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/07/06 13:22:02 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,16 @@
 
 #include "../../includes/minishell.h"
 
+void	do_echo(int argc, char **args, int i, int fd_out)
+{
+	while (i < argc)
+	{
+		ft_putstr_fd(args[i], fd_out);
+		if (++i != argc)
+			ft_putchar_fd(' ', fd_out);
+	}
+}
+
 int	ft_echo(char **args, t_envlst *envlst, int fd_out)
 {
 	int	argc;
@@ -42,13 +52,9 @@ int	ft_echo(char **args, t_envlst *envlst, int fd_out)
 		{
 			nl = 0;
 			args++;
+			argc--;
 		}
-		while (i < argc)
-		{
-			ft_putstr_fd(args[i], fd_out);
-			if (i++ != argc - 1)
-				ft_putchar_fd(' ', fd_out);
-		}
+		do_echo(argc, args, i, fd_out);
 	}
 	if (nl)
 		ft_putchar_fd('\n', fd_out);

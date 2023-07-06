@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:31:19 by jbernard          #+#    #+#             */
-/*   Updated: 2023/07/06 12:12:32 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/07/06 13:17:46 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ void	prompt_loop(t_envlst *envlst, struct termios o_t, struct termios n_t)
 		if (!yes_or_no)
 		{
 			yes_or_no = make_lst(input, &cmdlst, envlst);
-			ft_cmdlstiter(&cmdlst, print_cmdlst_node);
 			ft_sfree(input);
 			if (yes_or_no > 0)
 				yes_or_no = exec_launch(cmdlst, o_t, n_t);
