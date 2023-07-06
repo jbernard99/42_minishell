@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 12:09:57 by mgagnon           #+#    #+#             */
-/*   Updated: 2023/07/05 11:12:15 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/07/05 11:40:09 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,14 @@ char	*get_var_name(char *str)
 
 void	skip_dollar(char *str, int *i)
 {
-	if (str[*i] == '$' && (!str[*i + 1] || ft_is_whtspc(str[*i + 1]) || str[*i + 1] == '\''))
+	if (str[*i] == '$' && (!str[*i + 1] || \
+	ft_is_whtspc(str[*i + 1]) || str[*i + 1] == '\''))
 		(*i)++;
 	while (str[*i] && str[*i] != '$')
 	{
 		(*i)++;
-		if (str[*i] == '$' && (!str[*i + 1] || ft_is_whtspc(str[*i + 1]) || str[*i + 1] == '\''))
+		if (str[*i] == '$' && (!str[*i + 1] || \
+		ft_is_whtspc(str[*i + 1]) || str[*i + 1] == '\''))
 			(*i)++;
 	}
 	return ;
@@ -68,11 +70,13 @@ char	*rplc_env_var(t_envlst *envlst, char *str)
 int	is_there_env_var(char *str)
 {
 	int	i;
+
 	i = 0;
 	while (str[i])
 	{
 		if (str[i] == '$')
-			if (str[i + 1] && (ft_is_whtspc(str[i + 1]) == 0 && str[i + 1] != '\''))
+			if (str[i + 1] && \
+			(ft_is_whtspc(str[i + 1]) == 0 && str[i + 1] != '\''))
 				return (1);
 		i++;
 	}

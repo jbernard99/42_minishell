@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 16:37:35 by jbernard          #+#    #+#             */
-/*   Updated: 2023/06/19 16:25:06 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/07/05 13:48:05 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,8 @@ void	execute_sh(t_cmdlst *cmdlst)
 				cmdlst->envlst);
 	envp = get_initiated_from_envlst(cmdlst->envlst);
 	e = execve(cmdlst->token[0], cmdlst->token, envp);
+	if (cmdlst->flags & PIPEI)
+		close(cmdlst->pipefd[1]);
 	ft_freetabstr(envp);
 	if (e == -1)
 	{

@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 16:31:54 by jbernard          #+#    #+#             */
-/*   Updated: 2023/06/27 11:10:34 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/07/06 11:25:51 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,9 @@ void	parent_execute(t_cmdlst *cmdlst)
 	if (cmdlst->flags & PIPEI)
 		close(cmdlst->pipefd[1]);
 	if (cmdlst->flags & PIPEO)
+	{
 		close(cmdlst->pipefd[0]);
+	}
 	if (cmdlst->flags & (R_OUT | APP_OUT | R_IN | HR_DOC))
 	{
 		close(cmdlst->red_fd[0]);
