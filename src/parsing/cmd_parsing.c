@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 13:33:11 by mgagnon           #+#    #+#             */
-/*   Updated: 2023/07/06 12:26:33 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/07/06 12:40:08 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,19 +22,6 @@ void	what_is_it(char *input, size_t *i, int *flags)
 		(*i)++;
 		*flags |= PIPEI;
 	}
-}
-
-void	quote_handle(char *cmd, size_t *end, int *flags)
-{
-	if (cmd[*end] == '\'' || cmd[*end] == '\"')
-	{
-		if (cmd[*end] == '\'')
-			*flags |= QUOTE;
-		else if (cmd[*end] == '\"')
-			*flags |= DQUOTE;
-		check_quotes(cmd, end, flags);
-	}
-	(*end)++;
 }
 
 /* problem still in second_divide : */
@@ -69,6 +56,14 @@ int	second_divide(t_cmdlst **cmdlst)
 	return (ft_sfree(cmd), 1);
 }
 
+void	precheck_quotes(char *input, size_t *i, int *flags)
+{
+	if (input[*i] == '\'' || input[*i] == '\"')
+		quote_handle(input, i, flags);
+	else
+		(*i)++;
+}
+
 /* makes a first split to separate multiple cmd and looks */
 /* for PIPE */
 
@@ -77,7 +72,7 @@ int	first_divide(char *input, t_cmdlst **cmdlst, t_envlst *envlst)
 	t_cmdlst	*cur;
 	size_t		i;
 	size_t		origin;
-	int		flags;
+	int			flags;
 
 	flags = 0;
 	i = 0;
@@ -87,12 +82,7 @@ int	first_divide(char *input, t_cmdlst **cmdlst, t_envlst *envlst)
 			i++;
 		origin = i;
 		while (input[i] && !ft_strrchr("|", input[i]))
-		{
-			if (input[i] == '\'' || input[i] == '\"')
-				quote_handle(input, &i, &flags);
-			else
-				i++;
-		}
+			precheck_quotes(input, &i, &flags);
 		if (i == origin)
 			return (0);
 		else

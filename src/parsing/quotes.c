@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 11:57:20 by mgagnon           #+#    #+#             */
-/*   Updated: 2023/06/05 13:56:23 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/07/06 12:33:21 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,17 @@ char	*rmv_quotes(char *str)
 		return (proxy);
 	}
 	return (str);
+}
+
+void	quote_handle(char *cmd, size_t *end, int *flags)
+{
+	if (cmd[*end] == '\'' || cmd[*end] == '\"')
+	{
+		if (cmd[*end] == '\'')
+			*flags |= QUOTE;
+		else if (cmd[*end] == '\"')
+			*flags |= DQUOTE;
+		check_quotes(cmd, end, flags);
+	}
+	(*end)++;
 }
