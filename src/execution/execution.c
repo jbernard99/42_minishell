@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 16:37:35 by jbernard          #+#    #+#             */
-/*   Updated: 2023/07/05 13:48:05 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/07/26 12:20:24 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	(*get_built_in(char *name))(char **args, t_envlst *envlst, int fd_out)
 	int			i;
 
 	i = 0;
-	while (i < 4)
+	while (i < 4 && name)
 	{
 		if (ft_strcmp(name, funcs_name[i]) == 0)
 			return (funcs[i]);
@@ -72,14 +72,18 @@ void	execute_sh(t_cmdlst *cmdlst)
 	int			e;
 	char		**envp;
 
-	if (!ft_strchr(cmdlst->token[0], '/'))
-		cmdlst->token[0] = get_exec_location(cmdlst->token[0], \
-				cmdlst->envlst);
-	envp = get_initiated_from_envlst(cmdlst->envlst);
-	e = execve(cmdlst->token[0], cmdlst->token, envp);
+	e = 0;
+	if (cmdlst->token[0])
+	{
+		if (!ft_strchr(cmdlst->token[0], '/'))
+			cmdlst->token[0] = get_exec_location(cmdlst->token[0], \
+					cmdlst->envlst);
+		envp = get_initiated_from_envlst(cmdlst->envlst);
+		e = execve(cmdlst->token[0], cmdlst->token, envp);
+		ft_freetabstr(envp);
+	}
 	if (cmdlst->flags & PIPEI)
 		close(cmdlst->pipefd[1]);
-	ft_freetabstr(envp);
 	if (e == -1)
 	{
 		printf("bash: %s: command not found\n", &cmdlst->token[0][1]);
