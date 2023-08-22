@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 14:59:42 by jbernard          #+#    #+#             */
-/*   Updated: 2023/07/05 11:40:31 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/08/22 13:35:34 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,25 +65,14 @@ void	remove_redirection_from_tokens(t_cmdlst *cmdlst)
 	ft_freetabstr(n_token);
 }
 
-char	*get_file(t_cmdlst *cmdlst)
+char	*get_file(t_cmdlst *cmdlst, char *type)
 {
 	int	i;
 
 	i = 0;
-	while (cmdlst->token[i] && cmdlst->token[i + 1])
-	{
-		if (cmdlst->flags & R_IN && ft_strcmp("<", cmdlst->token[i]) == 0)
+	while (cmdlst->token[i + 1])
+		if (ft_strcmp(cmdlst->token[i], type) == 0)
 			return (cmdlst->token[i + 1]);
-		else if (cmdlst->flags & HR_DOC && ft_strcmp("<<", cmdlst->token[i]) \
-				== 0)
-			return (cmdlst->token[i + 1]);
-		else if (cmdlst->flags & R_OUT && ft_strcmp(">", cmdlst->token[i]) == 0)
-			return (cmdlst->token[i + 1]);
-		else if (cmdlst->flags & APP_OUT && ft_strcmp(">>", cmdlst->token[i]) \
-				== 0)
-			return (cmdlst->token[i + 1]);
-		i++;
-	}
 	return (NULL);
 }
 
@@ -114,19 +103,28 @@ void	work_work_redirection(t_cmdlst *cmdlst)
 int	work_redirection(t_cmdlst *cmdlst)
 {
 	char	*file;
+	int		i;
 
-	file = get_file(cmdlst);
 	pipe(cmdlst->red_fd);
-	if (check_file(cmdlst, file) == 1)
+	i = 0;
+	while (cmdlst->token[i])
 	{
-		work_work_redirection(cmdlst);
-		return (1);
+		if (token_is_redirection(cmdlst->token[i]))
+		{
+			printf("Token is red : %s\n", cmdlst->token[i]);
+			file = get_file(cmdlst, get_type(cmdlst->token[i]));
+			printf("File is : %s\n", file);
+			if (check_file(file, get_type(cmdlst->token[i])) == 1)
+				work_work_redirection(cmdlst);
+			else
+			{
+				printf("minishell: syntax error: unexpected token\n");
+				close(cmdlst->red_fd[0]);
+				close(cmdlst->red_fd[1]);
+				return (0);
+			}
+		}
+		i++;
 	}
-	else
-	{
-		printf("minishell: syntax error: unexpected token\n");
-		close(cmdlst->red_fd[0]);
-		close(cmdlst->red_fd[1]);
-		return (0);
-	}
+	return (1);
 }

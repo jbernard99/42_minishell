@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 14:36:53 by mgagnon           #+#    #+#             */
-/*   Updated: 2023/08/22 10:48:11 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/08/22 12:07:28 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,20 +44,20 @@ int	check_filename(char *file)
 	return (1);
 }
 
-int	check_file(t_cmdlst *cmdlst, char *file)
+int	check_file(char *file, char *type)
 {
 	int	status;
 	int	fd;
 
 	if (file == NULL || check_filename(file) == 0)
 		return (0);
-	if (cmdlst->flags & R_IN)
+	if (ft_strcmp("<", type) == 0)
 	{
 		status = access(file, F_OK | R_OK);
 		if (status == -1)
 			return (0);
 	}
-	else if (cmdlst->flags & (R_OUT | APP_OUT))
+	else if (ft_strcmp(">", type) == 0 || ft_strcmp(">>", type) == 0)
 	{
 		status = access(file, F_OK);
 		if (status == -1)

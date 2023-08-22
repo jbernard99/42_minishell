@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:25:35 by jbernard          #+#    #+#             */
-/*   Updated: 2023/07/06 12:34:28 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/08/22 12:07:41 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void		parent_execute(t_cmdlst *cmdlst);
 // pre_execution.c //
 void		work_env_vars_calls(t_cmdlst *cmdlst);
 int			work_redirection(t_cmdlst *cmdlst);
-char		*get_file(t_cmdlst *cmdlst);
+char		*get_file(t_cmdlst *cmdlst, char *type);
 
 // built-ins //	
 int			ft_cd(char **args, t_envlst *envlst, int fd_out);
@@ -146,7 +146,7 @@ void		quote_handle(char *cmd, size_t *end, int *flags);
 
 // redirect_parsing.c //
 int			scan_redirect(t_cmdlst *cmdlst);
-int			check_file(t_cmdlst *cmdlst, char *file);
+int			check_file(char *file, char *type);
 
 // pipe.c //
 void		pipe_it(t_cmdlst *cmdlst);
@@ -173,6 +173,10 @@ void		ok(int sig);
 void		ctrlc_handle(int sig);
 void		ctrl_bckslsh(int sig);
 void		read_result(t_envlst *envlst, int status);
+
+//extraz//
+int		token_is_redirection(char *token);
+char	*get_type(char *token);
 
 // ft_is_whtspc.c //
 int			ft_is_whtspc(char ch);
