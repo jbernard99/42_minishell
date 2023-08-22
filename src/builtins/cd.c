@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 13:40:17 by jbernard          #+#    #+#             */
-/*   Updated: 2023/06/20 14:24:29 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/08/22 11:25:15 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,17 @@ Exemples :
 */
 
 #include "../../includes/minishell.h"
+
+char	*remake_arg(char *arg)
+{
+	char	*new_arg;
+
+	arg++;
+	new_arg = ft_strjoin(getenv("HOME"), arg);
+	arg--;
+	ft_sfree(arg);
+	return (new_arg);
+}
 
 char	*pwd_previous_directory(char *pwd)
 {
@@ -63,6 +74,16 @@ int	ft_cd(char **args, t_envlst *envlst, int fd_out)
 	char	**split;
 
 	(void)fd_out;
+	if (!args[1])
+	{
+		chdir(getenv("HOME"));
+		split = ft_split(getenv("HOME"), '/');
+		manage_pwd(split, envlst);
+		ft_freetabstr(split);
+		return (0);
+	}
+	if (args[1][0] == '~')
+		args[1] = remake_arg(args[1]);
 	if (chdir(args[1]) == 0)
 	{
 		split = ft_split(args[1], '/');
