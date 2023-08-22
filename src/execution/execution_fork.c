@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 16:31:54 by jbernard          #+#    #+#             */
-/*   Updated: 2023/07/06 11:25:51 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/07/26 13:24:34 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,16 +56,19 @@ int	(*is_singled_out(t_cmdlst *cmdlst))(char **args, \
 	int			i;
 
 	i = 0;
-	if (ft_strcmp("exit", cmdlst->token[0]) == 0)
-		cmdlst->exit = 1;
-	if (ft_strcmp("export", cmdlst->token[0]) == 0 && \
-		ft_strtablen(cmdlst->token) == 1)
-		return (NULL);
-	while (i < 4)
+	if (cmdlst->token[0])
 	{
-		if (ft_strcmp(cmdlst->token[0], funcs_name[i]) == 0)
-			return (funcs[i]);
-		i++;
+		if (ft_strcmp("exit", cmdlst->token[0]) == 0)
+			cmdlst->exit = 1;
+		if (ft_strcmp("export", cmdlst->token[0]) == 0 && \
+			ft_strtablen(cmdlst->token) == 1)
+			return (NULL);
+		while (i < 4)
+		{
+			if (ft_strcmp(cmdlst->token[0], funcs_name[i]) == 0)
+				return (funcs[i]);
+			i++;
+		}
 	}
 	return (NULL);
 }
