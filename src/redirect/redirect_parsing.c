@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 14:36:53 by mgagnon           #+#    #+#             */
-/*   Updated: 2023/06/27 11:53:18 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/08/22 10:48:11 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,10 @@ int	check_filename(char *file)
 	while (file[i])
 	{
 		if (ft_isalnum(file[i]) == 0 && file[i] != '.' && file[i] != '_')
-			return (1);
+			return (0);
 		i++;
 	}
-	return (0);
+	return (1);
 }
 
 int	check_file(t_cmdlst *cmdlst, char *file)
@@ -49,7 +49,7 @@ int	check_file(t_cmdlst *cmdlst, char *file)
 	int	status;
 	int	fd;
 
-	if (file == NULL || check_filename(file) == 1)
+	if (file == NULL || check_filename(file) == 0)
 		return (0);
 	if (cmdlst->flags & R_IN)
 	{
