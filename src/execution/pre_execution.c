@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 14:59:42 by jbernard          #+#    #+#             */
-/*   Updated: 2023/08/22 13:35:34 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/08/23 11:08:23 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ int	work_redirection(t_cmdlst *cmdlst)
 	{
 		if (token_is_redirection(cmdlst->token[i]))
 		{
-			printf("Token is red : %s\n", cmdlst->token[i]);
+			printf("Token is redirection : %s\n", cmdlst->token[i]);
 			file = get_file(cmdlst, get_type(cmdlst->token[i]));
 			printf("File is : %s\n", file);
 			if (check_file(file, get_type(cmdlst->token[i])) == 1)
