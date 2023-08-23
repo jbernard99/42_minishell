@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 14:59:42 by jbernard          #+#    #+#             */
-/*   Updated: 2023/08/23 11:33:11 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/08/23 11:50:43 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ void	remove_redirection_from_tokens(t_cmdlst *cmdlst)
 	j = 0;
 	while (cmdlst->token[i] && !token_is_redirection(cmdlst->token[i]))
 		n_token[j++] = ft_strdup(cmdlst->token[i++]);
+		
 	if (ft_strcmp(cmdlst->token[i], ">>") == 0 || \
 				ft_strcmp(cmdlst->token[i], ">") == 0)
 			cmdlst->outfile = ft_strdup(cmdlst->token[++i]);
@@ -56,7 +57,7 @@ void	remove_redirection_from_tokens(t_cmdlst *cmdlst)
 			ft_strcmp(cmdlst->token[i], "<") == 0)
 		cmdlst->infile = ft_strdup(cmdlst->token[++i]);
 	while (cmdlst->token[++i])
-			n_token[j++] = ft_strdup(cmdlst->token[i++]);
+			n_token[j++] = ft_strdup(cmdlst->token[i]);
 	ft_freetabstr(cmdlst->token);
 	n_token[j] = NULL;
 	cmdlst->token = ft_tabstrdup(n_token);
@@ -121,8 +122,9 @@ int	work_redirection(t_cmdlst *cmdlst)
 			{
 				printf("Entering work_work_redirection . . .\n");
 				remove_redirection_from_tokens(cmdlst);
+				i = 0;
 				printf("Leaving work_work_redirection\n");
-				printf("Cmdlst->infile : %s\nCmdlst->outfile : %s\n", cmdlst->infile, cmdlst->outfile);
+				//printf("Cmdlst->infile : %s\nCmdlst->outfile : %s\n", cmdlst->infile, cmdlst->outfile);
 			}
 			else
 			{
@@ -135,6 +137,7 @@ int	work_redirection(t_cmdlst *cmdlst)
 		i++;
 		ft_cmdlstiter(&cmdlst, print_cmdlst_node);
 		printf("Cmdlst->infile : %s\nCmdlst->outfile : %s\n", cmdlst->infile, cmdlst->outfile);
+		sleep(3);
 	}
 	return (1);
 }
