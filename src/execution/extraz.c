@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 11:24:11 by jbernard          #+#    #+#             */
-/*   Updated: 2023/08/22 12:45:44 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/08/23 13:53:02 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,6 @@ char	*get_type(char *token)
 int	token_is_redirection(char *token)
 {
 	if (ft_strcmp(token, "<") == 0)
-		return (1);
-	else if (ft_strcmp(token, "<<") == 0)
 		return (1);
 	else if (ft_strcmp(token, ">") == 0)
 		return (1);

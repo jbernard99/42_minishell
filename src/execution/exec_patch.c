@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 10:47:45 by mgagnon           #+#    #+#             */
-/*   Updated: 2023/07/05 14:50:33 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/08/23 13:49:03 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,5 +53,7 @@ int	exec_launch(t_cmdlst *cmdlst, struct termios o_t, struct termios n_t)
 	work_env_vars_calls(cmdlst);
 	x = exec_fork(cmdlst, cmdlst->envlst);
 	tcsetattr(STDIN_FILENO, TCSANOW, &n_t);
+	if (x == 0)
+		signal(SIGINT, ctrlc_handle);
 	return (x);
 }
