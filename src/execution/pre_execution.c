@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 14:59:42 by jbernard          #+#    #+#             */
-/*   Updated: 2023/08/23 11:35:05 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/08/23 13:27:19 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ void	remove_redirection_from_tokens(t_cmdlst *cmdlst)
 	j = 0;
 	while (cmdlst->token[i] && !token_is_redirection(cmdlst->token[i]))
 		n_token[j++] = ft_strdup(cmdlst->token[i++]);
+		
 	if (ft_strcmp(cmdlst->token[i], ">>") == 0 || \
 				ft_strcmp(cmdlst->token[i], ">") == 0)
 			cmdlst->outfile = ft_strdup(cmdlst->token[++i]);
@@ -56,7 +57,7 @@ void	remove_redirection_from_tokens(t_cmdlst *cmdlst)
 			ft_strcmp(cmdlst->token[i], "<") == 0)
 		cmdlst->infile = ft_strdup(cmdlst->token[++i]);
 	while (cmdlst->token[++i])
-			n_token[j++] = ft_strdup(cmdlst->token[i++]);
+			n_token[j++] = ft_strdup(cmdlst->token[i]);
 	ft_freetabstr(cmdlst->token);
 	n_token[j] = NULL;
 	cmdlst->token = ft_tabstrdup(n_token);
@@ -117,20 +118,8 @@ int	work_redirection(t_cmdlst *cmdlst)
 			type = get_type(cmdlst->token[i]);
 			file = get_file(cmdlst, type);
 			printf("File name is : %s\n", file);
-			if (check_file(file, type) == 1)
-			{
-				printf("Entering work_work_redirection . . .\n");
-				remove_redirection_from_tokens(cmdlst);
-				printf("Leaving work_work_redirection\n");
-				printf("Cmdlst->infile : %s\nCmdlst->outfile : %s\n", cmdlst->infile, cmdlst->outfile);
-			}
-			else
-			{
-				printf("minishell: syntax error: unexpected token\n");
-				close(cmdlst->red_fd[0]);
-				close(cmdlst->red_fd[1]);
+			if (tell_me_why(&i, file, type, cmdlst) != 1)
 				return (0);
-			}
 		}
 		i++;
 		ft_cmdlstiter(&cmdlst, print_cmdlst_node);

@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:25:35 by jbernard          #+#    #+#             */
-/*   Updated: 2023/08/22 12:07:41 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/08/23 12:52:24 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ void		parent_execute(t_cmdlst *cmdlst);
 void		work_env_vars_calls(t_cmdlst *cmdlst);
 int			work_redirection(t_cmdlst *cmdlst);
 char		*get_file(t_cmdlst *cmdlst, char *type);
+void		remove_redirection_from_tokens(t_cmdlst *cmdlst);
 
 // built-ins //	
 int			ft_cd(char **args, t_envlst *envlst, int fd_out);
@@ -177,6 +178,7 @@ void		read_result(t_envlst *envlst, int status);
 //extraz//
 int		token_is_redirection(char *token);
 char	*get_type(char *token);
+int		tell_me_why(int *i, char *file, char *type, t_cmdlst *cmdlst);
 
 // ft_is_whtspc.c //
 int			ft_is_whtspc(char ch);

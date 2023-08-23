@@ -6,11 +6,28 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 11:24:11 by jbernard          #+#    #+#             */
-/*   Updated: 2023/08/22 12:45:44 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/08/23 13:22:58 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+int	tell_me_why(int *i, char *file, char *type, t_cmdlst *cmdlst)
+{
+	if (check_file(file, type) == 1)
+	{
+		remove_redirection_from_tokens(cmdlst);
+		*i = -1;
+	}
+	else
+	{
+		printf("minishell: syntax error: unexpected token\n");
+		close(cmdlst->red_fd[0]);
+		close(cmdlst->red_fd[1]);
+		return (0);
+	}
+	return (1);
+}
 
 char	*get_type(char *token)
 {
