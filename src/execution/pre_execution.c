@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 14:59:42 by jbernard          #+#    #+#             */
-/*   Updated: 2023/08/23 13:28:48 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/08/23 14:09:28 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,20 +117,12 @@ int	work_redirection(t_cmdlst *cmdlst)
 			type = get_type(cmdlst->token[i]);
 			file = get_file(cmdlst, type);
 			printf("File name is : %s\n", file);
-			if (check_file(file, type) == 1)
-			{
-				remove_redirection_from_tokens(cmdlst);
-				i = -1;
-			}
-			else
-			{
-				printf("minishell: syntax error: unexpected token\n");
-				close(cmdlst->red_fd[0]);
-				close(cmdlst->red_fd[1]);
+			if (tell_me_why(&i, file, type, cmdlst) != 1)
 				return (0);
-			}
 		}
 		i++;
+		ft_cmdlstiter(&cmdlst, print_cmdlst_node);
+		printf("Cmdlst->infile : %s\nCmdlst->outfile : %s\n", cmdlst->infile, cmdlst->outfile);
 	}
 	return (1);
 }
