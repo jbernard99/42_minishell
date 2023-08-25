@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 14:59:42 by jbernard          #+#    #+#             */
-/*   Updated: 2023/08/23 14:09:28 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/08/23 14:19:37 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,30 +77,6 @@ char	*get_file(t_cmdlst *cmdlst, char *type)
 	return (NULL);
 }
 
-void	work_work_redirection(t_cmdlst *cmdlst)
-{
-	if (cmdlst->flags & R_IN && ft_tabstrcmp(cmdlst->token, "<"))
-	{
-		remove_redirection_from_tokens(cmdlst);
-		//close(cmdlst->red_fd[1]);
-	}
-	else if (cmdlst->flags & R_OUT && ft_tabstrcmp(cmdlst->token, ">"))
-	{
-		remove_redirection_from_tokens(cmdlst);
-		//close(cmdlst->red_fd[0]);
-	}
-	else if (cmdlst->flags & APP_OUT && ft_tabstrcmp(cmdlst->token, ">>"))
-	{
-		remove_redirection_from_tokens(cmdlst);
-		//close(cmdlst->red_fd[0]);
-	}
-	else if (cmdlst->flags & HR_DOC && ft_tabstrcmp(cmdlst->token, "<<"))
-	{
-		remove_redirection_from_tokens(cmdlst);
-		//close(cmdlst->red_fd[1]);
-	}
-}
-
 int	work_redirection(t_cmdlst *cmdlst)
 {
 	char	*file;
@@ -113,10 +89,8 @@ int	work_redirection(t_cmdlst *cmdlst)
 	{
 		if (token_is_redirection(cmdlst->token[i]))
 		{
-			printf("Token is redirection : %s\n", cmdlst->token[i]);
 			type = get_type(cmdlst->token[i]);
 			file = get_file(cmdlst, type);
-			printf("File name is : %s\n", file);
 			if (tell_me_why(&i, file, type, cmdlst) != 1)
 				return (0);
 		}
