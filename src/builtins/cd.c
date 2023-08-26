@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 13:40:17 by jbernard          #+#    #+#             */
-/*   Updated: 2023/08/25 16:15:59 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/08/26 15:04:14 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ Exemples :
 
 #include "../../includes/minishell.h"
 
-char	*remake_arg(char *arg)
+char	*change_tild(char *arg)
 {
 	char	*new_arg;
 
@@ -49,55 +49,58 @@ char	*pwd_previous_directory(char *pwd)
 	return (pwd);
 }
 
-void	absolute_path(char **args, t_envlst *envlst)
-{
-}
-
 void	manage_pwd(char **args, t_envlst *envlst)
 {
 	int	i;
 
 	envlst = is_name_in_envlst(envlst, "PWD");
 	i = 0;
-	if (ft_strcmp(args[0], "Users") != 0)
+	if (ft_strcmp(args[0], "Users") == 0)
+		ft_sfree(envlst->value);
+	while (args[i])
 	{
-		while (args[i])
+		write(0, "hello\n", 6);
+		if (ft_strcmp(args[i], "..") == 0)
+			envlst->value = pwd_previous_directory(envlst->value);
+		else if (ft_strcmp(args[i], ".") != 0)
 		{
-			if (ft_strcmp(args[i], "..") == 0)
-				envlst->value = pwd_previous_directory(envlst->value);
-			else if (ft_strcmp(args[i], ".") != 0)
+			write(0, "hello2\n", 7);
+			if (envlst->value != NULL && ft_strlen(envlst->value) > 1)
 			{
-				if (i == 0)
-				{
-					ft_sfree(envlst->value);
-					envlst->value = ft_strdup(args[0]);
-				}
-				if (ft_strlen(envlst->value) > 1)
-					envlst->value = ft_strfreejoin(envlst->value, "/");
-				envlst->value = ft_strfreejoin(envlst->value, args[i]);
+				write(0, "hello3\n", 7);
+				envlst->value = ft_strfreejoin(envlst->value, "/");
+				write(0, "hello4\n", 7);
 			}
-			i++;
+			else
+				envlst->value = ft_strdup("/");
+			envlst->value = ft_strfreejoin(envlst->value, args[i]);
 		}
+		i++;
 	}
-	else
-		absolute_path(args, envlst);
 }
 
 int	ft_cd(char **args, t_envlst *envlst, int fd_out)
 {
+	int	i;
 	char	**split;
 
+	i = 0;
 	(void)fd_out;
 	if (!args[1])
 	{
 		chdir(getenv("HOME"));
 		split = ft_split(getenv("HOME"), '/');
+		while (split[i])
+		{
+			printf("%s\n", split[i]);
+			i++;
+		}
 		manage_pwd(split, envlst);
 		ft_freetabstr(split);
 		return (0);
 	}
 	if (args[1][0] == '~')
-		args[1] = remake_arg(args[1]);
+		args[1] = change_tild(args[1]);
 	if (chdir(args[1]) == 0)
 	{
 		split = ft_split(args[1], '/');
