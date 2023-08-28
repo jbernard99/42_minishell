@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 13:40:17 by jbernard          #+#    #+#             */
-/*   Updated: 2023/08/26 15:04:14 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/08/28 11:32:03 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,12 @@ void	manage_pwd(char **args, t_envlst *envlst)
 	envlst = is_name_in_envlst(envlst, "PWD");
 	i = 0;
 	if (ft_strcmp(args[0], "Users") == 0)
-		ft_sfree(envlst->value);
+	{
+		write(0, "freaking hello\n", 15);
+		free(envlst->value);
+		envlst->value = NULL;
+	}
+	printf("%s\n", envlst->value);
 	while (args[i])
 	{
 		write(0, "hello\n", 6);
@@ -64,19 +69,31 @@ void	manage_pwd(char **args, t_envlst *envlst)
 			envlst->value = pwd_previous_directory(envlst->value);
 		else if (ft_strcmp(args[i], ".") != 0)
 		{
-			write(0, "hello2\n", 7);
-			if (envlst->value != NULL && ft_strlen(envlst->value) > 1)
+			if (envlst->value == NULL)
+			{
+				write(0, "hello2\n", 7);
+				envlst->value = ft_strdup("/");
+			}
+			else
 			{
 				write(0, "hello3\n", 7);
 				envlst->value = ft_strfreejoin(envlst->value, "/");
 				write(0, "hello4\n", 7);
 			}
-			else
-				envlst->value = ft_strdup("/");
 			envlst->value = ft_strfreejoin(envlst->value, args[i]);
 		}
 		i++;
 	}
+}
+
+void	no_args(t_envlst *envlst)
+{
+	char	**split;
+
+	chdir(getenv("HOME"));
+	split = ft_split(getenv("HOME"), '/');
+	manage_pwd(split, envlst);
+	ft_freetabstr(split);
 }
 
 int	ft_cd(char **args, t_envlst *envlst, int fd_out)
@@ -87,27 +104,19 @@ int	ft_cd(char **args, t_envlst *envlst, int fd_out)
 	i = 0;
 	(void)fd_out;
 	if (!args[1])
+		no_args(envlst);
+	else if (args[1])
 	{
-		chdir(getenv("HOME"));
-		split = ft_split(getenv("HOME"), '/');
-		while (split[i])
+		if (args[1][0] == '~')
+			args[1] = change_tild(args[1]);
+		if (chdir(args[1]) == 0)
 		{
-			printf("%s\n", split[i]);
-			i++;
+			split = ft_split(args[1], '/');
+			manage_pwd(split, envlst);
+			ft_freetabstr(split);
 		}
-		manage_pwd(split, envlst);
-		ft_freetabstr(split);
-		return (0);
+		else
+			printf("minishell: cd: %s: Not a directory\n", args[1]);
 	}
-	if (args[1][0] == '~')
-		args[1] = change_tild(args[1]);
-	if (chdir(args[1]) == 0)
-	{
-		split = ft_split(args[1], '/');
-		manage_pwd(split, envlst);
-		ft_freetabstr(split);
-	}
-	else
-		printf("minishell: cd: %s: Not a directory\n", args[1]);
 	return (0);
 }
