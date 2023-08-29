@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 14:59:42 by jbernard          #+#    #+#             */
-/*   Updated: 2023/08/23 14:19:37 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/08/29 13:00:48 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,13 @@ void	remove_redirection_from_tokens(t_cmdlst *cmdlst)
 	while (cmdlst->token[i] && !token_is_redirection(cmdlst->token[i]))
 		n_token[j++] = ft_strdup(cmdlst->token[i++]);
 	if (ft_strcmp(cmdlst->token[i], ">>") == 0 || \
-				ft_strcmp(cmdlst->token[i], ">") == 0)
-			cmdlst->outfile = ft_strdup(cmdlst->token[++i]);
+			ft_strcmp(cmdlst->token[i], ">") == 0)
+		cmdlst->outfile = ft_strdup(cmdlst->token[++i]);
 	else if (ft_strcmp(cmdlst->token[i], "<<") == 0 || \
 			ft_strcmp(cmdlst->token[i], "<") == 0)
 		cmdlst->infile = ft_strdup(cmdlst->token[++i]);
 	while (cmdlst->token[++i])
-			n_token[j++] = ft_strdup(cmdlst->token[i]);
+		n_token[j++] = ft_strdup(cmdlst->token[i]);
 	ft_freetabstr(cmdlst->token);
 	n_token[j] = NULL;
 	cmdlst->token = ft_tabstrdup(n_token);
@@ -95,8 +95,6 @@ int	work_redirection(t_cmdlst *cmdlst)
 				return (0);
 		}
 		i++;
-		ft_cmdlstiter(&cmdlst, print_cmdlst_node);
-		printf("Cmdlst->infile : %s\nCmdlst->outfile : %s\n", cmdlst->infile, cmdlst->outfile);
 	}
 	return (1);
 }

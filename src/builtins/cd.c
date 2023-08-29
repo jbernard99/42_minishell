@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 13:40:17 by jbernard          #+#    #+#             */
-/*   Updated: 2023/08/29 10:31:17 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/08/29 12:59:58 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ void	no_args(t_envlst *envlst)
 
 int	ft_cd(char **args, t_envlst *envlst, int fd_out)
 {
-	int	i;
+	int		i;
 	char	**split;
 
 	i = 0;
