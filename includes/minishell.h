@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:25:35 by jbernard          #+#    #+#             */
-/*   Updated: 2023/08/25 14:42:04 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/08/29 10:24:28 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,5 +182,7 @@ int		tell_me_why(int *i, char *file, char *type, t_cmdlst *cmdlst);
 
 // ft_is_whtspc.c //
 int			ft_is_whtspc(char ch);
+
+void		*ft_sfree2(void *tofree);
 
 #endif

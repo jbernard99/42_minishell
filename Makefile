@@ -6,7 +6,7 @@
 #    By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/16 04:45:18 by jbernard          #+#    #+#              #
-#    Updated: 2023/08/23 11:43:42 by jbernard         ###   ########.fr        #
+#    Updated: 2023/08/29 10:26:13 by mgagnon          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,6 +41,7 @@ MAIN_FILES = 	main.c					\
 				tools.c					\
 				cleanup.c				\
 				ft_is_whtspc.c				\
+				ft_sfree2.c				\
 				signal.c
 				
 PARSE_FILES = 	cmd_parsing.c			\

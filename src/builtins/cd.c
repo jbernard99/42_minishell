@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 13:40:17 by jbernard          #+#    #+#             */
-/*   Updated: 2023/08/28 11:32:03 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/08/29 10:31:17 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ char	*change_tild(char *arg)
 	arg++;
 	new_arg = ft_strjoin(getenv("HOME"), arg);
 	arg--;
-	ft_sfree(arg);
+	arg = ft_sfree2(arg);
 	return (new_arg);
 }
 
@@ -56,29 +56,20 @@ void	manage_pwd(char **args, t_envlst *envlst)
 	envlst = is_name_in_envlst(envlst, "PWD");
 	i = 0;
 	if (ft_strcmp(args[0], "Users") == 0)
-	{
-		write(0, "freaking hello\n", 15);
-		free(envlst->value);
-		envlst->value = NULL;
-	}
-	printf("%s\n", envlst->value);
+		envlst->value = ft_sfree2(envlst->value);
 	while (args[i])
 	{
-		write(0, "hello\n", 6);
 		if (ft_strcmp(args[i], "..") == 0)
 			envlst->value = pwd_previous_directory(envlst->value);
 		else if (ft_strcmp(args[i], ".") != 0)
 		{
 			if (envlst->value == NULL)
 			{
-				write(0, "hello2\n", 7);
 				envlst->value = ft_strdup("/");
 			}
 			else
 			{
-				write(0, "hello3\n", 7);
 				envlst->value = ft_strfreejoin(envlst->value, "/");
-				write(0, "hello4\n", 7);
 			}
 			envlst->value = ft_strfreejoin(envlst->value, args[i]);
 		}
