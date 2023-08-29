@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 14:36:53 by mgagnon           #+#    #+#             */
-/*   Updated: 2023/08/23 14:17:14 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/08/29 13:25:11 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ int	check_file(char *file, char *type)
 	}
 	else if (ft_strcmp(">", type) == 0 || ft_strcmp(">>", type) == 0)
 	{
-		printf("file %s is a > or >>\n", file);
 		status = access(file, F_OK);
 		if (status == -1)
 		{

@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 13:40:17 by jbernard          #+#    #+#             */
-/*   Updated: 2023/08/29 12:59:58 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/08/29 13:35:56 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,10 @@ int	ft_cd(char **args, t_envlst *envlst, int fd_out)
 			args[1] = change_tild(args[1]);
 		if (chdir(args[1]) == 0)
 		{
-			split = ft_split(args[1], '/');
+			if (args[1][0] == '/' && ft_strlen(args[1]) == 1)
+				split = &args[1];
+			else
+				split = ft_split(args[1], '/');
 			manage_pwd(split, envlst);
 			ft_freetabstr(split);
 		}
