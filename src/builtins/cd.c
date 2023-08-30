@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 13:40:17 by jbernard          #+#    #+#             */
-/*   Updated: 2023/08/29 13:35:56 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/08/30 11:40:18 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,27 +64,33 @@ void	manage_pwd(char **args, t_envlst *envlst)
 		else if (ft_strcmp(args[i], ".") != 0)
 		{
 			if (envlst->value == NULL)
-			{
 				envlst->value = ft_strdup("/");
-			}
 			else
-			{
 				envlst->value = ft_strfreejoin(envlst->value, "/");
-			}
 			envlst->value = ft_strfreejoin(envlst->value, args[i]);
 		}
 		i++;
 	}
 }
 
-void	no_args(t_envlst *envlst)
+void	root_or_no_args(t_envlst *envlst, char *arg)
 {
 	char	**split;
 
-	chdir(getenv("HOME"));
-	split = ft_split(getenv("HOME"), '/');
-	manage_pwd(split, envlst);
-	ft_freetabstr(split);
+	if (!arg)
+	{
+		chdir(getenv("HOME"));
+		split = ft_split(getenv("HOME"), '/');
+		manage_pwd(split, envlst);
+		ft_freetabstr(split);
+	}
+	else
+	{
+		chdir("/");
+		envlst = is_name_in_envlst(envlst, "PWD");
+		envlst->value = ft_sfree2(envlst->value);
+		envlst->value = ft_strdup("/");
+	}
 }
 
 int	ft_cd(char **args, t_envlst *envlst, int fd_out)
@@ -94,8 +100,8 @@ int	ft_cd(char **args, t_envlst *envlst, int fd_out)
 
 	i = 0;
 	(void)fd_out;
-	if (!args[1])
-		no_args(envlst);
+	if (!args[1] || ft_strcmp(args[1], "/") == 0)
+		root_or_no_args(envlst, args[1]);
 	else if (args[1])
 	{
 		if (args[1][0] == '~')
