@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 13:40:17 by jbernard          #+#    #+#             */
-/*   Updated: 2023/08/30 13:17:18 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/08/30 16:08:47 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,10 +95,8 @@ void	root_or_no_args(t_envlst *envlst, char *arg)
  
 int	ft_cd(char **args, t_envlst *envlst, int fd_out)
 {
-	int		i;
 	char	**split;
 
-	i = 0;
 	(void)fd_out;
 	if (!args[1] || ft_strcmp(args[1], "/") == 0)
 		root_or_no_args(envlst, args[1]);
