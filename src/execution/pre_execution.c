@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 14:59:42 by jbernard          #+#    #+#             */
-/*   Updated: 2023/08/29 13:30:49 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/08/30 13:03:41 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ int	work_redirection(t_cmdlst *cmdlst)
 			file = get_file(cmdlst, type);
 			if (file == NULL || tell_me_why(&i, file, type, cmdlst) != 1)
 			{
-				printf("minishell: syntax error: unexpected token\n");
+				printf("minishell: Redirection Error: Can't access file! :(\n");
 				close(cmdlst->red_fd[0]);
 				close(cmdlst->red_fd[1]);
 				return (0);

@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 11:24:11 by jbernard          #+#    #+#             */
-/*   Updated: 2023/08/23 14:25:20 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/08/30 13:03:19 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,7 @@ int	tell_me_why(int *i, char *file, char *type, t_cmdlst *cmdlst)
 		*i = -1;
 	}
 	else
-	{
-		printf("minishell: syntax error: unexpected token\n");
-		close(cmdlst->red_fd[0]);
-		close(cmdlst->red_fd[1]);
 		return (0);
-	}
 	return (1);
 }
 

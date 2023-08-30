@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 13:40:17 by jbernard          #+#    #+#             */
-/*   Updated: 2023/08/30 11:40:18 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/08/30 13:17:18 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ void	root_or_no_args(t_envlst *envlst, char *arg)
 		envlst->value = ft_strdup("/");
 	}
 }
-
+ 
 int	ft_cd(char **args, t_envlst *envlst, int fd_out)
 {
 	int		i;

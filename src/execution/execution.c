@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 16:37:35 by jbernard          #+#    #+#             */
-/*   Updated: 2023/07/26 12:20:24 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/08/30 13:14:50 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ void	execute_sh(t_cmdlst *cmdlst)
 		close(cmdlst->pipefd[1]);
 	if (e == -1)
 	{
-		printf("bash: %s: command not found\n", &cmdlst->token[0][1]);
+		ft_putstr_fd("minishell: Command not found.\n", 2);
 		ft_end(cmdlst, cmdlst->envlst, 127);
 	}
 }
@@ -103,7 +103,7 @@ void	execution(t_cmdlst *cmdlst)
 		if (cmdlst->flags & (R_OUT | APP_OUT))
 			status = func(cmdlst->token, cmdlst->envlst, cmdlst->red_fd[0]);
 		else if (cmdlst->flags & PIPEI)
-			status = func(cmdlst->token, cmdlst->envlst, cmdlst->pipefd[0]);
+			status = func(cmdlst->token, cmdlst->envlst, cmdlst->pipefd[1]);
 		else
 			status = func(cmdlst->token, cmdlst->envlst, 1);
 	}
