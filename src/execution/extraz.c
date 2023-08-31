@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 11:24:11 by jbernard          #+#    #+#             */
-/*   Updated: 2023/08/30 13:03:19 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/08/31 12:19:31 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ int	tell_me_why(int *i, char *file, char *type, t_cmdlst *cmdlst)
 	else if (ft_strcmp(type, "<<") == 0)
 	{
 		remove_redirection_from_tokens(cmdlst);
+		ft_cmdlstiter(&cmdlst, print_cmdlst_node);
 		*i = -1;
 	}
 	else

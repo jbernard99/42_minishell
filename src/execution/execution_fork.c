@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 16:31:54 by jbernard          #+#    #+#             */
-/*   Updated: 2023/08/25 14:54:49 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/08/31 11:38:32 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	child_execute(t_cmdlst *cmdlst)
 {
 	signal(SIGINT, ctrl_c_heredoc);
 	if (cmdlst->flags & HR_DOC)
-		cmdlst->red_fd[1] = here_doc(cmdlst->infile);
+		cmdlst->red_fd[1] = loop_here_doc(cmdlst->eof);
 	if (cmdlst->flags & PIPEI)
 		change_stdout(cmdlst->pipefd[1]);
 	if (cmdlst->flags & PIPEO)

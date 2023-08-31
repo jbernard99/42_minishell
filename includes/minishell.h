@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 04:25:35 by jbernard          #+#    #+#             */
-/*   Updated: 2023/08/29 13:01:28 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/08/31 11:16:59 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ typedef struct s_cmdlst {
 	char			*cmd;
 	char			*outfile;
 	char			*infile;
+	char			**eof;
 	char			**token;
 	struct s_cmdlst	*next;
 }		t_cmdlst;
@@ -162,7 +163,8 @@ int			redirect_out(char *file);
 
 // redirect_in_tools.c //
 int			redirect_in(char *file);
-int			here_doc(const char *delim);
+char		*here_doc(const char *delim);
+int			loop_here_doc(char **eof);
 
 // cleanup.c //
 void		free_envlst(t_envlst *envlst);

@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 16:37:35 by jbernard          #+#    #+#             */
-/*   Updated: 2023/08/30 13:14:50 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/08/31 12:49:05 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,13 +57,13 @@ char	*get_exec_location(char *exec, t_envlst *envlst)
 		if (exec_exists(n_exec))
 		{
 			ft_sfree(exec);
-			ft_freetabstr(path);
+			path = ft_freetabstr(path);
 			return (n_exec);
 		}
 		ft_sfree(n_exec);
 		i++;
 	}
-	ft_freetabstr(path);
+	path = ft_freetabstr(path);
 	return (exec);
 }
 
