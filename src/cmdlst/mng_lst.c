@@ -14,25 +14,13 @@
 
 void	cmdlst_delone(t_cmdlst *cmdlst, void (*del)(t_cmdlst *))
 {
-	int	i;
-
-	i = 0;
 	if (!cmdlst)
 		return ;
 	ft_sfree(cmdlst->outfile);
 	ft_sfree(cmdlst->infile);
 	cmdlst->outfile = NULL;
 	cmdlst->infile = NULL;
-	if (cmdlst->eof && cmdlst->eof[i])
-	{
-		while (cmdlst->eof[i])
-		{
-			free(cmdlst->eof[i]);
-			cmdlst->eof[i] = NULL;
-			i++;
-		}
-	}
-	free(cmdlst->eof);
+	ft_freetabstr(cmdlst->eof);
 	cmdlst->eof = NULL;
 	del(cmdlst);
 	ft_sfree(cmdlst);

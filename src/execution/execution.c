@@ -57,13 +57,13 @@ char	*get_exec_location(char *exec, t_envlst *envlst)
 		if (exec_exists(n_exec))
 		{
 			ft_sfree(exec);
-			path = ft_freetabstr(path);
+			ft_freetabstr(path);
 			return (n_exec);
 		}
 		ft_sfree(n_exec);
 		i++;
 	}
-	path = ft_freetabstr(path);
+	ft_freetabstr(path);
 	return (exec);
 }
 

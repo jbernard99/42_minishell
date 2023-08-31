@@ -42,28 +42,41 @@ void	remove_redirection_from_tokens(t_cmdlst *cmdlst)
 {
 	char	**n_token;
 	size_t	i;
-	int		j;
+	size_t	j;
 
+	ft_cmdlstiter(&cmdlst, print_cmdlst_node);
 	n_token = ft_calloc(ft_strtablen(cmdlst->token) - 1, sizeof(char *));
 	i = 0;
 	j = 0;
 	while (cmdlst->token[i] && !token_is_redirection(cmdlst->token[i]))
+	{
+		printf("Entering first loop. n_token[%zu] = %s, cmdlst->token[%zu] = %s\n", j, n_token[j], i, cmdlst->token[i]);
 		n_token[j++] = ft_strdup(cmdlst->token[i++]);
-	if (ft_strcmp(cmdlst->token[i], ">>") == 0 || \
-			ft_strcmp(cmdlst->token[i], ">") == 0)
+		ft_cmdlstiter(&cmdlst, print_cmdlst_node);
+		printf("Exiting first loop. n_token[%zu] = %s, cmdlst->token[%zu] = %s\n", j - 1, n_token[j - 1], i - 1, cmdlst->token[i - 1]);
+	}
+	if (ft_strcmp(cmdlst->token[i], ">>") == 0 || ft_strcmp(cmdlst->token[i], ">") == 0)
 		cmdlst->outfile = ft_strdup(cmdlst->token[++i]);
 	else if (ft_strcmp(cmdlst->token[i], "<") == 0)
 		cmdlst->infile = ft_strdup(cmdlst->token[++i]);
 	else if (ft_strcmp(cmdlst->token[i], "<<") == 0)
+	{
+		printf("\n\nEntering if here_doc\n");
+		ft_cmdlstiter(&cmdlst, print_cmdlst_node);
 		cmdlst->eof = ft_addtolst(cmdlst->eof, cmdlst->token[++i]);
+		ft_cmdlstiter(&cmdlst, print_cmdlst_node);
+		printf("Exiting if heredoc : n_token[%zu] = %s, cmdlst->token[%zu] = %s\n\n\n", j, n_token[j], i, cmdlst->token[i - 1]);
+	}
 	while (cmdlst->token[++i])
+	{
+		printf("Entering second loop\n");
 		n_token[j++] = ft_strdup(cmdlst->token[i]);
+		printf("Exiting if second loop : n_token[%zu] = %s, cmdlst->token[%zu] = %s\n", j - 1, n_token[j - 1], i, cmdlst->token[i]);
+	}
 	n_token[j] = NULL;
-	/* cmdlst->token = ft_freetabstr(cmdlst->token); */
-	free(cmdlst->token);
-	cmdlst->token = NULL;
+	ft_freetabstr(cmdlst->token);
 	cmdlst->token = ft_tabstrdup(n_token);
-	n_token = ft_freetabstr(n_token);
+	ft_freetabstr(n_token);
 }
 
 char	*get_file(t_cmdlst *cmdlst, char *type)
