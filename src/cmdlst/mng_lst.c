@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 11:17:41 by mgagnon           #+#    #+#             */
-/*   Updated: 2023/08/31 12:58:57 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/08/31 14:01:23 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,26 @@
 
 void	cmdlst_delone(t_cmdlst *cmdlst, void (*del)(t_cmdlst *))
 {
+	int	i;
+
+	i = 0;
 	if (!cmdlst)
 		return ;
 	ft_sfree(cmdlst->outfile);
 	ft_sfree(cmdlst->infile);
 	cmdlst->outfile = NULL;
 	cmdlst->infile = NULL;
+	if (cmdlst->eof && cmdlst->eof[i])
+	{
+		while (cmdlst->eof[i])
+		{
+			free(cmdlst->eof[i]);
+			cmdlst->eof[i] = NULL;
+			i++;
+		}
+	}
+	free(cmdlst->eof);
+	cmdlst->eof = NULL;
 	del(cmdlst);
 	ft_sfree(cmdlst);
 	cmdlst = NULL;
@@ -82,7 +96,7 @@ t_cmdlst	*new_node(char *cmd, t_envlst *envlst)
 	new_node->envlst = envlst;
 	new_node->outfile = NULL;
 	new_node->infile = NULL;
-	new_node->eof = ft_calloc(0, size);
+	new_node->eof = NULL;
 	new_node->next = NULL;
 	new_node->dont_pipe_it = 0;
 	return (new_node);
