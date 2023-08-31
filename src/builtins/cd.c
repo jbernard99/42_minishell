@@ -3,34 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: mgagnon <mgagnon@student.42quebec.com      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/24 13:40:17 by jbernard          #+#    #+#             */
-/*   Updated: 2023/08/30 16:08:47 by mgagnon          ###   ########.fr       */
+/*   Created: 2023/08/30 14:04:35 by mgagnon           #+#    #+#             */
+/*   Updated: 2023/08/31 12:44:09 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/*
-Exemples :
-	cd: Return to /home
-	cd 'invalid folder': "cd: {invalid folder}: No such file or directory"
-	cd 'valid folder': Moves current working div to selected folder
-	cd 'valid folder' 'invalid folder': Moves current working div to selected 
-					    folder.
-*/
-
 #include "../../includes/minishell.h"
-
-char	*change_tild(char *arg)
-{
-	char	*new_arg;
-
-	arg++;
-	new_arg = ft_strjoin(getenv("HOME"), arg);
-	arg--;
-	arg = ft_sfree2(arg);
-	return (new_arg);
-}
 
 char	*pwd_previous_directory(char *pwd)
 {
@@ -49,14 +29,14 @@ char	*pwd_previous_directory(char *pwd)
 	return (pwd);
 }
 
-void	manage_pwd(char **args, t_envlst *envlst)
+void	change_pwd(char *arg, t_envlst *envlst)
 {
 	int	i;
+	char	**args;
 
-	envlst = is_name_in_envlst(envlst, "PWD");
 	i = 0;
-	if (ft_strcmp(args[0], "Users") == 0)
-		envlst->value = ft_sfree2(envlst->value);
+	args = ft_split(arg, '/');
+	i = 0;
 	while (args[i])
 	{
 		if (ft_strcmp(args[i], "..") == 0)
@@ -71,50 +51,64 @@ void	manage_pwd(char **args, t_envlst *envlst)
 		}
 		i++;
 	}
+	ft_freetabstr(args);
 }
 
-void	root_or_no_args(t_envlst *envlst, char *arg)
+int	absolute_path(char *arg, t_envlst *envlst)
 {
-	char	**split;
+	int	i;
 
-	if (!arg)
-	{
-		chdir(getenv("HOME"));
-		split = ft_split(getenv("HOME"), '/');
-		manage_pwd(split, envlst);
-		ft_freetabstr(split);
-	}
-	else
+	i = 0;
+	while (arg[i] && arg[i] == '/')
+		i++;
+	if (arg[i] == '\0')
 	{
 		chdir("/");
-		envlst = is_name_in_envlst(envlst, "PWD");
 		envlst->value = ft_sfree2(envlst->value);
-		envlst->value = ft_strdup("/");
+		envlst->value = strdup("/");
+		return (0);
 	}
+	else if (chdir(arg) != 0)
+	{
+		printf("minishell: cd: %s: Not a directory\n", arg);
+		return (1);
+	}
+	envlst->value = ft_sfree2(envlst->value);
+	change_pwd(&arg[i], envlst);
+	return (0);
 }
- 
+
+int	relative_path(char *arg, t_envlst *envlst)
+{
+	if (chdir(arg) != 0)
+	{
+		printf("minishell: cd: %s: Not a directory\n", arg);
+		return (1);
+	}
+	change_pwd(arg, envlst);
+	return (0);
+}
+
 int	ft_cd(char **args, t_envlst *envlst, int fd_out)
 {
-	char	**split;
+	char	*new_arg;
 
 	(void)fd_out;
-	if (!args[1] || ft_strcmp(args[1], "/") == 0)
-		root_or_no_args(envlst, args[1]);
-	else if (args[1])
+	envlst = is_name_in_envlst(envlst, "PWD");
+	if (!args[1])
 	{
-		if (args[1][0] == '~')
-			args[1] = change_tild(args[1]);
-		if (chdir(args[1]) == 0)
-		{
-			if (args[1][0] == '/' && ft_strlen(args[1]) == 1)
-				split = &args[1];
-			else
-				split = ft_split(args[1], '/');
-			manage_pwd(split, envlst);
-			ft_freetabstr(split);
-		}
-		else
-			printf("minishell: cd: %s: Not a directory\n", args[1]);
+		chdir(getenv("HOME"));
+		envlst->value = ft_sfree2(envlst->value);
+		envlst->value = ft_strdup(getenv("HOME"));
+		return (0);
 	}
-	return (0);
+	if (args[1][0] == '~')
+	{
+		new_arg = ft_strjoin(getenv("HOME"), &args[1][1]);
+		args[1] = ft_sfree2(args[1]);
+		args[1] = new_arg;
+	}
+	if (args[1][0] == '/')
+		return (absolute_path(args[1], envlst));
+	return (relative_path(args[1], envlst));
 }
