@@ -6,7 +6,7 @@
 /*   By: mgagnon <mgagnon@student.42quebec.com      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 14:04:35 by mgagnon           #+#    #+#             */
-/*   Updated: 2023/08/31 12:44:09 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/09/01 12:53:04 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ char	*pwd_previous_directory(char *pwd)
 
 void	change_pwd(char *arg, t_envlst *envlst)
 {
-	int	i;
+	int		i;
 	char	**args;
 
 	i = 0;

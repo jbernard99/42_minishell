@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 14:52:21 by mgagnon           #+#    #+#             */
-/*   Updated: 2023/08/31 13:49:15 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/09/01 12:54:53 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ char	*here_doc(const char *delim)
 {
 	char	*input;
 	char	*ret;
-	
-	ret = ft_calloc(1 , sizeof(char *));
+
+	ret = ft_calloc(1, sizeof(char *));
 	input = readline("> ");
 	while (ft_strcmp(input, delim) != 0)
 	{
