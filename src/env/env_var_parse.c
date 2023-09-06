@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 12:09:57 by mgagnon           #+#    #+#             */
-/*   Updated: 2023/07/05 11:40:09 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/09/06 16:36:50 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,20 +42,18 @@ void	skip_dollar(char *str, int *i)
 char	*rplc_env_var(t_envlst *envlst, char *str)
 {
 	int		i;
-	char	*old;
 	char	*var;
 	char	*replacement;
 
 	i = 0;
-	replacement = NULL;
 	skip_dollar(str, &i);
 	var = get_var_name(&str[++i]);
-	if (is_name_in_envlst(envlst, var) != NULL)
-		replacement = m_get_value(&envlst, var);
+	replacement = m_get_value(envlst, var);
 	ft_sfree(var);
-	old = ft_strldup(str, (i - 1));
-	var = ft_strfreejoinfree(old, replacement);
-	while (str[i] == '?' || ft_isalpha(str[i]))
+	var = ft_strldup(str, (i - 1));
+	if (replacement != NULL)
+		var = ft_strfreejoinfree(var, replacement);
+	while (str[i] && (str[i] == '?' || ft_isalpha(str[i])))
 		i++;
 	if (!str[i])
 	{
@@ -83,20 +81,13 @@ int	is_there_env_var(char *str)
 	return (0);
 }
 
-char	*m_get_value(t_envlst **envlst, char *name)
+char	*m_get_value(t_envlst *envlst, char *name)
 {
-	t_envlst	*proxy;
-	char		*ret;
-
-	proxy = *envlst;
-	while (proxy)
+	envlst = is_name_in_envlst(envlst, name);
+	if (envlst != NULL)	
 	{
-		if (ft_strcmp(name, proxy->name) == 0)
-		{
-			ret = strdup(proxy->value);
-			return (ret);
-		}
-		proxy = proxy->next;
+		if (envlst->value != NULL && ft_strcmp(envlst->value, "\"\"") != 0)
+			return (strdup(envlst->value));
 	}
 	return (NULL);
 }
