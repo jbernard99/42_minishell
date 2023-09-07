@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 16:31:54 by jbernard          #+#    #+#             */
-/*   Updated: 2023/08/31 11:38:32 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/09/06 22:30:37 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,28 @@
 void	child_execute(t_cmdlst *cmdlst)
 {
 	signal(SIGINT, ctrl_c_heredoc);
-	if (cmdlst->flags & HR_DOC)
-		cmdlst->red_fd[1] = loop_here_doc(cmdlst->eof);
+	if (cmdlst->flags & (R_OUT | APP_OUT))
+	{
+		close(cmdlst->red_fd[1]);
+		if (cmdlst->flags & HR_DOC)
+			cmdlst->red_fd[1] = loop_here_doc(cmdlst->eof);
+		if (cmdlst->flags & R_IN)
+			cmdlst->red_fd[1] = redirect_in(cmdlst->infile);
+	}
+	if (cmdlst->flags & (R_IN | HR_DOC))
+	{
+		close(cmdlst->red_fd[0]);
+		if (cmdlst->flags & R_OUT)
+			cmdlst->red_fd[0] = redirect_out(cmdlst->outfile);
+		if (cmdlst->flags & APP_OUT)
+			cmdlst->red_fd[0] = append(cmdlst->outfile);
+	}
 	if (cmdlst->flags & PIPEI)
 		change_stdout(cmdlst->pipefd[1]);
 	if (cmdlst->flags & PIPEO)
 		change_stdin(cmdlst->pipefd[0]);
-	if (cmdlst->flags & R_IN)
-		cmdlst->red_fd[1] = redirect_in(cmdlst->infile);
-	if (cmdlst->flags & R_OUT)
-		cmdlst->red_fd[0] = redirect_out(cmdlst->outfile);
-	if (cmdlst->flags & APP_OUT)
-		cmdlst->red_fd[0] = append(cmdlst->outfile);
+	
+	
 	execution(cmdlst);
 	exit(0);
 }

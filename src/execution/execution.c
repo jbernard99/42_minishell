@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 16:37:35 by jbernard          #+#    #+#             */
-/*   Updated: 2023/08/31 12:49:05 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/09/06 22:25:38 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,11 @@ void	execution(t_cmdlst *cmdlst)
 	if (func)
 	{
 		if (cmdlst->flags & (R_OUT | APP_OUT))
+		{
 			status = func(cmdlst->token, cmdlst->envlst, cmdlst->red_fd[0]);
+			close(cmdlst->red_fd[0]);
+			close(cmdlst->red_fd[1]);
+		}
 		else if (cmdlst->flags & PIPEI)
 			status = func(cmdlst->token, cmdlst->envlst, cmdlst->pipefd[1]);
 		else
