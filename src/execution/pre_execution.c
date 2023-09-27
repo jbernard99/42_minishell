@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 14:59:42 by jbernard          #+#    #+#             */
-/*   Updated: 2023/09/01 13:05:13 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/09/26 20:33:14 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,6 @@ int	work_redirection(t_cmdlst *cmdlst)
 	char	*type;
 	int		i;
 
-	pipe(cmdlst->red_fd);
 	i = 0;
 	while (cmdlst->token[i])
 	{
@@ -100,8 +99,6 @@ int	work_redirection(t_cmdlst *cmdlst)
 			if (file == NULL || tell_me_why(&i, file, type, cmdlst) != 1)
 			{
 				printf("minishell: Redirection Error: Can't access file! :(\n");
-				close(cmdlst->red_fd[0]);
-				close(cmdlst->red_fd[1]);
 				return (0);
 			}
 		}
