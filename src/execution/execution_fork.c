@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 16:31:54 by jbernard          #+#    #+#             */
-/*   Updated: 2023/09/06 22:30:37 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/09/26 20:03:15 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,6 @@ void	child_execute(t_cmdlst *cmdlst)
 		change_stdout(cmdlst->pipefd[1]);
 	if (cmdlst->flags & PIPEO)
 		change_stdin(cmdlst->pipefd[0]);
-	
-	
 	execution(cmdlst);
 	exit(0);
 }

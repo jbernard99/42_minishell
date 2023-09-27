@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 12:09:57 by mgagnon           #+#    #+#             */
-/*   Updated: 2023/09/06 16:36:50 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/09/26 20:02:58 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ int	is_there_env_var(char *str)
 char	*m_get_value(t_envlst *envlst, char *name)
 {
 	envlst = is_name_in_envlst(envlst, name);
-	if (envlst != NULL)	
+	if (envlst != NULL)
 	{
 		if (envlst->value != NULL && ft_strcmp(envlst->value, "\"\"") != 0)
 			return (strdup(envlst->value));
