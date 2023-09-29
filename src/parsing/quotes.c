@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 11:57:20 by mgagnon           #+#    #+#             */
-/*   Updated: 2023/09/29 09:57:01 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/09/29 12:17:20 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	quote_handle(char *cmd, size_t *end, int *flags)
 {
 	int	no_match;
 
-	no_match = 0;
+	no_match = 1;
 	if (cmd[*end] == '\'' || cmd[*end] == '\"')
 	{
 		if (cmd[*end] == '\'')
@@ -72,7 +72,5 @@ void	quote_handle(char *cmd, size_t *end, int *flags)
 		no_match = check_quotes(cmd, end, flags);
 	}
 	if (no_match)
-		(*end)++;
-	if (!no_match && (*flags & QUOTE) == 0 && (*flags & DQUOTE) == 0)
 		(*end)++;
 }
