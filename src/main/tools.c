@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 06:43:50 by jbernard          #+#    #+#             */
-/*   Updated: 2023/06/16 14:35:27 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/09/28 20:12:54 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 /* if quotes or double quotes are used makes sure to skip */
 /* over every part between 2 quotes or two double quotes */
 
-void	check_quotes(char *input, size_t *i, int *flags)
+int	check_quotes(char *input, size_t *i, int *flags)
 {
 	char	c;
 
@@ -30,6 +30,9 @@ void	check_quotes(char *input, size_t *i, int *flags)
 		*flags &= ~QUOTE;
 	else if (input[*i] == '\"')
 		*flags &= ~DQUOTE;
+	if (!input[*i])
+		return (0);
+	return (1);
 }
 
 int	finish_flag_set(t_cmdlst **cmdlst)
@@ -55,9 +58,9 @@ size_t	ft_strpbrk(char *str, const char *delim, int *flags)
 
 	token_nb = 1;
 	i = 0;
-	while (str[i] == ' ')
+	while (str[i] && str[i] == ' ')
 		i++;
-	while (str[i] != '\0')
+	while (str[i] && str[i] != '\0')
 	{
 		if (str[i] == '\'' || str[i] == '\"')
 		{
@@ -65,8 +68,8 @@ size_t	ft_strpbrk(char *str, const char *delim, int *flags)
 				*flags ^= QUOTE;
 			else if (str[i] == '\"')
 				*flags ^= DQUOTE;
-			check_quotes(str, &i, flags);
-			i++;
+			if (check_quotes(str, &i, flags))
+				i++;
 		}
 		else
 		{
