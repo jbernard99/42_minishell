@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 16:31:54 by jbernard          #+#    #+#             */
-/*   Updated: 2023/09/26 20:32:56 by jbernard         ###   ########.fr       */
+/*   Updated: 2023/09/29 12:07:06 by jbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,10 @@
 void	child_execute(t_cmdlst *cmdlst)
 {
 	signal(SIGINT, ctrl_c_heredoc);
+	if (cmdlst->flags & PIPEI)
+		change_stdout(cmdlst->pipefd[1]);
+	if (cmdlst->flags & PIPEO)
+		change_stdin(cmdlst->pipefd[0]);
 	if (cmdlst->flags & HR_DOC)
 		loop_here_doc(cmdlst->eof);
 	if (cmdlst->flags & R_IN)
@@ -23,10 +27,6 @@ void	child_execute(t_cmdlst *cmdlst)
 		redirect_out(cmdlst->outfile);
 	if (cmdlst->flags & APP_OUT)
 		append(cmdlst->outfile);
-	if (cmdlst->flags & PIPEI)
-		change_stdout(cmdlst->pipefd[1]);
-	if (cmdlst->flags & PIPEO)
-		change_stdin(cmdlst->pipefd[0]);
 	execution(cmdlst);
 	exit(0);
 }
