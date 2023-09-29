@@ -6,7 +6,7 @@
 /*   By: jbernard <jbernard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 13:33:11 by mgagnon           #+#    #+#             */
-/*   Updated: 2023/09/28 20:06:40 by mgagnon          ###   ########.fr       */
+/*   Updated: 2023/09/29 09:02:50 by mgagnon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ int	second_divide(t_cmdlst **cmdlst)
 	i = 0;
 	end = 0;
 	cmd = ft_strdup((*cmdlst)->cmd);
-	printf("%s\n", cmd);
 	while (cmd[end] && ft_is_whtspc(cmd[end]))
 		end++;
 	if (!cmd[end])
